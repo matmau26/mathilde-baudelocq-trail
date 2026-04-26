@@ -2,7 +2,9 @@ import Header from './components/Header.jsx';
 import Hero from './components/Hero.jsx';
 import Profile from './components/Profile.jsx';
 import Performances from './components/Performances.jsx';
+import Palmares from './components/Palmares.jsx';
 import Calendar from './components/Calendar.jsx';
+import Partnership from './components/Partnership.jsx';
 
 export default function App() {
   return (
@@ -11,8 +13,10 @@ export default function App() {
       <main>
         <Hero />
         <Performances />
+        <Palmares />
         <Profile />
         <Calendar />
+        <Partnership />
       </main>
     </div>
   );

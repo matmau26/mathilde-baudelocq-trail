@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 
 const NAV_LINKS = [
   { href: '#kpi', label: 'Performances' },
-  { href: '#profil', label: 'Profil' },
-  { href: '#calendrier', label: 'Calendrier' },
+  { href: '#palmares', label: 'Palmarès' },
+  { href: '#calendrier', label: 'Objectifs' },
   { href: '#partenariat', label: 'Partenariat' },
 ];
 
