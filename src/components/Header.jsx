@@ -2,8 +2,9 @@ import { useEffect, useState } from 'react';
 
 const NAV_LINKS = [
   { href: '#profil', label: 'Profil' },
+  { href: '#performances', label: 'Performances' },
+  { href: '#calendrier', label: 'Calendrier' },
   { href: '#partenariat', label: 'Partenariat' },
-  { href: '#contact', label: 'Contact' },
 ];
 
 export default function Header() {

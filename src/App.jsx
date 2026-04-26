@@ -1,6 +1,8 @@
 import Header from './components/Header.jsx';
 import Hero from './components/Hero.jsx';
 import Profile from './components/Profile.jsx';
+import Performances from './components/Performances.jsx';
+import Calendar from './components/Calendar.jsx';
 
 export default function App() {
   return (
@@ -9,6 +11,8 @@ export default function App() {
       <main>
         <Hero />
         <Profile />
+        <Performances />
+        <Calendar />
       </main>
     </div>
   );
