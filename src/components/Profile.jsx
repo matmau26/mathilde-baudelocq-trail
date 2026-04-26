@@ -17,24 +17,22 @@ const FACTS = [
     ),
   },
   {
-    label: 'Famille',
-    value: 'Mère de 2 enfants',
+    label: 'Discipline',
+    value: 'Trail Running',
     icon: (
       <>
-        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-        <circle cx="9" cy="7" r="4" />
-        <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
-        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+        <path d="M3 20l4-6 4 4 5-9 5 11" />
+        <circle cx="14" cy="5" r="1.5" />
       </>
     ),
   },
   {
-    label: 'Formation',
-    value: 'Concours CRPE en cours',
+    label: 'Terrain',
+    value: 'Massif de Dieulefit',
     icon: (
       <>
-        <path d="M22 10 12 4 2 10l10 6 10-6Z" />
-        <path d="M6 12v5a6 6 0 0 0 12 0v-5" />
+        <path d="M3 18l5-7 4 5 4-9 5 11" />
+        <line x1="3" y1="22" x2="21" y2="22" />
       </>
     ),
   },
@@ -73,7 +71,7 @@ export default function Profile() {
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-5">
             <p className="text-xs font-semibold uppercase tracking-widest text-mountain-500">
-              01 — Profil
+              02 — Profil
             </p>
             <h2 className="mt-3 text-4xl font-bold tracking-tight text-mountain-950 sm:text-5xl">
               L'athlète,

@@ -10,8 +10,8 @@ export default function App() {
       <Header />
       <main>
         <Hero />
-        <Profile />
         <Performances />
+        <Profile />
         <Calendar />
       </main>
     </div>

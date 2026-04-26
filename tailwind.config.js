@@ -28,6 +28,7 @@ export default {
           'Roboto',
           'sans-serif',
         ],
+        display: ['Oswald', 'Inter', 'sans-serif'],
       },
       letterSpacing: {
         widest: '0.25em',

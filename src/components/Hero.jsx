@@ -48,7 +48,7 @@ export default function Hero() {
             Athlète Trail Running
             <span className="mx-3 inline-block h-1 w-1 rounded-full bg-mountain-400 align-middle" />
             <span className="font-medium text-mountain-900">
-              Aux portes du statut Élite
+              Trajectoire Élite
             </span>
           </p>
 
@@ -73,35 +73,25 @@ export default function Hero() {
             </a>
 
             <a
-              href="#profil"
+              href="#kpi"
               className="inline-flex items-center gap-2 text-sm font-medium text-mountain-700 hover:text-mountain-900 transition-colors"
             >
-              Voir le profil
+              Voir les performances
               <span aria-hidden="true">→</span>
             </a>
           </div>
 
-          {/* Stats rapides */}
-          <dl className="mt-14 grid grid-cols-3 gap-6 max-w-md">
-            <div>
-              <dt className="text-xs uppercase tracking-widest text-mountain-500">
-                Pratique
-              </dt>
-              <dd className="mt-1 text-2xl font-bold text-mountain-900">5 ans</dd>
-            </div>
-            <div>
-              <dt className="text-xs uppercase tracking-widest text-mountain-500">
-                Niveau
-              </dt>
-              <dd className="mt-1 text-2xl font-bold text-mountain-900">National</dd>
-            </div>
-            <div>
-              <dt className="text-xs uppercase tracking-widest text-mountain-500">
-                Base
-              </dt>
-              <dd className="mt-1 text-2xl font-bold text-mountain-900">Drôme</dd>
-            </div>
-          </dl>
+          {/* Tags signalétiques */}
+          <div className="mt-14 flex flex-wrap items-center gap-3">
+            <span className="inline-flex items-center gap-2 rounded-full border border-mountain-200 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-widest text-mountain-800">
+              <span className="inline-block h-1.5 w-1.5 rounded-full bg-mountain-500" />
+              26 — Montélimar
+            </span>
+            <span className="inline-flex items-center gap-2 rounded-full bg-mountain-900 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white">
+              <span className="inline-block h-1.5 w-1.5 rounded-full bg-white" />
+              Projet 2026 · Statut Élite
+            </span>
+          </div>
         </div>
 
         {/* Bloc visuel — placeholder stylisé */}
@@ -153,8 +143,8 @@ export default function Hero() {
 
       {/* Indicateur de scroll */}
       <a
-        href="#profil"
-        aria-label="Faire défiler vers le profil"
+        href="#kpi"
+        aria-label="Faire défiler vers les performances"
         className="absolute left-1/2 bottom-6 hidden -translate-x-1/2 flex-col items-center gap-2 text-mountain-500 sm:flex"
       >
         <span className="text-[10px] uppercase tracking-widest">Défiler</span>
