@@ -1,4 +1,43 @@
-import { Award, Mountain } from 'lucide-react';
+import { Award, Mountain, Trophy, TrendingUp } from 'lucide-react';
+
+const BADGE_STYLES = {
+  Podium: {
+    className:
+      'bg-solar-300 text-mountain-950 ring-1 ring-inset ring-solar-500/40',
+    icon: Trophy,
+  },
+  'Top perf': {
+    className:
+      'bg-electric-600 text-white ring-1 ring-inset ring-electric-700/40',
+    icon: TrendingUp,
+  },
+  Ultra: {
+    className: 'bg-mountain-950 text-white',
+    icon: Mountain,
+  },
+};
+
+function RaceBadges({ badges }) {
+  if (!badges || badges.length === 0) return null;
+  return (
+    <>
+      {badges.map((badge) => {
+        const style = BADGE_STYLES[badge];
+        if (!style) return null;
+        const Icon = style.icon;
+        return (
+          <span
+            key={badge}
+            className={`inline-flex items-center gap-1 px-2 py-0.5 text-[9px] font-bold uppercase tracking-[0.25em] ${style.className}`}
+          >
+            {Icon && <Icon className="h-3 w-3" strokeWidth={2.5} />}
+            {badge}
+          </span>
+        );
+      })}
+    </>
+  );
+}
 
 const RACES = [
   {
@@ -29,6 +68,27 @@ const RACES = [
     temps: '04:36:58',
     rangGeneral: '95/568',
     rangFemmes: '8/152',
+    badges: ['Top perf'],
+  },
+  {
+    date: '12/10/2025',
+    nom: "All'en Trail",
+    distance: '12 KM',
+    dplus: '420 M+',
+    temps: '01:05:52',
+    rangGeneral: '33/272',
+    rangFemmes: '2/90',
+    badges: ['Podium'],
+  },
+  {
+    date: '07/09/2025',
+    nom: 'Les rondes charolaises',
+    distance: '20 KM',
+    dplus: '750 M+',
+    temps: '02:12:18',
+    rangGeneral: '36/120',
+    rangFemmes: '2/28',
+    badges: ['Podium'],
   },
   {
     date: '31/05/2025',
@@ -38,7 +98,7 @@ const RACES = [
     temps: '18:01:41',
     rangGeneral: '700/1621',
     rangFemmes: '41/124',
-    ultra: true,
+    badges: ['Ultra'],
   },
   {
     date: '27/04/2025',
@@ -48,6 +108,16 @@ const RACES = [
     temps: '02:53:08',
     rangGeneral: '112/917',
     rangFemmes: '12/320',
+  },
+  {
+    date: '29/03/2025',
+    nom: 'Trail de Mirmande',
+    distance: '15 KM',
+    dplus: '870 M+',
+    temps: '01:36:25',
+    rangGeneral: '22/192',
+    rangFemmes: '1/58',
+    badges: ['Podium'],
   },
   {
     date: '09/03/2025',
@@ -194,12 +264,7 @@ export default function RaceResults() {
                         <p className="text-sm font-semibold text-mountain-950">
                           {race.nom}
                         </p>
-                        {race.ultra && (
-                          <span className="inline-flex items-center gap-1 bg-mountain-950 px-2 py-0.5 text-[9px] font-bold uppercase tracking-[0.25em] text-white">
-                            <Mountain className="h-3 w-3" strokeWidth={2.5} />
-                            Ultra
-                          </span>
-                        )}
+                        <RaceBadges badges={race.badges} />
                       </div>
                       {isHighlight && (
                         <span className="mt-2 inline-flex items-center gap-1.5 bg-flame-500 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-white">
@@ -270,12 +335,7 @@ export default function RaceResults() {
                     <h3 className="text-base font-bold leading-snug text-mountain-950">
                       {race.nom}
                     </h3>
-                    {race.ultra && (
-                      <span className="inline-flex items-center gap-1 bg-mountain-950 px-2 py-0.5 text-[9px] font-bold uppercase tracking-[0.25em] text-white">
-                        <Mountain className="h-3 w-3" strokeWidth={2.5} />
-                        Ultra
-                      </span>
-                    )}
+                    <RaceBadges badges={race.badges} />
                   </div>
                   {isHighlight && (
                     <span className="mt-3 inline-flex items-center gap-1.5 bg-flame-500 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-white">
