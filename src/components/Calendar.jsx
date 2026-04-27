@@ -66,7 +66,7 @@ const SECONDARY_OBJECTIVE = {
   title: 'La SainteSprint',
   distance: '25 km',
   location: 'Lyon · Rhône',
-  period: 'Novembre 2026',
+  period: '28 novembre 2026',
   badge: 'Événement de clôture de saison',
   context:
     '5ᵉ participation consécutive à l’événement — progression constante du classement féminin sur les formats courts à longs.',
