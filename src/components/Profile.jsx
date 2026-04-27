@@ -81,13 +81,17 @@ export default function Profile() {
               </span>
             </h2>
             <p className="mt-6 max-w-md text-base leading-relaxed text-mountain-700">
-              Une approche du sport basée sur la{' '}
-              <span className="font-semibold text-mountain-900">simplicité</span>,
-              l'
-              <span className="font-semibold text-mountain-900">intégrité</span>{' '}
-              et la{' '}
-              <span className="font-semibold text-mountain-900">loyauté</span>.
-              Une progression constante jusqu'au niveau national.
+              Exigence compétitive et ancrage territorial. En pleine ascension
+              vers le niveau Élite, sa progression s’appuie sur une éthique de
+              travail stricte :{' '}
+              <span className="font-semibold text-mountain-950">simplicité</span>,{' '}
+              <span className="font-semibold text-mountain-950">intégrité</span>{' '}
+              et{' '}
+              <span className="font-semibold text-mountain-950">loyauté</span>.
+              Professionnelle de l’éducation basée dans la Drôme, elle incarne
+              factuellement le cœur de cible outdoor. Un profil structuré pour
+              la performance, calibré pour représenter un équipementier local
+              et s’investir dans sa R&D technique.
             </p>
 
             {/* Valeurs en chips */}
@@ -95,28 +99,42 @@ export default function Profile() {
               {VALUES.map((v) => (
                 <li
                   key={v}
-                  className="rounded-full border border-mountain-200 bg-mountain-50 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-mountain-700"
+                  className="rounded-full border border-mountain-200 bg-mountain-50 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.25em] text-mountain-700"
                 >
                   {v}
                 </li>
               ))}
             </ul>
 
-            {/* Carte signature */}
-            <div className="mt-10 rounded-2xl border border-mountain-100 bg-mountain-50/60 p-6">
-              <p className="text-xs uppercase tracking-widest text-mountain-500">
-                Discipline
-              </p>
-              <p className="mt-2 text-xl font-semibold text-mountain-900">
-                Trail Running
-              </p>
-              <div className="mt-4 h-px w-full bg-mountain-200" />
-              <p className="mt-4 text-sm text-mountain-700">
-                Préparation orientée performances moyennes distances
-                Régularité · Performance
-                durable.
-              </p>
-            </div>
+            {/* Photo civile */}
+            <figure className="mt-10 overflow-hidden rounded-2xl border-2 border-mountain-950 bg-mountain-950 shadow-xl shadow-mountain-900/10">
+              <div className="relative aspect-[3/4] w-full">
+                <img
+                  src="/Mathilde.jpeg"
+                  alt="Mathilde Baudelocq, portrait civil"
+                  className="absolute inset-0 h-full w-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 bg-gradient-to-t from-mountain-950/65 via-mountain-950/0 to-transparent"
+                />
+                <figcaption className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-4">
+                  <div>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-flame-300">
+                      Portrait
+                    </p>
+                    <p className="mt-1 font-display text-base font-bold uppercase tracking-wide text-white">
+                      Mathilde Baudelocq
+                    </p>
+                  </div>
+                  <span className="rounded-full border border-white/30 bg-white/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-white backdrop-blur">
+                    Drôme
+                  </span>
+                </figcaption>
+              </div>
+            </figure>
           </div>
 
           {/* Grille de faits */}
