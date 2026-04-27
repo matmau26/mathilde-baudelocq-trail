@@ -2,9 +2,9 @@ import { useEffect, useRef } from 'react';
 import { Mountain, Target, MapPin, Zap, Flag } from 'lucide-react';
 
 const CAMP_VIDEO_MP4 =
-  'https://res.cloudinary.com/dnh2k1blz/video/upload/q_auto/f_auto/v1777277532/copy_4DCA6D2A-9482-42D8-8367-37ADFF42D80C_socek9.mp4';
+  'https://res.cloudinary.com/dnh2k1blz/video/upload/q_auto/f_auto/v1777295336/copy_4DCA6D2A-9482-42D8-8367-37ADFF42D80C_et2qrm.mp4';
 const CAMP_VIDEO_MOV =
-  'https://res.cloudinary.com/dnh2k1blz/video/upload/q_auto/f_auto/v1777277532/copy_4DCA6D2A-9482-42D8-8367-37ADFF42D80C_socek9.mov';
+  'https://res.cloudinary.com/dnh2k1blz/video/upload/q_auto/f_auto/v1777295336/copy_4DCA6D2A-9482-42D8-8367-37ADFF42D80C_et2qrm.mov';
 
 function CampVideo() {
   const videoRef = useRef(null);
