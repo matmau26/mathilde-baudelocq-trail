@@ -27,6 +27,11 @@ const MEDIA = [
     src: 'https://res.cloudinary.com/dnh2k1blz/video/upload/q_auto/f_auto/v1777295309/4610396B-0A29-45AF-96C4-0D9E53FB185B_srmuvl.mp4',
   },
   { type: 'photo', src: '/VentouxOrigine2025-2.jpeg', alt: 'Trail Ventoux · LE 46 Origine' },
+  { type: 'photo', src: '/Ventous2026.jpeg', alt: 'Mathilde Baudelocq · Ventoux 2026' },
+  {
+    type: 'video',
+    src: 'https://res.cloudinary.com/dnh2k1blz/video/upload/q_auto/f_auto/v1777295336/copy_4DCA6D2A-9482-42D8-8367-37ADFF42D80C_et2qrm.mov',
+  },
 ];
 
 const itemVariants = {
