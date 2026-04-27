@@ -32,6 +32,8 @@ const KPIS = [
     value: '565',
     suffix: 'pts',
     context: 'International Trail Running Association',
+    logo: '/ITRA_logo.svg',
+    logoAlt: 'Logo officiel ITRA',
     tag: 'Indice global de performance',
     accent: 'electric',
   },
@@ -41,6 +43,8 @@ const KPIS = [
     value: '545',
     suffix: 'pts',
     context: 'UTMB World Series · Trail',
+    logo: '/logo-utmb-index.png',
+    logoAlt: 'Logo officiel UTMB Index',
     tag: 'Indice de référence trail',
     accent: 'solar',
   },
@@ -183,10 +187,22 @@ export default function Performances() {
                   </span>
                 </div>
 
-                {/* Contexte */}
-                <p className="mt-5 text-sm font-bold text-mountain-950">
-                  {kpi.context}
-                </p>
+                {/* Contexte : logo officiel ou texte, hauteur fixe pour symétrie */}
+                <div className="mt-5 flex h-10 items-center">
+                  {kpi.logo ? (
+                    <img
+                      src={kpi.logo}
+                      alt={kpi.logoAlt}
+                      className="h-8 w-auto max-w-[12rem] object-contain object-left"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : (
+                    <p className="text-sm font-bold text-mountain-950">
+                      {kpi.context}
+                    </p>
+                  )}
+                </div>
                 <p
                   className={`mt-2 inline-flex rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.2em] ring-1 ring-inset ${a.tag}`}
                 >
@@ -206,7 +222,7 @@ export default function Performances() {
         <div className="mt-8 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border-2 border-mountain-950 bg-mountain-950 sm:grid-cols-4">
           {[
             { label: 'Discipline', value: 'Trail Running', accent: 'text-mountain-200' },
-            { label: 'Distance phare', value: '20–84 km', accent: 'text-electric-300' },
+            { label: 'Distance phare', value: '20–80 km', accent: 'text-electric-300' },
             { label: 'Niveau actuel', value: 'National', accent: 'text-mountain-200' },
             { label: 'Objectif 2026', value: 'Statut Élite', accent: 'text-flame-300' },
           ].map((item) => (
