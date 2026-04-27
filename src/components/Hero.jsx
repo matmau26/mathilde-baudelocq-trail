@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion';
 
-const HERO_VIDEO = '/hero.mp4';
-const HERO_POSTER = '/hero-poster.jpg';
+const HERO_IMAGE = '/Maxi2025-1.jpg';
 
 export default function Hero() {
   return (
@@ -115,12 +114,12 @@ export default function Hero() {
           </motion.div>
         </motion.div>
 
-        {/* Panneau vidéo */}
+        {/* Panneau photo */}
         <motion.div
           initial={{ opacity: 0, x: 32 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.9, ease: 'easeOut', delay: 0.2 }}
-          className="relative lg:col-span-5"
+          className="relative mx-auto w-full max-w-[22rem] lg:col-span-5 lg:max-w-sm"
         >
           {/* Cadre décoratif décalé */}
           <div
@@ -128,30 +127,26 @@ export default function Hero() {
             className="absolute -left-3 -top-3 h-full w-full rounded-3xl border-2 border-flame-500"
           />
 
-          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-3xl border-2 border-mountain-950 bg-mountain-950 shadow-2xl shadow-mountain-900/20">
-            {/* Vidéo */}
-            <video
-              autoPlay
-              loop
-              muted
-              playsInline
-              poster={HERO_POSTER}
-              className="absolute inset-0 h-full w-full object-cover"
-              aria-hidden="true"
-            >
-              <source src={HERO_VIDEO} type="video/mp4" />
-            </video>
-
-            {/* Fallback dégradé sportif */}
+          <div className="relative aspect-[2/3] w-full overflow-hidden rounded-3xl border-2 border-mountain-950 bg-mountain-950 shadow-2xl shadow-mountain-900/20">
+            {/* Fallback dégradé pendant le chargement */}
             <div
               aria-hidden="true"
               className="absolute inset-0 bg-gradient-to-br from-mountain-700 via-mountain-900 to-flame-900"
             />
 
+            {/* Photo */}
+            <img
+              src={HERO_IMAGE}
+              alt="Mathilde Baudelocq, athlète trail running, en course"
+              className="absolute inset-0 h-full w-full object-cover"
+              loading="eager"
+              decoding="async"
+            />
+
             {/* Calque glassmorphism / vignette */}
             <div
               aria-hidden="true"
-              className="absolute inset-0 bg-gradient-to-t from-mountain-950/70 via-mountain-950/20 to-transparent"
+              className="absolute inset-0 bg-gradient-to-t from-mountain-950/70 via-mountain-950/10 to-transparent"
             />
 
             {/* HUD top-right */}
@@ -161,33 +156,33 @@ export default function Hero() {
             </div>
 
             {/* Bandeau bas avec stats */}
-            <div className="absolute inset-x-0 bottom-0 flex flex-col gap-3 p-5">
+            <div className="absolute inset-x-0 bottom-0 flex flex-col gap-3 p-4">
               <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-[0.25em] text-white/80">
                 <span>Snapshot</span>
                 <span>2025–26</span>
               </div>
               <div className="grid grid-cols-3 gap-2">
-                <div className="rounded-xl border border-white/15 bg-white/10 p-3 backdrop-blur-md">
+                <div className="rounded-xl border border-white/15 bg-white/10 p-2.5 backdrop-blur-md">
                   <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-flame-300">
                     ITRA
                   </p>
-                  <p className="mt-1 font-display text-2xl font-bold text-white">
+                  <p className="mt-0.5 font-display text-xl font-bold text-white">
                     565
                   </p>
                 </div>
-                <div className="rounded-xl border border-white/15 bg-white/10 p-3 backdrop-blur-md">
+                <div className="rounded-xl border border-white/15 bg-white/10 p-2.5 backdrop-blur-md">
                   <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-electric-300">
                     UTMB
                   </p>
-                  <p className="mt-1 font-display text-2xl font-bold text-white">
+                  <p className="mt-0.5 font-display text-xl font-bold text-white">
                     545
                   </p>
                 </div>
-                <div className="rounded-xl border border-flame-400/50 bg-flame-500/20 p-3 backdrop-blur-md">
+                <div className="rounded-xl border border-flame-400/50 bg-flame-500/20 p-2.5 backdrop-blur-md">
                   <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-flame-200">
                     GRV
                   </p>
-                  <p className="mt-1 font-display text-2xl font-bold text-white">
+                  <p className="mt-0.5 font-display text-xl font-bold text-white">
                     Top 4%
                   </p>
                 </div>
