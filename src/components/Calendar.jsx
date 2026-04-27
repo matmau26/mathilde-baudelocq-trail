@@ -47,7 +47,7 @@ const OBJECTIVES = [
     title: 'Marathon du Mont-Blanc',
     distance: '42 km',
     location: 'Chamonix · Haute-Savoie',
-    period: 'Juin 2026',
+    period: '28 juin 2026',
     note: 'Vitrine internationale · format marathon montagne',
   },
   {
@@ -55,8 +55,8 @@ const OBJECTIVES = [
     title: 'UltraTrail du Vercors',
     distance: '84 km',
     location: 'Massif du Vercors · Drôme / Isère',
-    period: 'Juillet 2026',
-    note: 'Validation ultra · terrain de jeu domestique',
+    period: '12 septembre 2026',
+    note: '2eme ultra · terrain de jeu local',
   },
 ];
 
