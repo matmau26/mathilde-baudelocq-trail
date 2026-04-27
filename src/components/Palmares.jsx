@@ -251,7 +251,7 @@ export default function Palmares() {
 
             <div className="mt-6 flex items-center justify-between border-t border-white/10 pt-4 text-[10px] font-semibold uppercase tracking-widest">
               <span className="text-mountain-300">Départ : Régional</span>
-              <span className="text-solar-300">Aujourd’hui : Top 3 % Élite</span>
+              <span className="text-solar-300">Aujourd’hui : Top Féminine</span>
             </div>
           </aside>
 
