@@ -18,7 +18,7 @@ const FACTS = [
   },
   {
     label: 'Discipline',
-    value: 'Trail Running',
+    value: 'Trail Running moyenne distance',
     icon: (
       <>
         <path d="M3 20l4-6 4 4 5-9 5 11" />
@@ -28,7 +28,7 @@ const FACTS = [
   },
   {
     label: 'Terrain',
-    value: 'Massif de Dieulefit',
+    value: 'Régional et National',
     icon: (
       <>
         <path d="M3 18l5-7 4 5 4-9 5 11" />
