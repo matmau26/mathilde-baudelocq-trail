@@ -40,7 +40,7 @@ const KPIS = [
   {
     eyebrow: 'UTMB Index',
     metric: '',
-    value: '545',
+    value: '568',
     suffix: 'pts',
     context: 'UTMB World Series · Trail',
     logo: '/logo-utmb-index.png',
