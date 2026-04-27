@@ -73,14 +73,50 @@ export default function Profile() {
             <p className="text-xs font-bold uppercase tracking-[0.25em] text-electric-600">
               05 — Profil
             </p>
-            <h2 className="mt-3 font-display text-5xl font-bold uppercase leading-[0.95] tracking-tight text-mountain-950 sm:text-6xl">
-              L'athlète,
-              <br />
-              <span className="bg-gradient-to-r from-electric-700 via-electric-500 to-flame-500 bg-clip-text text-transparent">
-                en bref.
-              </span>
-            </h2>
-            <p className="mt-6 max-w-md text-base leading-relaxed text-mountain-700">
+
+            {/* Photo civile avec titre superposé en haut-gauche */}
+            <figure className="mt-4 overflow-hidden rounded-2xl border-2 border-mountain-950 bg-mountain-950 shadow-xl shadow-mountain-900/10">
+              <div className="relative aspect-[3/4] w-full">
+                <img
+                  src="/Mathilde.jpeg"
+                  alt="Mathilde Baudelocq, portrait civil"
+                  className="absolute inset-0 h-full w-full object-cover"
+                  loading="lazy"
+                  decoding="async"
+                />
+                {/* Voile haut pour lisibilité du titre + voile bas pour la légende */}
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-0 bg-gradient-to-b from-mountain-950/70 via-mountain-950/0 to-mountain-950/70"
+                />
+
+                {/* Titre superposé top-left */}
+                <h2 className="absolute left-5 top-5 max-w-[85%] font-display text-4xl font-bold uppercase leading-[0.9] tracking-tight text-white sm:text-5xl">
+                  L'athlète,
+                  <br />
+                  <span className="bg-gradient-to-r from-flame-300 via-flame-400 to-solar-300 bg-clip-text text-transparent drop-shadow">
+                    en bref.
+                  </span>
+                </h2>
+
+                {/* Légende bas */}
+                <figcaption className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-4">
+                  <div>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-flame-300">
+                      Portrait
+                    </p>
+                    <p className="mt-1 font-display text-base font-bold uppercase tracking-wide text-white">
+                      Mathilde Baudelocq
+                    </p>
+                  </div>
+                  <span className="rounded-full border border-white/30 bg-white/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-white backdrop-blur">
+                    Drôme
+                  </span>
+                </figcaption>
+              </div>
+            </figure>
+
+            <p className="mt-8 max-w-md text-base leading-relaxed text-mountain-700">
               Exigence compétitive et ancrage territorial. En pleine ascension
               vers le niveau Élite, sa progression s’appuie sur une éthique de
               travail stricte :{' '}
@@ -105,36 +141,6 @@ export default function Profile() {
                 </li>
               ))}
             </ul>
-
-            {/* Photo civile */}
-            <figure className="mt-10 overflow-hidden rounded-2xl border-2 border-mountain-950 bg-mountain-950 shadow-xl shadow-mountain-900/10">
-              <div className="relative aspect-[3/4] w-full">
-                <img
-                  src="/Mathilde.jpeg"
-                  alt="Mathilde Baudelocq, portrait civil"
-                  className="absolute inset-0 h-full w-full object-cover"
-                  loading="lazy"
-                  decoding="async"
-                />
-                <div
-                  aria-hidden="true"
-                  className="absolute inset-0 bg-gradient-to-t from-mountain-950/65 via-mountain-950/0 to-transparent"
-                />
-                <figcaption className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-4">
-                  <div>
-                    <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-flame-300">
-                      Portrait
-                    </p>
-                    <p className="mt-1 font-display text-base font-bold uppercase tracking-wide text-white">
-                      Mathilde Baudelocq
-                    </p>
-                  </div>
-                  <span className="rounded-full border border-white/30 bg-white/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-white backdrop-blur">
-                    Drôme
-                  </span>
-                </figcaption>
-              </div>
-            </figure>
           </div>
 
           {/* Grille de faits */}
