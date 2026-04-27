@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, ArrowLeft, Send, Mountain } from 'lucide-react';
+import { Mail, ArrowLeft, Send } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const RECIPIENT = 'mathilde.baudelocq@gmail.com'; // TODO: remplacer par l'email réel
-const CONTACT_VIDEO = ''; // TODO: brancher l'URL Cloudinary du portrait vidéo (format 9:16)
+const CONTACT_VIDEO =
+  'https://res.cloudinary.com/dnh2k1blz/video/upload/q_auto/f_auto/v1777295309/4610396B-0A29-45AF-96C4-0D9E53FB185B_srmuvl.mp4';
 
 const SUBJECTS = [
   'Sponsoring / Représentation',
@@ -220,35 +221,6 @@ export default function Contact() {
                       aria-hidden="true"
                     />
                   )}
-
-                  {/* Vignette */}
-                  <div
-                    aria-hidden="true"
-                    className="absolute inset-0 bg-gradient-to-t from-mountain-950/70 via-transparent to-mountain-950/30"
-                  />
-
-                  {/* HUD top */}
-                  <div className="absolute left-4 right-4 top-4 flex items-center justify-between">
-                    <span className="inline-flex items-center gap-1.5 rounded-full bg-white/90 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-mountain-950 backdrop-blur">
-                      <Mountain className="h-3 w-3" strokeWidth={2.5} />
-                      M.B.
-                    </span>
-                    <span className="rounded-full border border-white/30 bg-white/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-white backdrop-blur">
-                      9:16
-                    </span>
-                  </div>
-
-                  {/* Caption bas */}
-                  <div className="absolute inset-x-0 bottom-0 p-5">
-                    <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-flame-300">
-                      Présentation
-                    </p>
-                    <p className="mt-1 font-display text-xl font-bold uppercase leading-tight tracking-tight text-white">
-                      Mathilde
-                      <br />
-                      Baudelocq
-                    </p>
-                  </div>
                 </div>
               </div>
 
