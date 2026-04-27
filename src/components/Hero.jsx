@@ -61,7 +61,7 @@ export default function Hero() {
               href="#partenariat"
               className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full bg-flame-500 px-7 py-4 text-sm font-bold uppercase tracking-[0.2em] text-white shadow-lg shadow-flame-500/30 transition-all hover:bg-flame-600 hover:shadow-xl hover:shadow-flame-500/40"
             >
-              <span className="relative z-10">Découvrir le partenariat</span>
+              <span className="relative z-10">Proposition de collaboration</span>
               <svg
                 className="relative z-10 h-4 w-4 transition-transform group-hover:translate-x-1"
                 viewBox="0 0 24 24"
