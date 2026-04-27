@@ -26,7 +26,7 @@ export default function Palmares() {
   return (
     <section
       id="palmares"
-      className="relative scroll-mt-20 bg-white py-24 sm:py-32"
+      className="relative scroll-mt-20 bg-zinc-50 py-24 sm:py-32"
     >
       <div className="mx-auto max-w-6xl px-6">
         {/* En-tête */}

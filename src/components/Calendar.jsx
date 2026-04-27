@@ -35,14 +35,14 @@ export default function Calendar() {
   return (
     <section
       id="calendrier"
-      className="relative scroll-mt-20 bg-white py-24 sm:py-32"
+      className="relative scroll-mt-20 bg-zinc-50 py-24 sm:py-32"
     >
       <div className="mx-auto max-w-6xl px-6">
         {/* En-tête */}
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.25em] text-mountain-500">
-              05 — Objectifs 2026
+              06 — Objectifs 2026
             </p>
             <h2 className="mt-3 font-display text-5xl font-bold uppercase leading-[0.95] tracking-tight text-mountain-950 sm:text-6xl">
               Cibles de

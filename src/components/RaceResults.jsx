@@ -108,14 +108,14 @@ export default function RaceResults() {
   return (
     <section
       id="resultats"
-      className="relative scroll-mt-20 bg-mountain-50/40 py-24 sm:py-32"
+      className="relative scroll-mt-20 bg-zinc-50 py-24 sm:py-32"
     >
       <div className="mx-auto max-w-6xl px-6">
         {/* En-tête */}
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.25em] text-mountain-500">
-              03 — Résultats détaillés
+              04 — Résultats détaillés
             </p>
             <h2 className="mt-3 font-display text-5xl font-bold uppercase leading-[0.95] tracking-tight text-mountain-950 sm:text-6xl">
               Historique

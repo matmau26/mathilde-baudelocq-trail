@@ -1,3 +1,21 @@
+import { motion } from 'framer-motion';
+
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.18, delayChildren: 0.1 },
+  },
+};
+
+const cardVariants = {
+  hidden: { opacity: 0, y: 32 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
+  },
+};
+
 const KPIS = [
   {
     eyebrow: 'Performance de référence',
@@ -87,10 +105,17 @@ export default function Performances() {
         </div>
 
         {/* Grille KPI */}
-        <div className="mt-12 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 sm:grid-cols-3">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: '-80px' }}
+          variants={containerVariants}
+          className="mt-12 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 sm:grid-cols-3"
+        >
           {KPIS.map((kpi, idx) => (
-            <article
+            <motion.article
               key={kpi.eyebrow}
+              variants={cardVariants}
               className="group relative bg-mountain-950 p-8 transition-colors hover:bg-mountain-900 sm:p-10"
             >
               {/* Numéro KPI en filigrane */}
@@ -144,9 +169,9 @@ export default function Performances() {
 
               {/* Ligne accent en bas qui s'étend au hover */}
               <span className="absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-gradient-to-r from-mountain-300 to-white transition-transform duration-500 group-hover:scale-x-100" />
-            </article>
+            </motion.article>
           ))}
-        </div>
+        </motion.div>
 
         {/* Pied de section : tickers */}
         <div className="mt-8 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 sm:grid-cols-4">

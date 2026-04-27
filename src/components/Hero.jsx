@@ -1,61 +1,92 @@
+import { motion } from 'framer-motion';
+
+const HERO_VIDEO = '/hero.mp4';
+const HERO_POSTER = '/hero-poster.jpg';
+
 export default function Hero() {
   return (
     <section
       id="top"
-      className="relative isolate overflow-hidden bg-gradient-to-b from-mountain-50 via-white to-white pt-32 pb-24 sm:pt-40 sm:pb-32"
+      className="relative isolate flex min-h-[100svh] items-center overflow-hidden bg-mountain-950 pt-32 pb-24 sm:pt-40 sm:pb-32"
     >
-      {/* Décor : silhouette de montagnes en SVG */}
-      <svg
+      {/* Vidéo plein écran en arrière-plan */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        poster={HERO_POSTER}
+        className="absolute inset-0 -z-20 h-full w-full object-cover"
         aria-hidden="true"
-        className="pointer-events-none absolute inset-x-0 bottom-0 h-48 w-full text-mountain-100"
-        viewBox="0 0 1440 320"
-        preserveAspectRatio="none"
       >
-        <path
-          fill="currentColor"
-          d="M0,224L60,202.7C120,181,240,139,360,138.7C480,139,600,181,720,197.3C840,213,960,203,1080,176C1200,149,1320,107,1380,85.3L1440,64L1440,320L0,320Z"
-        />
-      </svg>
+        <source src={HERO_VIDEO} type="video/mp4" />
+      </video>
 
-      {/* Grain léger pour effet sportif */}
+      {/* Fallback : dégradé sombre sportif en cas d'absence de vidéo */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 -z-10 opacity-[0.04]"
+        className="absolute inset-0 -z-20 bg-gradient-to-br from-mountain-900 via-mountain-950 to-black"
+      />
+
+      {/* Calque glassmorphism : assombrissement + flou pour lisibilité */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-10 bg-mountain-950/55 backdrop-blur-[3px]"
+      />
+
+      {/* Vignettes haut/bas pour focus central */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-mountain-950/60 via-transparent to-mountain-950/80"
+      />
+
+      {/* Trame technique fine */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10 opacity-[0.06]"
         style={{
           backgroundImage:
-            'radial-gradient(circle at 25% 25%, #1f3144 1px, transparent 1px), radial-gradient(circle at 75% 75%, #1f3144 1px, transparent 1px)',
-          backgroundSize: '36px 36px, 36px 36px',
+            'linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px)',
+          backgroundSize: '64px 64px',
         }}
       />
 
-      <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-14 px-6 lg:grid-cols-12">
+      <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-14 px-6 lg:grid-cols-12">
         {/* Bloc texte */}
-        <div className="lg:col-span-7 animate-fade-up">
-          <div className="inline-flex items-center gap-2 rounded-full border border-mountain-200 bg-white/70 px-3 py-1 text-xs font-medium uppercase tracking-widest text-mountain-600 backdrop-blur">
-            <span className="inline-block h-1.5 w-1.5 rounded-full bg-mountain-500" />
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: 'easeOut' }}
+          className="lg:col-span-8"
+        >
+          <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.25em] text-white backdrop-blur-md">
+            <span className="inline-block h-1.5 w-1.5 rounded-full bg-mountain-300" />
             Media Kit · Saison 2026
           </div>
 
-          <h1 className="mt-6 font-extrabold tracking-tight text-mountain-950 text-5xl sm:text-6xl lg:text-7xl">
+          <h1 className="mt-6 font-display text-6xl font-bold uppercase leading-[0.9] tracking-tight text-white sm:text-7xl lg:text-8xl">
             Mathilde
             <br />
-            <span className="bg-gradient-to-r from-mountain-700 via-mountain-500 to-mountain-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-white via-mountain-200 to-mountain-400 bg-clip-text text-transparent">
               Baudelocq
             </span>
           </h1>
 
-          <p className="mt-6 max-w-xl text-lg sm:text-xl font-light text-mountain-700">
+          <p className="mt-6 max-w-xl text-lg sm:text-xl font-light text-mountain-100">
             Athlète Trail Running
-            <span className="mx-3 inline-block h-1 w-1 rounded-full bg-mountain-400 align-middle" />
-            <span className="font-medium text-mountain-900">
-              Trajectoire Élite
-            </span>
+            <span className="mx-3 inline-block h-1 w-1 rounded-full bg-mountain-300 align-middle" />
+            <span className="font-semibold text-white">Trajectoire Élite</span>
           </p>
 
-          <div className="mt-10 flex flex-wrap items-center gap-4">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: 'easeOut', delay: 0.25 }}
+            className="mt-10 flex flex-wrap items-center gap-4"
+          >
             <a
               href="#partenariat"
-              className="group inline-flex items-center gap-3 rounded-full bg-mountain-700 px-7 py-4 text-sm font-semibold uppercase tracking-widest text-white shadow-lg shadow-mountain-700/20 hover:bg-mountain-800 hover:shadow-xl hover:shadow-mountain-700/30 transition-all"
+              className="group inline-flex items-center gap-3 rounded-full bg-white px-7 py-4 text-sm font-bold uppercase tracking-[0.2em] text-mountain-950 shadow-lg shadow-black/20 transition-all hover:bg-mountain-100"
             >
               Découvrir le projet de partenariat
               <svg
@@ -63,7 +94,7 @@ export default function Hero() {
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                strokeWidth="2"
+                strokeWidth="2.5"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               >
@@ -74,81 +105,87 @@ export default function Hero() {
 
             <a
               href="#kpi"
-              className="inline-flex items-center gap-2 text-sm font-medium text-mountain-700 hover:text-mountain-900 transition-colors"
+              className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/5 px-5 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-white backdrop-blur-md transition-colors hover:bg-white/10"
             >
               Voir les performances
               <span aria-hidden="true">→</span>
             </a>
-          </div>
+          </motion.div>
 
           {/* Tags signalétiques */}
-          <div className="mt-14 flex flex-wrap items-center gap-3">
-            <span className="inline-flex items-center gap-2 rounded-full border border-mountain-200 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-widest text-mountain-800">
-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-mountain-500" />
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, ease: 'easeOut', delay: 0.4 }}
+            className="mt-14 flex flex-wrap items-center gap-3"
+          >
+            <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-white backdrop-blur-md">
+              <span className="inline-block h-1.5 w-1.5 rounded-full bg-mountain-300" />
               26 — Montélimar
             </span>
-            <span className="inline-flex items-center gap-2 rounded-full bg-mountain-900 px-4 py-2 text-xs font-semibold uppercase tracking-widest text-white">
-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-white" />
+            <span className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2 text-xs font-bold uppercase tracking-[0.25em] text-mountain-950">
+              <span className="inline-block h-1.5 w-1.5 rounded-full bg-mountain-700" />
               Projet 2026 · Statut Élite
             </span>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
-        {/* Bloc visuel — placeholder stylisé */}
-        <div className="relative lg:col-span-5 animate-fade-up [animation-delay:200ms]">
-          <div className="relative mx-auto aspect-[4/5] w-full max-w-sm overflow-hidden rounded-3xl border border-mountain-200 bg-gradient-to-br from-mountain-100 via-mountain-50 to-white shadow-2xl shadow-mountain-900/10">
-            {/* Icône sportive centrée */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <svg
-                className="h-24 w-24 text-mountain-400"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                aria-hidden="true"
-              >
-                <path d="M3 20l4-6 4 4 5-9 5 11" />
-                <circle cx="14" cy="5" r="1.5" />
-              </svg>
+        {/* Carte info "live" type HUD */}
+        <motion.aside
+          initial={{ opacity: 0, x: 32 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.9, ease: 'easeOut', delay: 0.3 }}
+          className="hidden lg:col-span-4 lg:block"
+        >
+          <div className="relative overflow-hidden rounded-2xl border border-white/15 bg-white/5 p-6 backdrop-blur-xl">
+            <div className="flex items-center justify-between">
+              <span className="text-[10px] font-semibold uppercase tracking-[0.25em] text-mountain-200">
+                Snapshot
+              </span>
+              <span className="inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-widest text-white">
+                <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
+                Live
+              </span>
             </div>
 
-            {/* Étiquette en bas */}
-            <div className="absolute inset-x-4 bottom-4 rounded-2xl bg-white/80 px-4 py-3 backdrop-blur-md ring-1 ring-mountain-100">
-              <p className="text-[10px] uppercase tracking-widest text-mountain-500">
-                Photo officielle
-              </p>
-              <p className="text-sm font-semibold text-mountain-900">
-                Trail · Saison 2025
-              </p>
-            </div>
-
-            {/* Coin décoratif */}
-            <div className="absolute right-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-mountain-700/90 px-3 py-1 text-[10px] font-semibold uppercase tracking-widest text-white">
-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-white" />
-              Live
-            </div>
+            <dl className="mt-6 space-y-5">
+              <div>
+                <dt className="text-[10px] font-bold uppercase tracking-[0.25em] text-mountain-300">
+                  Cote ITRA
+                </dt>
+                <dd className="mt-1 font-display text-4xl font-bold tracking-tighter text-white">
+                  565
+                </dd>
+              </div>
+              <div>
+                <dt className="text-[10px] font-bold uppercase tracking-[0.25em] text-mountain-300">
+                  UTMB Index
+                </dt>
+                <dd className="mt-1 font-display text-4xl font-bold tracking-tighter text-white">
+                  545
+                </dd>
+              </div>
+              <div className="border-t border-white/10 pt-4">
+                <dt className="text-[10px] font-bold uppercase tracking-[0.25em] text-mountain-300">
+                  Dernière référence
+                </dt>
+                <dd className="mt-1 text-sm font-semibold text-white">
+                  Top 4 % féminin · GR Ventoux
+                </dd>
+              </div>
+            </dl>
           </div>
-
-          {/* Mini badge flottant */}
-          <div className="absolute -left-4 bottom-10 hidden rounded-2xl border border-mountain-100 bg-white px-4 py-3 shadow-xl shadow-mountain-900/10 sm:block">
-            <p className="text-[10px] uppercase tracking-widest text-mountain-500">
-              Objectif
-            </p>
-            <p className="text-sm font-bold text-mountain-900">Statut Élite</p>
-          </div>
-        </div>
+        </motion.aside>
       </div>
 
-      {/* Indicateur de scroll */}
+      {/* Indicateur scroll */}
       <a
         href="#kpi"
         aria-label="Faire défiler vers les performances"
-        className="absolute left-1/2 bottom-6 hidden -translate-x-1/2 flex-col items-center gap-2 text-mountain-500 sm:flex"
+        className="absolute left-1/2 bottom-6 hidden -translate-x-1/2 flex-col items-center gap-2 text-mountain-200 sm:flex"
       >
-        <span className="text-[10px] uppercase tracking-widest">Défiler</span>
-        <span className="block h-8 w-px bg-mountain-300 animate-bounce-slow" />
+        <span className="text-[10px] uppercase tracking-[0.25em]">Défiler</span>
+        <span className="block h-8 w-px bg-mountain-300/60 animate-bounce-slow" />
       </a>
     </section>
   );
