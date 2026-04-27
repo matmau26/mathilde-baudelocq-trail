@@ -1,4 +1,4 @@
-import { Mountain, Target, MapPin } from 'lucide-react';
+import { Mountain, Target, MapPin, Zap, Flag } from 'lucide-react';
 
 const OBJECTIVES = [
   {
@@ -18,6 +18,18 @@ const OBJECTIVES = [
     note: 'Validation ultra · terrain de jeu domestique',
   },
 ];
+
+const SECONDARY_OBJECTIVE = {
+  code: 'B.01',
+  category: 'Objectif Visibilité & Vitesse',
+  title: 'La SainteSprint',
+  distance: '25 km',
+  location: 'Lyon · Rhône',
+  period: 'Novembre 2026',
+  badge: 'Événement de clôture de saison',
+  context:
+    '5ᵉ participation consécutive à l’événement — progression constante du classement féminin sur les formats courts à longs.',
+};
 
 export default function Calendar() {
   return (
@@ -104,6 +116,88 @@ export default function Calendar() {
             </li>
           ))}
         </ul>
+
+        {/* Objectif B — Visibilité & Vitesse */}
+        <article className="group relative mt-8 overflow-hidden border-2 border-mountain-950 bg-white transition-colors hover:bg-mountain-50">
+          <div className="grid grid-cols-1 lg:grid-cols-12">
+            {/* Colonne identité */}
+            <div className="border-b-2 border-mountain-950 p-6 sm:p-8 lg:col-span-4 lg:border-b-0 lg:border-r-2">
+              <div className="flex items-center justify-between">
+                <span className="inline-flex items-center gap-2 border border-mountain-950 bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-mountain-950">
+                  <Zap className="h-3 w-3" strokeWidth={2.5} />
+                  Objectif B
+                </span>
+                <span className="font-display text-sm font-bold uppercase tracking-widest text-mountain-400">
+                  {SECONDARY_OBJECTIVE.code}
+                </span>
+              </div>
+
+              <p className="mt-6 text-[10px] font-bold uppercase tracking-[0.25em] text-mountain-600">
+                {SECONDARY_OBJECTIVE.category}
+              </p>
+              <h3 className="mt-2 font-display text-3xl font-bold uppercase leading-[1] tracking-tight text-mountain-950 sm:text-4xl">
+                {SECONDARY_OBJECTIVE.title}
+              </h3>
+
+              <div className="mt-5 flex items-baseline gap-2">
+                <span className="font-display text-5xl font-bold leading-none tracking-tighter text-mountain-950 sm:text-6xl">
+                  {SECONDARY_OBJECTIVE.distance.split(' ')[0]}
+                </span>
+                <span className="font-display text-lg font-semibold uppercase tracking-widest text-mountain-500">
+                  {SECONDARY_OBJECTIVE.distance.split(' ')[1]}
+                </span>
+              </div>
+            </div>
+
+            {/* Colonne détails */}
+            <div className="flex flex-col justify-between p-6 sm:p-8 lg:col-span-8">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="inline-flex items-center gap-2 bg-mountain-950 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.25em] text-white">
+                  <Flag className="h-3 w-3" strokeWidth={2.5} />
+                  {SECONDARY_OBJECTIVE.badge}
+                </span>
+                <span className="inline-flex items-center gap-2 border border-mountain-300 bg-white px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.25em] text-mountain-700">
+                  Format court · Vitesse
+                </span>
+              </div>
+
+              <dl className="mt-6 grid grid-cols-2 gap-px overflow-hidden border border-mountain-200 bg-mountain-200 sm:grid-cols-3">
+                <div className="bg-white p-4">
+                  <dt className="text-[10px] font-bold uppercase tracking-[0.25em] text-mountain-500">
+                    Période
+                  </dt>
+                  <dd className="mt-1 font-display text-base font-bold uppercase tracking-wide text-mountain-950">
+                    {SECONDARY_OBJECTIVE.period}
+                  </dd>
+                </div>
+                <div className="bg-white p-4">
+                  <dt className="text-[10px] font-bold uppercase tracking-[0.25em] text-mountain-500">
+                    Lieu
+                  </dt>
+                  <dd className="mt-1 font-display text-base font-bold uppercase tracking-wide text-mountain-950">
+                    {SECONDARY_OBJECTIVE.location}
+                  </dd>
+                </div>
+                <div className="bg-white p-4 sm:col-span-1 col-span-2">
+                  <dt className="text-[10px] font-bold uppercase tracking-[0.25em] text-mountain-500">
+                    Récurrence
+                  </dt>
+                  <dd className="mt-1 font-display text-base font-bold uppercase tracking-wide text-mountain-950">
+                    5ᵉ participation
+                  </dd>
+                </div>
+              </dl>
+
+              {/* Note de contexte */}
+              <p className="mt-6 border-l-2 border-mountain-700 pl-4 text-xs leading-relaxed text-mountain-600">
+                {SECONDARY_OBJECTIVE.context}
+              </p>
+            </div>
+          </div>
+
+          {/* Barre d’accent en bas */}
+          <span className="absolute inset-x-0 bottom-0 h-1 origin-left scale-x-0 bg-mountain-700 transition-transform duration-500 group-hover:scale-x-100" />
+        </article>
 
         {/* Camp de base */}
         <div className="mt-8 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border-2 border-mountain-950 bg-mountain-950 lg:grid-cols-12">
