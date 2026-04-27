@@ -48,7 +48,7 @@ const FACTS = [
   },
   {
     label: 'Niveau',
-    value: 'Progression au niveau national',
+    value: 'De local à Top féminine',
     icon: (
       <>
         <polyline points="3 17 9 11 13 15 21 7" />
@@ -112,7 +112,8 @@ export default function Profile() {
               </p>
               <div className="mt-4 h-px w-full bg-mountain-200" />
               <p className="mt-4 text-sm text-mountain-700">
-                Préparation orientée long & ultra · Régularité · Performance
+                Préparation orientée performances moyennes distances
+                Régularité · Performance
                 durable.
               </p>
             </div>
