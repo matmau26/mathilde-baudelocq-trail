@@ -7,7 +7,7 @@ const RECIPIENT = 'mathilde.baudelocq@gmail.com'; // TODO: remplacer par l'email
 const CONTACT_VIDEO = ''; // TODO: brancher l'URL Cloudinary du portrait vidéo (format 9:16)
 
 const SUBJECTS = [
-  'Sponsoring / Représentation'
+  'Sponsoring / Représentation',
   'Intégration team',
   'Demande presse',
   'Autre',
