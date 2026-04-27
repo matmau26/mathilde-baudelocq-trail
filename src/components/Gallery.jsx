@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Play, Loader2 } from 'lucide-react';
 
@@ -51,107 +51,121 @@ function withCldTransform(src, transforms) {
   return src.replace(/\/upload\/(?:[^/]+\/)*(v\d+\/)/, `/upload/${transforms}/$1`);
 }
 
-// Poster JPEG redimensionné à 720px (léger, partagé pour mobile + desktop)
+// Poster JPEG très léger : 540 px → ~20-60 Ko / image
 function videoPoster(src) {
   return withCldTransform(
     src.replace(/\.(mp4|mov|webm)(\?.*)?$/, '.jpg$2'),
-    'w_720,q_auto:good,f_jpg'
+    'w_540,q_auto:good,f_jpg'
   );
 }
 
-// Vidéo en streaming optimisé : 960px max, qualité "eco" → gain massif sur le poids
+// Vidéo en streaming optimisé : 720 px max + H.264 baseline + faststart →
+// le moov est en début de fichier, premiers frames lus dès les premiers Ko.
 function videoStream(src) {
-  return withCldTransform(src, 'w_960,q_auto:eco,f_auto');
+  return withCldTransform(src, 'w_720,q_auto:eco,vc_h264,f_mp4');
+}
+
+// Détecte les réseaux lents / data-saver pour ne pas saturer la 3G mobile
+function shouldPreload() {
+  if (typeof navigator === 'undefined') return true;
+  const c = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  if (!c) return true;
+  if (c.saveData) return false;
+  if (c.effectiveType === 'slow-2g' || c.effectiveType === '2g') return false;
+  return true;
 }
 
 function MediaVideo({ src }) {
   const [playing, setPlaying] = useState(false);
   const [loaded, setLoaded] = useState(false);
-  const [hovering, setHovering] = useState(false);
-  const prefetchRef = useRef(null);
+  const [mounted, setMounted] = useState(false); // <video> rendu (= byte fetch démarré)
+  const wrapperRef = useRef(null);
+  const videoRef = useRef(null);
 
   const poster = videoPoster(src);
   const streamUrl = videoStream(src);
 
-  // Au clic : on bascule en lecture
-  const handleClick = () => {
-    setPlaying(true);
-  };
+  // Mount le <video> dès que la tuile approche du viewport (200 px de marge)
+  // → le téléchargement est déjà lancé bien avant le clic.
+  useEffect(() => {
+    if (!wrapperRef.current || mounted) return;
+    if (!shouldPreload()) return; // garde-fou réseau lent
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setMounted(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: '200px 0px' }
+    );
+    io.observe(wrapperRef.current);
+    return () => io.disconnect();
+  }, [mounted]);
 
-  // Préchargement au hover : un <video> caché commence à bufferiser
-  const handleMouseEnter = () => {
-    if (!hovering && !playing) {
-      setHovering(true);
+  const handleClick = () => {
+    if (!mounted) setMounted(true); // au cas où réseau lent : on force le mount au clic
+    setPlaying(true);
+    const v = videoRef.current;
+    if (v) {
+      v.muted = false;
+      v.play().catch(() => {});
     }
   };
 
-  if (playing) {
-    return (
-      <div className="relative">
+  return (
+    <div ref={wrapperRef} className="relative">
+      {mounted ? (
         <video
+          ref={videoRef}
           src={streamUrl}
           poster={poster}
-          autoPlay
-          controls
-          playsInline
-          preload="auto"
-          onCanPlay={() => setLoaded(true)}
-          onPlaying={() => setLoaded(true)}
-          className="block h-auto w-full"
-        />
-        {!loaded && (
-          <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-mountain-950/55 backdrop-blur-sm">
-            <Loader2 className="h-10 w-10 animate-spin text-white" strokeWidth={2.5} />
-          </div>
-        )}
-      </div>
-    );
-  }
-
-  return (
-    <button
-      type="button"
-      onClick={handleClick}
-      onMouseEnter={handleMouseEnter}
-      aria-label="Lire la vidéo"
-      className="relative block w-full bg-mountain-100"
-    >
-      <img
-        src={poster}
-        alt=""
-        loading="lazy"
-        decoding="async"
-        className="block h-auto w-full transition-transform duration-500 group-hover:scale-[1.03]"
-      />
-
-      {/* Préchargement silencieux quand la souris arrive sur la tuile */}
-      {hovering && (
-        <video
-          ref={prefetchRef}
-          src={streamUrl}
           preload="auto"
           muted
           playsInline
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 h-full w-full opacity-0"
+          controls={playing}
+          onCanPlay={() => setLoaded(true)}
+          onPlaying={() => setLoaded(true)}
+          className="block h-auto w-full transition-transform duration-500 group-hover:scale-[1.03]"
+        />
+      ) : (
+        <img
+          src={poster}
+          alt=""
+          loading="lazy"
+          decoding="async"
+          className="block h-auto w-full transition-transform duration-500 group-hover:scale-[1.03]"
         />
       )}
 
-      {/* Voile foncé léger */}
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 bg-mountain-950/15 transition-opacity duration-300 group-hover:bg-mountain-950/25"
-      />
-      {/* Bouton play central */}
-      <span className="pointer-events-none absolute inset-0 flex items-center justify-center">
-        <span className="flex h-14 w-14 items-center justify-center rounded-full bg-flame-500 text-white shadow-xl shadow-mountain-900/30 transition-transform duration-300 group-hover:scale-110 sm:h-16 sm:w-16">
-          <Play
-            className="h-6 w-6 translate-x-0.5 fill-white sm:h-7 sm:w-7"
-            strokeWidth={0}
+      {/* Bouton play tant que la lecture n'a pas démarré */}
+      {!playing && (
+        <button
+          type="button"
+          onClick={handleClick}
+          aria-label="Lire la vidéo"
+          className="absolute inset-0 flex items-center justify-center"
+        >
+          <span
+            aria-hidden="true"
+            className="absolute inset-0 bg-mountain-950/15 transition-opacity duration-300 hover:bg-mountain-950/25"
           />
-        </span>
-      </span>
-    </button>
+          <span className="relative flex h-14 w-14 items-center justify-center rounded-full bg-flame-500 text-white shadow-xl shadow-mountain-900/30 transition-transform duration-300 hover:scale-110 sm:h-16 sm:w-16">
+            <Play
+              className="h-6 w-6 translate-x-0.5 fill-white sm:h-7 sm:w-7"
+              strokeWidth={0}
+            />
+          </span>
+        </button>
+      )}
+
+      {/* Spinner pendant le buffering post-clic */}
+      {playing && !loaded && (
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-mountain-950/55 backdrop-blur-sm">
+          <Loader2 className="h-10 w-10 animate-spin text-white" strokeWidth={2.5} />
+        </div>
+      )}
+    </div>
   );
 }
 
