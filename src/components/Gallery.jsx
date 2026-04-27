@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Play } from 'lucide-react';
 
@@ -46,44 +46,58 @@ function MediaPhoto({ src, alt }) {
   );
 }
 
+// Cloudinary génère un poster JPEG si on remplace l'extension de la vidéo par .jpg
+function videoPosterFromCloudinary(src) {
+  return src.replace(/\.(mp4|mov|webm)(\?.*)?$/, '.jpg$2');
+}
+
 function MediaVideo({ src }) {
-  const ref = useRef(null);
+  const [playing, setPlaying] = useState(false);
+  const poster = videoPosterFromCloudinary(src);
 
-  useEffect(() => {
-    const v = ref.current;
-    if (!v) return;
-    v.muted = true;
-    v.setAttribute('muted', '');
-
-    // Joue / met en pause selon la visibilité — préserve la batterie mobile
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            v.play().catch(() => {});
-          } else {
-            v.pause();
-          }
-        });
-      },
-      { threshold: 0.25 }
+  if (playing) {
+    return (
+      <video
+        src={src}
+        poster={poster}
+        autoPlay
+        controls
+        playsInline
+        preload="auto"
+        className="block h-auto w-full"
+      />
     );
-    io.observe(v);
-    return () => io.disconnect();
-  }, []);
+  }
 
   return (
-    <video
-      ref={ref}
-      src={src}
-      loop
-      muted
-      defaultMuted
-      playsInline
-      preload="metadata"
-      className="block h-auto w-full transition-transform duration-500 group-hover:scale-[1.03]"
-      aria-hidden="true"
-    />
+    <button
+      type="button"
+      onClick={() => setPlaying(true)}
+      aria-label="Lire la vidéo"
+      className="relative block w-full bg-mountain-100"
+    >
+      <img
+        src={poster}
+        alt=""
+        loading="lazy"
+        decoding="async"
+        className="block h-auto w-full transition-transform duration-500 group-hover:scale-[1.03]"
+      />
+      {/* Voile foncé léger */}
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 bg-mountain-950/15 transition-opacity duration-300 group-hover:bg-mountain-950/25"
+      />
+      {/* Bouton play central */}
+      <span className="pointer-events-none absolute inset-0 flex items-center justify-center">
+        <span className="flex h-14 w-14 items-center justify-center rounded-full bg-flame-500 text-white shadow-xl shadow-mountain-900/30 transition-transform duration-300 group-hover:scale-110 sm:h-16 sm:w-16">
+          <Play
+            className="h-6 w-6 translate-x-0.5 fill-white sm:h-7 sm:w-7"
+            strokeWidth={0}
+          />
+        </span>
+      </span>
+    </button>
   );
 }
 
@@ -144,24 +158,17 @@ export default function Gallery() {
               className="group relative mb-4 break-inside-avoid overflow-hidden rounded-xl border border-mountain-200 bg-mountain-100 shadow-sm transition-shadow duration-300 hover:shadow-2xl hover:shadow-mountain-900/10 lg:mb-5"
             >
               {item.type === 'photo' ? (
-                <MediaPhoto src={item.src} alt={item.alt || ''} />
+                <>
+                  <MediaPhoto src={item.src} alt={item.alt || ''} />
+                  {/* Voile au hover — uniquement sur les photos */}
+                  <span
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0 bg-gradient-to-t from-mountain-950/30 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                  />
+                </>
               ) : (
                 <MediaVideo src={item.src} />
               )}
-
-              {/* Badge "Vidéo" */}
-              {item.type === 'video' && (
-                <span className="pointer-events-none absolute right-2 top-2 inline-flex items-center gap-1 rounded-full bg-flame-500/95 px-2 py-0.5 text-[9px] font-bold uppercase tracking-[0.25em] text-white shadow backdrop-blur">
-                  <Play className="h-2.5 w-2.5 fill-white" strokeWidth={0} />
-                  Vidéo
-                </span>
-              )}
-
-              {/* Voile au hover */}
-              <span
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-0 bg-gradient-to-t from-mountain-950/30 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-              />
             </motion.figure>
           ))}
         </motion.div>
