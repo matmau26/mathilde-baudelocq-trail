@@ -1,6 +1,6 @@
 import Hero from '../components/Hero.jsx';
 import Athlete from '../components/Athlete.jsx';
-import Palmares from '../components/Palmares.jsx';
+import TopPerf from '../components/Palmares.jsx';
 import Gallery from '../components/Gallery.jsx';
 import RaceResults from '../components/RaceResults.jsx';
 import Calendar from '../components/Calendar.jsx';
@@ -11,7 +11,7 @@ export default function Home() {
     <main>
       <Hero />
       <Athlete />
-      <Palmares />
+      <TopPerf />
       <Gallery />
       <RaceResults />
       <Calendar />
