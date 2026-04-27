@@ -17,26 +17,6 @@ const FACTS = [
     ),
   },
   {
-    label: 'Discipline',
-    value: 'Trail Running moyenne distance',
-    icon: (
-      <>
-        <path d="M3 20l4-6 4 4 5-9 5 11" />
-        <circle cx="14" cy="5" r="1.5" />
-      </>
-    ),
-  },
-  {
-    label: 'Terrain',
-    value: 'Régional et National',
-    icon: (
-      <>
-        <path d="M3 18l5-7 4 5 4-9 5 11" />
-        <line x1="3" y1="22" x2="21" y2="22" />
-      </>
-    ),
-  },
-  {
     label: 'Expérience',
     value: '5 ans de pratique du trail',
     icon: (
