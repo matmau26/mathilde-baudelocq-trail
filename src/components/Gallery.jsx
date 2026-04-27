@@ -1,60 +1,91 @@
+import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Camera, Mountain, Activity, MapPin, Footprints } from 'lucide-react';
+import { Play } from 'lucide-react';
 
-const TILES = [
+const MEDIA = [
+  { type: 'photo', src: '/Ventoux2025.jpeg', alt: 'Mathilde Baudelocq · GR Ventoux 2025' },
   {
-    label: 'Sortie Dieulefit',
-    sub: 'Drôme · D+ 1 200 m',
-    icon: Mountain,
-    gradient: 'from-flame-600 via-flame-500 to-solar-400',
-    span: 'sm:col-span-2 sm:row-span-2',
+    type: 'video',
+    src: 'https://res.cloudinary.com/dnh2k1blz/video/upload/q_auto/f_auto/v1777295334/820A29E3-30E7-4E58-8105-2AA9BF614759_fapha9.mp4',
   },
+  { type: 'photo', src: '/Maxi2025-1.jpg', alt: 'MaXi-Race 2025 · 100 km' },
+  { type: 'photo', src: '/Ventoux1.jpeg', alt: 'Trail · Massif du Ventoux' },
   {
-    label: 'GR Ventoux 2025',
-    sub: 'Highlight · 28 km',
-    icon: Activity,
-    gradient: 'from-mountain-900 via-mountain-700 to-electric-500',
-    span: 'sm:col-span-2 sm:row-span-1',
+    type: 'video',
+    src: 'https://res.cloudinary.com/dnh2k1blz/video/upload/q_auto/f_auto/v1777295387/Edits_Mathilde_Espeluche_20260427_145433_cccnyk.mp4',
   },
+  { type: 'photo', src: '/TrailBourget.jpeg', alt: 'Trail du Bourget' },
+  { type: 'photo', src: '/UT4M.jpeg', alt: 'Ultra Tour des 4 Massifs' },
   {
-    label: 'Préparation D+',
-    sub: 'Massif · piste',
-    icon: Footprints,
-    gradient: 'from-cream-100 via-white to-flame-50 text-mountain-900',
-    span: 'sm:col-span-1 sm:row-span-1',
-    inverse: true,
+    type: 'video',
+    src: 'https://res.cloudinary.com/dnh2k1blz/video/upload/q_auto/f_auto/v1777295344/1A98EE77-7DF1-412F-858D-7F0C39814491_zinypp.mp4',
   },
+  { type: 'photo', src: '/Ventoux2025-2.jpeg', alt: 'GR Ventoux · 2ᵉ moment' },
+  { type: 'photo', src: '/VentouxOrigine2025.jpeg', alt: 'Trail Ventoux · LE 46 Origine' },
   {
-    label: 'Reco Vercors',
-    sub: '84 km · 2026',
-    icon: MapPin,
-    gradient: 'from-electric-700 via-electric-500 to-mountain-400',
-    span: 'sm:col-span-1 sm:row-span-1',
+    type: 'video',
+    src: 'https://res.cloudinary.com/dnh2k1blz/video/upload/q_auto/f_auto/v1777295309/4610396B-0A29-45AF-96C4-0D9E53FB185B_srmuvl.mp4',
   },
-  {
-    label: 'Shooting CIMALP',
-    sub: 'Saint-Marcel-lès-Valence',
-    icon: Camera,
-    gradient: 'from-mountain-950 via-mountain-900 to-flame-700',
-    span: 'sm:col-span-4 sm:row-span-1',
-  },
+  { type: 'photo', src: '/VentouxOrigine2025-2.jpeg', alt: 'Trail Ventoux · LE 46 Origine' },
 ];
 
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.12, delayChildren: 0.05 },
-  },
+const itemVariants = {
+  hidden: { opacity: 0, y: 16 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
 };
 
-const tileVariants = {
-  hidden: { opacity: 0, y: 24 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
-  },
-};
+function MediaPhoto({ src, alt }) {
+  return (
+    <img
+      src={src}
+      alt={alt}
+      loading="lazy"
+      decoding="async"
+      className="block h-auto w-full transition-transform duration-500 group-hover:scale-[1.03]"
+    />
+  );
+}
+
+function MediaVideo({ src }) {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const v = ref.current;
+    if (!v) return;
+    v.muted = true;
+    v.setAttribute('muted', '');
+
+    // Joue / met en pause selon la visibilité — préserve la batterie mobile
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            v.play().catch(() => {});
+          } else {
+            v.pause();
+          }
+        });
+      },
+      { threshold: 0.25 }
+    );
+    io.observe(v);
+    return () => io.disconnect();
+  }, []);
+
+  return (
+    <video
+      ref={ref}
+      src={src}
+      loop
+      muted
+      defaultMuted
+      playsInline
+      preload="metadata"
+      className="block h-auto w-full transition-transform duration-500 group-hover:scale-[1.03]"
+      aria-hidden="true"
+    />
+  );
+}
 
 export default function Gallery() {
   return (
@@ -78,99 +109,66 @@ export default function Gallery() {
             </h2>
           </div>
           <p className="max-w-md text-sm leading-relaxed text-mountain-700">
-            Galerie sélective — sorties d’entraînement, courses majeures et
-            sessions presse. Visuels libres de droits sur demande.
+            Bibliothèque vivante — photos et vidéos de course, sorties et
+            entraînements. Visuels haute définition libres de droits sur
+            demande.
           </p>
         </div>
 
-        {/* Bento grid */}
+        {/* Compteurs */}
+        <div className="mt-8 flex flex-wrap items-center gap-2 text-[10px] font-bold uppercase tracking-[0.25em]">
+          <span className="rounded-full border border-mountain-200 bg-white/80 px-3 py-1 text-mountain-700">
+            {MEDIA.filter((m) => m.type === 'photo').length} Photos
+          </span>
+          <span className="inline-flex items-center gap-1 rounded-full bg-flame-500 px-3 py-1 text-white">
+            <Play className="h-3 w-3 fill-white" strokeWidth={0} />
+            {MEDIA.filter((m) => m.type === 'video').length} Vidéos
+          </span>
+          <span className="rounded-full border border-mountain-200 bg-white/80 px-3 py-1 text-mountain-700">
+            HD · Sur demande
+          </span>
+        </div>
+
+        {/* Masonry — CSS columns, naturel et performant */}
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, margin: '-80px' }}
-          variants={containerVariants}
-          className="mt-12 grid grid-cols-2 gap-4 sm:grid-cols-4 sm:auto-rows-[180px] lg:auto-rows-[220px]"
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ staggerChildren: 0.06 }}
+          className="mt-10 columns-2 gap-4 [column-fill:_balance] sm:columns-3 lg:columns-4 lg:gap-5"
         >
-          {TILES.map((tile) => {
-            const Icon = tile.icon;
-            return (
-              <motion.figure
-                key={tile.label}
-                variants={tileVariants}
-                className={`group relative overflow-hidden rounded-xl border border-mountain-100 bg-gradient-to-br ${tile.gradient} ${tile.span} transition-transform duration-300 hover:scale-[1.03]`}
-              >
-                {/* Image placeholder : si une vraie image est fournie, on la met ici */}
-                <div className="absolute inset-0 transition-transform duration-500 group-hover:scale-110">
-                  {/* Trame technique */}
-                  <div
-                    aria-hidden="true"
-                    className={`absolute inset-0 ${
-                      tile.inverse ? 'opacity-[0.05]' : 'opacity-[0.12]'
-                    }`}
-                    style={{
-                      backgroundImage:
-                        'linear-gradient(to right, currentColor 1px, transparent 1px), linear-gradient(to bottom, currentColor 1px, transparent 1px)',
-                      backgroundSize: '32px 32px',
-                    }}
-                  />
-                  {/* Icône centrée */}
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <Icon
-                      className={`h-16 w-16 ${
-                        tile.inverse ? 'text-mountain-400' : 'text-white/30'
-                      }`}
-                      strokeWidth={1.2}
-                    />
-                  </div>
-                </div>
+          {MEDIA.map((item, idx) => (
+            <motion.figure
+              key={`${item.src}-${idx}`}
+              variants={itemVariants}
+              className="group relative mb-4 break-inside-avoid overflow-hidden rounded-xl border border-mountain-200 bg-mountain-100 shadow-sm transition-shadow duration-300 hover:shadow-2xl hover:shadow-mountain-900/10 lg:mb-5"
+            >
+              {item.type === 'photo' ? (
+                <MediaPhoto src={item.src} alt={item.alt || ''} />
+              ) : (
+                <MediaVideo src={item.src} />
+              )}
 
-                {/* Voile bas pour lisibilité du label */}
-                <div
-                  aria-hidden="true"
-                  className={`absolute inset-x-0 bottom-0 h-1/2 ${
-                    tile.inverse
-                      ? 'bg-gradient-to-t from-white via-white/70 to-transparent'
-                      : 'bg-gradient-to-t from-black/70 via-black/30 to-transparent'
-                  }`}
-                />
+              {/* Badge "Vidéo" */}
+              {item.type === 'video' && (
+                <span className="pointer-events-none absolute right-2 top-2 inline-flex items-center gap-1 rounded-full bg-flame-500/95 px-2 py-0.5 text-[9px] font-bold uppercase tracking-[0.25em] text-white shadow backdrop-blur">
+                  <Play className="h-2.5 w-2.5 fill-white" strokeWidth={0} />
+                  Vidéo
+                </span>
+              )}
 
-                {/* Contenu */}
-                <figcaption
-                  className={`absolute inset-x-0 bottom-0 flex items-end justify-between p-5 ${
-                    tile.inverse ? 'text-mountain-950' : 'text-white'
-                  }`}
-                >
-                  <div>
-                    <p className="font-display text-base font-bold uppercase tracking-wide sm:text-lg">
-                      {tile.label}
-                    </p>
-                    <p
-                      className={`mt-0.5 text-[10px] font-semibold uppercase tracking-[0.2em] ${
-                        tile.inverse ? 'text-mountain-600' : 'text-white/80'
-                      }`}
-                    >
-                      {tile.sub}
-                    </p>
-                  </div>
-                  <span
-                    className={`shrink-0 rounded-full border px-2 py-0.5 text-[9px] font-bold uppercase tracking-[0.2em] ${
-                      tile.inverse
-                        ? 'border-mountain-300 text-mountain-700'
-                        : 'border-white/30 text-white/90'
-                    }`}
-                  >
-                    Photo
-                  </span>
-                </figcaption>
-              </motion.figure>
-            );
-          })}
+              {/* Voile au hover */}
+              <span
+                aria-hidden="true"
+                className="pointer-events-none absolute inset-0 bg-gradient-to-t from-mountain-950/30 via-transparent to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+              />
+            </motion.figure>
+          ))}
         </motion.div>
 
-        {/* Note */}
-        <p className="mt-6 text-[10px] uppercase tracking-widest text-mountain-500">
-          Visuels haute définition · Crédits photographes mentionnés sur
-          demande.
+        <p className="mt-8 text-[10px] uppercase tracking-widest text-mountain-500">
+          Crédits photographes mentionnés sur demande · Vidéos hébergées via
+          Cloudinary
         </p>
       </div>
     </section>
