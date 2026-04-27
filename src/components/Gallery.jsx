@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Play } from 'lucide-react';
+import { Play, Loader2 } from 'lucide-react';
 
 const MEDIA = [
   { type: 'photo', src: '/Ventoux2025.jpeg', alt: 'Mathilde Baudelocq · GR Ventoux 2025' },
@@ -46,33 +46,73 @@ function MediaPhoto({ src, alt }) {
   );
 }
 
-// Cloudinary génère un poster JPEG si on remplace l'extension de la vidéo par .jpg
-function videoPosterFromCloudinary(src) {
-  return src.replace(/\.(mp4|mov|webm)(\?.*)?$/, '.jpg$2');
+// Insère une chaîne de transformations Cloudinary entre /upload/ et /v…/
+function withCldTransform(src, transforms) {
+  return src.replace(/\/upload\/(?:[^/]+\/)*(v\d+\/)/, `/upload/${transforms}/$1`);
+}
+
+// Poster JPEG redimensionné à 720px (léger, partagé pour mobile + desktop)
+function videoPoster(src) {
+  return withCldTransform(
+    src.replace(/\.(mp4|mov|webm)(\?.*)?$/, '.jpg$2'),
+    'w_720,q_auto:good,f_jpg'
+  );
+}
+
+// Vidéo en streaming optimisé : 960px max, qualité "eco" → gain massif sur le poids
+function videoStream(src) {
+  return withCldTransform(src, 'w_960,q_auto:eco,f_auto');
 }
 
 function MediaVideo({ src }) {
   const [playing, setPlaying] = useState(false);
-  const poster = videoPosterFromCloudinary(src);
+  const [loaded, setLoaded] = useState(false);
+  const [hovering, setHovering] = useState(false);
+  const prefetchRef = useRef(null);
+
+  const poster = videoPoster(src);
+  const streamUrl = videoStream(src);
+
+  // Au clic : on bascule en lecture
+  const handleClick = () => {
+    setPlaying(true);
+  };
+
+  // Préchargement au hover : un <video> caché commence à bufferiser
+  const handleMouseEnter = () => {
+    if (!hovering && !playing) {
+      setHovering(true);
+    }
+  };
 
   if (playing) {
     return (
-      <video
-        src={src}
-        poster={poster}
-        autoPlay
-        controls
-        playsInline
-        preload="auto"
-        className="block h-auto w-full"
-      />
+      <div className="relative">
+        <video
+          src={streamUrl}
+          poster={poster}
+          autoPlay
+          controls
+          playsInline
+          preload="auto"
+          onCanPlay={() => setLoaded(true)}
+          onPlaying={() => setLoaded(true)}
+          className="block h-auto w-full"
+        />
+        {!loaded && (
+          <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-mountain-950/55 backdrop-blur-sm">
+            <Loader2 className="h-10 w-10 animate-spin text-white" strokeWidth={2.5} />
+          </div>
+        )}
+      </div>
     );
   }
 
   return (
     <button
       type="button"
-      onClick={() => setPlaying(true)}
+      onClick={handleClick}
+      onMouseEnter={handleMouseEnter}
       aria-label="Lire la vidéo"
       className="relative block w-full bg-mountain-100"
     >
@@ -83,6 +123,20 @@ function MediaVideo({ src }) {
         decoding="async"
         className="block h-auto w-full transition-transform duration-500 group-hover:scale-[1.03]"
       />
+
+      {/* Préchargement silencieux quand la souris arrive sur la tuile */}
+      {hovering && (
+        <video
+          ref={prefetchRef}
+          src={streamUrl}
+          preload="auto"
+          muted
+          playsInline
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 h-full w-full opacity-0"
+        />
+      )}
+
       {/* Voile foncé léger */}
       <span
         aria-hidden="true"
