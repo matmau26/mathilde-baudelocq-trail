@@ -89,33 +89,67 @@ export default function Partnership() {
       className="relative scroll-mt-20 overflow-hidden bg-mesh-cool py-28 sm:py-36"
     >
       <div className="relative mx-auto max-w-6xl px-6">
-        {/* En-tête */}
+        {/* En-tête : texte à gauche, photo à droite */}
         <div className="border-t-2 border-mountain-950 pt-10">
-          <p className="text-xs font-bold uppercase tracking-[0.25em] text-flame-600">
-            06 — Partenariat
-          </p>
-          <h2 className="mt-3 font-display text-5xl font-bold uppercase leading-[0.92] tracking-tight text-mountain-950 sm:text-6xl lg:text-7xl">
-            Vision de
-            <br />
-            <span className="bg-gradient-to-r from-flame-600 via-flame-500 to-electric-500 bg-clip-text text-transparent">
-              collaboration.
-            </span>
-          </h2>
-          <p className="mt-6 max-w-3xl text-base leading-relaxed text-mountain-700 sm:text-lg">
-            Une collaboration articulée autour de la{' '}
-            <span className="font-semibold text-mountain-950">
-              performance mutuelle
-            </span>
-            , de l’
-            <span className="font-semibold text-mountain-950">
-              ancrage territorial
-            </span>{' '}
-            et de l’
-            <span className="font-semibold text-mountain-950">
-              intégration au projet de marque
-            </span>
-            .
-          </p>
+          <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
+            <div className="lg:col-span-7">
+              <p className="text-xs font-bold uppercase tracking-[0.25em] text-flame-600">
+                06 — Partenariat
+              </p>
+              <h2 className="mt-3 font-display text-5xl font-bold uppercase leading-[0.92] tracking-tight text-mountain-950 sm:text-6xl lg:text-7xl">
+                Vision de
+                <br />
+                <span className="bg-gradient-to-r from-flame-600 via-flame-500 to-electric-500 bg-clip-text text-transparent">
+                  collaboration.
+                </span>
+              </h2>
+              <p className="mt-6 max-w-xl text-base leading-relaxed text-mountain-700 sm:text-lg">
+                Une collaboration articulée autour de la{' '}
+                <span className="font-semibold text-mountain-950">
+                  performance mutuelle
+                </span>
+                , de l’
+                <span className="font-semibold text-mountain-950">
+                  ancrage territorial
+                </span>{' '}
+                et de l’
+                <span className="font-semibold text-mountain-950">
+                  intégration au projet de marque
+                </span>
+                .
+              </p>
+            </div>
+
+            {/* Photo Ventoux 2025 — contenue */}
+            <div className="lg:col-span-5">
+              <figure className="mx-auto w-full max-w-[20rem] overflow-hidden rounded-2xl border-2 border-mountain-950 bg-mountain-950 shadow-xl shadow-mountain-900/10 sm:max-w-sm lg:ml-auto lg:mr-0 lg:max-w-[18rem]">
+                <div className="relative aspect-[5/7] w-full">
+                  <img
+                    src="/Ventoux2025-crop.jpg"
+                    alt="Mathilde Baudelocq en course au Grand Raid du Ventoux"
+                    className="absolute inset-0 h-full w-full object-cover"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <div
+                    aria-hidden="true"
+                    className="absolute inset-0 bg-gradient-to-t from-mountain-950/70 via-mountain-950/0 to-mountain-950/30"
+                  />
+                  <span className="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-flame-500 px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.25em] text-white">
+                    GR Ventoux
+                  </span>
+                  <figcaption className="absolute inset-x-0 bottom-0 p-4">
+                    <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-flame-300">
+                      En course · 2025
+                    </p>
+                    <p className="mt-1 font-display text-base font-bold uppercase tracking-wide text-white">
+                      Trail technique
+                    </p>
+                  </figcaption>
+                </div>
+              </figure>
+            </div>
+          </div>
         </div>
 
         {/* Grille des 3 piliers — version premium */}
