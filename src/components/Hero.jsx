@@ -154,7 +154,7 @@ export default function Hero() {
                     UTMB
                   </p>
                   <p className="mt-0.5 font-display text-xl font-bold text-white">
-                    545
+                    568
                   </p>
                 </div>
                 <div className="rounded-xl border border-flame-400/50 bg-flame-500/20 p-2.5 backdrop-blur-md">
