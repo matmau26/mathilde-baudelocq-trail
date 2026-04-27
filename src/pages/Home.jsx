@@ -1,6 +1,5 @@
 import Hero from '../components/Hero.jsx';
-import Profile from '../components/Profile.jsx';
-import Performances from '../components/Performances.jsx';
+import Athlete from '../components/Athlete.jsx';
 import Palmares from '../components/Palmares.jsx';
 import Gallery from '../components/Gallery.jsx';
 import RaceResults from '../components/RaceResults.jsx';
@@ -11,11 +10,10 @@ export default function Home() {
   return (
     <main>
       <Hero />
-      <Performances />
+      <Athlete />
       <Palmares />
       <Gallery />
       <RaceResults />
-      <Profile />
       <Calendar />
       <Partnership />
     </main>

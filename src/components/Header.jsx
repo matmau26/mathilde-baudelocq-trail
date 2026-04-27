@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const NAV_LINKS = [
-  { href: '#kpi', label: 'Performances' },
+  { href: '#athlete', label: 'Athlète' },
   { href: '#palmares', label: 'Palmarès' },
   { href: '#medias', label: 'Médias' },
   { href: '#resultats', label: 'Résultats' },

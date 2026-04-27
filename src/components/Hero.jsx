@@ -77,7 +77,7 @@ export default function Hero() {
             </a>
 
             <a
-              href="#kpi"
+              href="#athlete"
               className="inline-flex items-center gap-2 rounded-full border-2 border-mountain-950 bg-transparent px-5 py-3 text-sm font-bold uppercase tracking-[0.2em] text-mountain-950 transition-colors hover:bg-mountain-950 hover:text-white"
             >
               Voir les performances
@@ -174,7 +174,7 @@ export default function Hero() {
 
       {/* Indicateur scroll */}
       <a
-        href="#kpi"
+        href="#athlete"
         aria-label="Faire défiler vers les performances"
         className="absolute left-1/2 bottom-6 hidden -translate-x-1/2 flex-col items-center gap-2 text-mountain-700 sm:flex"
       >
