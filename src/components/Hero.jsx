@@ -121,42 +121,32 @@ export default function Hero() {
           transition={{ duration: 0.9, ease: 'easeOut', delay: 0.2 }}
           className="relative mx-auto w-full max-w-[22rem] lg:col-span-5 lg:max-w-sm"
         >
-          {/* Cadre décoratif décalé */}
-          <div
-            aria-hidden="true"
-            className="absolute -left-3 -top-3 h-full w-full rounded-3xl border-2 border-flame-500"
-          />
+          {/* Cadre orange contenant la photo */}
+          <div className="rounded-3xl border-2 border-flame-500 p-2 shadow-2xl shadow-mountain-900/20">
+            <div className="relative aspect-[2/3] w-full overflow-hidden rounded-2xl bg-mountain-950">
+              {/* Fallback dégradé pendant le chargement */}
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 bg-gradient-to-br from-mountain-700 via-mountain-900 to-flame-900"
+              />
 
-          <div className="relative aspect-[2/3] w-full overflow-hidden rounded-3xl border-2 border-mountain-950 bg-mountain-950 shadow-2xl shadow-mountain-900/20">
-            {/* Fallback dégradé pendant le chargement */}
-            <div
-              aria-hidden="true"
-              className="absolute inset-0 bg-gradient-to-br from-mountain-700 via-mountain-900 to-flame-900"
-            />
+              {/* Photo */}
+              <img
+                src={HERO_IMAGE}
+                alt="Mathilde Baudelocq, athlète trail running, en course"
+                className="absolute inset-0 h-full w-full object-cover"
+                loading="eager"
+                decoding="async"
+              />
 
-            {/* Photo */}
-            <img
-              src={HERO_IMAGE}
-              alt="Mathilde Baudelocq, athlète trail running, en course"
-              className="absolute inset-0 h-full w-full object-cover"
-              loading="eager"
-              decoding="async"
-            />
+              {/* Calque glassmorphism / vignette */}
+              <div
+                aria-hidden="true"
+                className="absolute inset-0 bg-gradient-to-t from-mountain-950/70 via-mountain-950/10 to-transparent"
+              />
 
-            {/* Calque glassmorphism / vignette */}
-            <div
-              aria-hidden="true"
-              className="absolute inset-0 bg-gradient-to-t from-mountain-950/70 via-mountain-950/10 to-transparent"
-            />
-
-            {/* HUD top-right */}
-            <div className="absolute right-4 top-4 inline-flex items-center gap-2 rounded-full bg-white/90 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-mountain-950 backdrop-blur">
-              <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-flame-500" />
-              Live
-            </div>
-
-            {/* Bandeau bas avec stats */}
-            <div className="absolute inset-x-0 bottom-0 flex flex-col gap-3 p-4">
+              {/* Bandeau bas avec stats */}
+              <div className="absolute inset-x-0 bottom-0 flex flex-col gap-3 p-4">
               <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-[0.25em] text-white/80">
                 <span>Snapshot</span>
                 <span>2025–26</span>
@@ -188,6 +178,7 @@ export default function Hero() {
                 </div>
               </div>
             </div>
+          </div>
           </div>
         </motion.div>
       </div>
