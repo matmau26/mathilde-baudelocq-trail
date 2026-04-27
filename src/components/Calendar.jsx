@@ -236,24 +236,24 @@ export default function Calendar() {
             </ul>
           </div>
 
-          {/* Bloc visuel */}
-          <div className="relative min-h-[220px] bg-white lg:col-span-5">
-            <svg
+          {/* Bloc visuel — vidéo Cloudinary */}
+          <div className="relative min-h-[220px] overflow-hidden bg-mountain-950 lg:col-span-5">
+            <video
+              src="https://res.cloudinary.com/dnh2k1blz/video/upload/q_auto/f_auto/v1777277532/copy_4DCA6D2A-9482-42D8-8367-37ADFF42D80C_socek9.mov"
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="absolute inset-0 h-full w-full object-cover"
               aria-hidden="true"
-              className="absolute inset-0 h-full w-full text-mountain-100"
-              viewBox="0 0 400 240"
-              preserveAspectRatio="none"
-            >
-              <path
-                fill="currentColor"
-                d="M0,180 L60,140 L110,170 L160,110 L220,160 L280,90 L340,150 L400,120 L400,240 L0,240 Z"
-              />
-              <path
-                fill="#365f81"
-                fillOpacity="0.4"
-                d="M0,210 L80,170 L140,200 L200,150 L260,190 L320,140 L400,180 L400,240 L0,240 Z"
-              />
-            </svg>
+            />
+
+            {/* Overlay pour lisibilité du badge */}
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 bg-gradient-to-t from-mountain-950/55 via-mountain-950/15 to-mountain-950/30"
+            />
+
             <div className="absolute right-4 top-4 inline-flex items-center gap-2 bg-mountain-950 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-white">
               <Mountain className="h-3 w-3" strokeWidth={2.5} />
               Drôme · 26
