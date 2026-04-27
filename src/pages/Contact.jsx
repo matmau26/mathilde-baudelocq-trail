@@ -3,14 +3,13 @@ import { motion } from 'framer-motion';
 import { Mail, ArrowLeft, Send, Mountain } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const RECIPIENT = 'mathilde.baudelocq@example.com'; // TODO: remplacer par l'email réel
+const RECIPIENT = 'mathilde.baudelocq@gmail.com'; // TODO: remplacer par l'email réel
 const CONTACT_VIDEO = ''; // TODO: brancher l'URL Cloudinary du portrait vidéo (format 9:16)
 
 const SUBJECTS = [
-  'Partenariat technique',
+  'Sponsoring / Représentation'
+  'Intégration team',
   'Demande presse',
-  'Sponsoring événementiel',
-  'Coaching / Intervention',
   'Autre',
 ];
 
