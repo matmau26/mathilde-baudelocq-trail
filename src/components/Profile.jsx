@@ -71,7 +71,7 @@ export default function Profile() {
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-5">
             <p className="text-xs font-semibold uppercase tracking-widest text-mountain-500">
-              03 — Profil
+              04 — Profil
             </p>
             <h2 className="mt-3 text-4xl font-bold tracking-tight text-mountain-950 sm:text-5xl">
               L'athlète,

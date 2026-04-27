@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 const NAV_LINKS = [
   { href: '#kpi', label: 'Performances' },
   { href: '#palmares', label: 'Palmarès' },
+  { href: '#resultats', label: 'Résultats' },
   { href: '#calendrier', label: 'Objectifs' },
   { href: '#partenariat', label: 'Partenariat' },
 ];

@@ -67,33 +67,33 @@ export default function Palmares() {
               du Ventoux
             </h3>
             <p className="mt-3 text-sm font-semibold uppercase tracking-widest text-mountain-600">
-              20 km · Massif du Ventoux · France
+              28 km · 1200 m+ · Massif du Ventoux
             </p>
 
             <p className="mt-6 max-w-lg text-base leading-relaxed text-mountain-800">
               <span className="font-display text-2xl font-semibold text-mountain-950">
-                Top 9
+                12ᵉ femme / 320
               </span>{' '}
-              au scratch féminin, au contact direct du peloton Élite. Une
-              référence solide pour valider le passage au niveau national.
+              — soit le Top 4 % féminin, au contact direct du peloton Élite.
+              Une référence solide pour valider le passage au niveau national.
             </p>
 
             {/* Mini-stats */}
             <dl className="mt-10 grid grid-cols-3 gap-px overflow-hidden rounded-xl border border-mountain-200 bg-mountain-200">
               <div className="bg-white p-4">
                 <dt className="text-[10px] font-semibold uppercase tracking-widest text-mountain-500">
-                  Classement
+                  Rang Femmes
                 </dt>
                 <dd className="mt-1 font-display text-2xl font-bold text-mountain-950">
-                  9ᵉ
+                  12 / 320
                 </dd>
               </div>
               <div className="bg-white p-4">
                 <dt className="text-[10px] font-semibold uppercase tracking-widest text-mountain-500">
-                  Distance
+                  Temps
                 </dt>
-                <dd className="mt-1 font-display text-2xl font-bold text-mountain-950">
-                  20 km
+                <dd className="mt-1 font-mono text-2xl font-bold text-mountain-950">
+                  02:53:08
                 </dd>
               </div>
               <div className="bg-white p-4">

@@ -2,12 +2,12 @@ const KPIS = [
   {
     eyebrow: 'Performance de référence',
     metric: 'TOP',
-    value: '9',
-    suffix: 'e',
-    context: '20K · Grand Raid du Ventoux',
-    tag: 'Au contact du peloton Élite',
+    value: '4',
+    suffix: '%',
+    context: '28 km · Grand Raid du Ventoux',
+    tag: '12ᵉ femme · 112ᵉ scratch',
     progress: 82,
-    progressLabel: 'Niveau Élite',
+    progressLabel: 'Niveau Élite féminin',
   },
   {
     eyebrow: 'Cote ITRA',

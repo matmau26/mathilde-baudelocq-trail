@@ -36,7 +36,7 @@ export default function Partnership() {
           <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.25em] text-mountain-500">
-                05 — Partenariat technique
+                06 — Partenariat technique
               </p>
               <h2 className="mt-3 font-display text-5xl font-bold uppercase leading-[0.95] tracking-tight text-mountain-950 sm:text-6xl">
                 Proposition
