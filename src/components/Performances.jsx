@@ -32,7 +32,7 @@ const KPIS = [
     value: '565',
     suffix: 'pts',
     context: 'International Trail Running Association',
-    logo: '/ITRA_logo.svg',
+    logo: '/itra-logo.png',
     logoAlt: 'Logo officiel ITRA',
     tag: 'Indice global de performance',
     accent: 'electric',
