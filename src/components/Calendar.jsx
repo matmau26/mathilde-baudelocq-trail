@@ -1,4 +1,45 @@
+import { useEffect, useRef } from 'react';
 import { Mountain, Target, MapPin, Zap, Flag } from 'lucide-react';
+
+const CAMP_VIDEO_MP4 =
+  'https://res.cloudinary.com/dnh2k1blz/video/upload/q_auto/f_auto/v1777277532/copy_4DCA6D2A-9482-42D8-8367-37ADFF42D80C_socek9.mp4';
+const CAMP_VIDEO_MOV =
+  'https://res.cloudinary.com/dnh2k1blz/video/upload/q_auto/f_auto/v1777277532/copy_4DCA6D2A-9482-42D8-8367-37ADFF42D80C_socek9.mov';
+
+function CampVideo() {
+  const videoRef = useRef(null);
+
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    // Force muted en JS : sans ça React applique parfois l'attribut trop tard,
+    // et iOS / Android refusent l'autoplay
+    v.muted = true;
+    v.setAttribute('muted', '');
+    const tryPlay = () => v.play().catch(() => {});
+    tryPlay();
+    // Replay au premier toucher si le navigateur a bloqué
+    document.addEventListener('touchstart', tryPlay, { once: true, passive: true });
+    return () => document.removeEventListener('touchstart', tryPlay);
+  }, []);
+
+  return (
+    <video
+      ref={videoRef}
+      autoPlay
+      loop
+      muted
+      defaultMuted
+      playsInline
+      preload="metadata"
+      className="absolute inset-0 h-full w-full object-cover"
+      aria-hidden="true"
+    >
+      <source src={CAMP_VIDEO_MP4} type="video/mp4" />
+      <source src={CAMP_VIDEO_MOV} type="video/quicktime" />
+    </video>
+  );
+}
 
 const OBJECTIVES = [
   {
@@ -237,16 +278,8 @@ export default function Calendar() {
           </div>
 
           {/* Bloc visuel — vidéo Cloudinary */}
-          <div className="relative min-h-[220px] overflow-hidden bg-mountain-950 lg:col-span-5">
-            <video
-              src="https://res.cloudinary.com/dnh2k1blz/video/upload/q_auto/f_auto/v1777277532/copy_4DCA6D2A-9482-42D8-8367-37ADFF42D80C_socek9.mov"
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="absolute inset-0 h-full w-full object-cover"
-              aria-hidden="true"
-            />
+          <div className="relative min-h-[260px] overflow-hidden bg-mountain-950 lg:col-span-5 lg:min-h-0">
+            <CampVideo />
 
             {/* Overlay pour lisibilité du badge */}
             <div
