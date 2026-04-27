@@ -82,11 +82,6 @@ export default function Contact() {
                 ensemble.
               </span>
             </h1>
-            <p className="mt-4 max-w-lg text-base leading-relaxed text-mountain-700">
-              Pour toute proposition de partenariat technique, demande presse
-              ou collaboration ponctuelle, remplissez le formulaire ci-dessous.
-              Réponse sous 48 h.
-            </p>
 
             <form
               onSubmit={onSubmit}
