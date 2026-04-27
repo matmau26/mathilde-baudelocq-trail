@@ -35,19 +35,21 @@ export default function Calendar() {
   return (
     <section
       id="calendrier"
-      className="relative scroll-mt-20 bg-zinc-50 py-24 sm:py-32"
+      className="relative scroll-mt-20 overflow-hidden bg-mesh-warm py-24 sm:py-32"
     >
       <div className="mx-auto max-w-6xl px-6">
         {/* En-tête */}
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-mountain-500">
+            <p className="text-xs font-bold uppercase tracking-[0.25em] text-flame-600">
               06 — Objectifs 2026
             </p>
             <h2 className="mt-3 font-display text-5xl font-bold uppercase leading-[0.95] tracking-tight text-mountain-950 sm:text-6xl">
               Cibles de
               <br />
-              <span className="text-mountain-600">Performance Majeures.</span>
+              <span className="bg-gradient-to-r from-flame-600 via-flame-500 to-solar-400 bg-clip-text text-transparent">
+                Performance Majeures.
+              </span>
             </h2>
           </div>
           <p className="max-w-md text-sm leading-relaxed text-mountain-700">
@@ -65,7 +67,7 @@ export default function Calendar() {
             >
               {/* Code & label */}
               <div className="flex items-center justify-between">
-                <span className="inline-flex items-center gap-2 rounded-none border border-mountain-950 bg-mountain-950 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-white">
+                <span className="inline-flex items-center gap-2 rounded-none border border-flame-500 bg-flame-500 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-white">
                   <Target className="h-3 w-3" strokeWidth={2.5} />
                   Objectif A
                 </span>
@@ -112,7 +114,7 @@ export default function Calendar() {
               <p className="mt-6 text-sm text-mountain-700">{obj.note}</p>
 
               {/* Barre d’accent au hover */}
-              <span className="absolute inset-x-0 bottom-0 h-1 origin-left scale-x-0 bg-mountain-700 transition-transform duration-500 group-hover:scale-x-100" />
+              <span className="absolute inset-x-0 bottom-0 h-1 origin-left scale-x-0 bg-gradient-to-r from-flame-500 to-solar-400 transition-transform duration-500 group-hover:scale-x-100" />
             </li>
           ))}
         </ul>
@@ -123,7 +125,7 @@ export default function Calendar() {
             {/* Colonne identité */}
             <div className="border-b-2 border-mountain-950 p-6 sm:p-8 lg:col-span-4 lg:border-b-0 lg:border-r-2">
               <div className="flex items-center justify-between">
-                <span className="inline-flex items-center gap-2 border border-mountain-950 bg-white px-3 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-mountain-950">
+                <span className="inline-flex items-center gap-2 border border-electric-500 bg-electric-500 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-white">
                   <Zap className="h-3 w-3" strokeWidth={2.5} />
                   Objectif B
                 </span>
@@ -132,7 +134,7 @@ export default function Calendar() {
                 </span>
               </div>
 
-              <p className="mt-6 text-[10px] font-bold uppercase tracking-[0.25em] text-mountain-600">
+              <p className="mt-6 text-[10px] font-bold uppercase tracking-[0.25em] text-electric-600">
                 {SECONDARY_OBJECTIVE.category}
               </p>
               <h3 className="mt-2 font-display text-3xl font-bold uppercase leading-[1] tracking-tight text-mountain-950 sm:text-4xl">
@@ -152,7 +154,7 @@ export default function Calendar() {
             {/* Colonne détails */}
             <div className="flex flex-col justify-between p-6 sm:p-8 lg:col-span-8">
               <div className="flex flex-wrap items-center gap-2">
-                <span className="inline-flex items-center gap-2 bg-mountain-950 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.25em] text-white">
+                <span className="inline-flex items-center gap-2 bg-gradient-to-r from-electric-600 to-electric-400 px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.25em] text-white">
                   <Flag className="h-3 w-3" strokeWidth={2.5} />
                   {SECONDARY_OBJECTIVE.badge}
                 </span>
@@ -189,14 +191,14 @@ export default function Calendar() {
               </dl>
 
               {/* Note de contexte */}
-              <p className="mt-6 border-l-2 border-mountain-700 pl-4 text-xs leading-relaxed text-mountain-600">
+              <p className="mt-6 border-l-2 border-electric-500 pl-4 text-xs leading-relaxed text-mountain-700">
                 {SECONDARY_OBJECTIVE.context}
               </p>
             </div>
           </div>
 
           {/* Barre d’accent en bas */}
-          <span className="absolute inset-x-0 bottom-0 h-1 origin-left scale-x-0 bg-mountain-700 transition-transform duration-500 group-hover:scale-x-100" />
+          <span className="absolute inset-x-0 bottom-0 h-1 origin-left scale-x-0 bg-gradient-to-r from-electric-500 to-electric-300 transition-transform duration-500 group-hover:scale-x-100" />
         </article>
 
         {/* Camp de base */}

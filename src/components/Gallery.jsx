@@ -6,21 +6,21 @@ const TILES = [
     label: 'Sortie Dieulefit',
     sub: 'Drôme · D+ 1 200 m',
     icon: Mountain,
-    gradient: 'from-mountain-700 via-mountain-500 to-mountain-300',
+    gradient: 'from-flame-600 via-flame-500 to-solar-400',
     span: 'sm:col-span-2 sm:row-span-2',
   },
   {
     label: 'GR Ventoux 2025',
     sub: 'Highlight · 28 km',
     icon: Activity,
-    gradient: 'from-mountain-900 via-mountain-700 to-mountain-500',
+    gradient: 'from-mountain-900 via-mountain-700 to-electric-500',
     span: 'sm:col-span-2 sm:row-span-1',
   },
   {
     label: 'Préparation D+',
     sub: 'Massif · piste',
     icon: Footprints,
-    gradient: 'from-zinc-200 via-zinc-100 to-white text-mountain-900',
+    gradient: 'from-cream-100 via-white to-flame-50 text-mountain-900',
     span: 'sm:col-span-1 sm:row-span-1',
     inverse: true,
   },
@@ -28,14 +28,14 @@ const TILES = [
     label: 'Reco Vercors',
     sub: '84 km · 2026',
     icon: MapPin,
-    gradient: 'from-mountain-800 via-mountain-600 to-mountain-400',
+    gradient: 'from-electric-700 via-electric-500 to-mountain-400',
     span: 'sm:col-span-1 sm:row-span-1',
   },
   {
     label: 'Shooting CIMALP',
     sub: 'Saint-Marcel-lès-Valence',
     icon: Camera,
-    gradient: 'from-zinc-900 via-mountain-900 to-mountain-700',
+    gradient: 'from-mountain-950 via-mountain-900 to-flame-700',
     span: 'sm:col-span-4 sm:row-span-1',
   },
 ];
@@ -60,19 +60,21 @@ export default function Gallery() {
   return (
     <section
       id="medias"
-      className="relative scroll-mt-20 bg-white py-24 sm:py-32"
+      className="relative scroll-mt-20 overflow-hidden bg-mesh-warm py-24 sm:py-32"
     >
       <div className="mx-auto max-w-6xl px-6">
         {/* En-tête */}
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-mountain-500">
+            <p className="text-xs font-bold uppercase tracking-[0.25em] text-electric-600">
               03 — Médias
             </p>
             <h2 className="mt-3 font-display text-5xl font-black uppercase leading-[0.9] tracking-tight text-mountain-950 sm:text-6xl lg:text-7xl">
               Sur le
               <br />
-              <span className="text-mountain-600">terrain.</span>
+              <span className="bg-gradient-to-r from-electric-700 via-electric-500 to-flame-500 bg-clip-text text-transparent">
+                terrain.
+              </span>
             </h2>
           </div>
           <p className="max-w-md text-sm leading-relaxed text-mountain-700">

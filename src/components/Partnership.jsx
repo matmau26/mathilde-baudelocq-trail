@@ -28,20 +28,22 @@ export default function Partnership() {
   return (
     <section
       id="partenariat"
-      className="relative scroll-mt-20 bg-white py-24 sm:py-32"
+      className="relative scroll-mt-20 overflow-hidden bg-mesh-cool py-24 sm:py-32"
     >
       <div className="mx-auto max-w-6xl px-6">
         {/* En-tête */}
         <div className="border-t-2 border-mountain-950 pt-10">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.25em] text-mountain-500">
+              <p className="text-xs font-bold uppercase tracking-[0.25em] text-flame-600">
                 07 — Partenariat technique
               </p>
               <h2 className="mt-3 font-display text-5xl font-bold uppercase leading-[0.95] tracking-tight text-mountain-950 sm:text-6xl">
                 Proposition
                 <br />
-                <span className="text-mountain-600">de collaboration.</span>
+                <span className="bg-gradient-to-r from-flame-600 via-flame-500 to-electric-500 bg-clip-text text-transparent">
+                  de collaboration.
+                </span>
               </h2>
             </div>
             <p className="max-w-md text-sm leading-relaxed text-mountain-700">
@@ -117,7 +119,7 @@ export default function Partnership() {
           </div>
           <a
             href="#contact"
-            className="group inline-flex items-center gap-3 border-2 border-white bg-white px-7 py-4 text-sm font-bold uppercase tracking-[0.2em] text-mountain-950 transition-colors hover:bg-mountain-950 hover:text-white"
+            className="group inline-flex items-center gap-3 border-2 border-flame-500 bg-flame-500 px-7 py-4 text-sm font-bold uppercase tracking-[0.2em] text-white transition-colors hover:bg-flame-600 hover:border-flame-600"
           >
             Prendre contact
             <ArrowRight

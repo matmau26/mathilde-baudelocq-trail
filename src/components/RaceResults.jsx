@@ -108,19 +108,21 @@ export default function RaceResults() {
   return (
     <section
       id="resultats"
-      className="relative scroll-mt-20 bg-zinc-50 py-24 sm:py-32"
+      className="relative scroll-mt-20 overflow-hidden bg-mesh-soft py-24 sm:py-32"
     >
       <div className="mx-auto max-w-6xl px-6">
         {/* En-tête */}
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-mountain-500">
+            <p className="text-xs font-bold uppercase tracking-[0.25em] text-flame-600">
               04 — Résultats détaillés
             </p>
             <h2 className="mt-3 font-display text-5xl font-bold uppercase leading-[0.95] tracking-tight text-mountain-950 sm:text-6xl">
               Historique
               <br />
-              <span className="text-mountain-600">des courses.</span>
+              <span className="bg-gradient-to-r from-mountain-900 via-electric-600 to-flame-500 bg-clip-text text-transparent">
+                des courses.
+              </span>
             </h2>
           </div>
           <p className="max-w-md text-sm leading-relaxed text-mountain-700">
@@ -146,7 +148,7 @@ export default function RaceResults() {
                 <th className="border-r border-white/10 px-4 py-3 text-[10px] font-bold uppercase tracking-[0.25em]">
                   Temps
                 </th>
-                <th className="border-r border-white/10 bg-mountain-700 px-4 py-3 text-[10px] font-bold uppercase tracking-[0.25em]">
+                <th className="border-r border-white/10 bg-flame-500 px-4 py-3 text-[10px] font-bold uppercase tracking-[0.25em]">
                   Rang Femmes
                 </th>
                 <th className="px-4 py-3 text-[10px] font-bold uppercase tracking-[0.25em]">
@@ -162,7 +164,7 @@ export default function RaceResults() {
                     key={`${race.date}-${idx}`}
                     className={`border-t border-mountain-200 transition-colors ${
                       isHighlight
-                        ? 'bg-mountain-100/70 hover:bg-mountain-100'
+                        ? 'bg-flame-50 hover:bg-flame-100'
                         : 'hover:bg-mountain-50'
                     }`}
                   >
@@ -175,14 +177,14 @@ export default function RaceResults() {
                       {isHighlight && (
                         <span
                           aria-hidden="true"
-                          className="absolute left-0 top-0 h-full w-1 bg-mountain-700"
+                          className="absolute left-0 top-0 h-full w-1 bg-flame-500"
                         />
                       )}
                       <p className="text-sm font-semibold text-mountain-950">
                         {race.nom}
                       </p>
                       {isHighlight && (
-                        <span className="mt-2 inline-flex items-center gap-1.5 bg-mountain-950 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-white">
+                        <span className="mt-2 inline-flex items-center gap-1.5 bg-flame-500 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-white">
                           <Award className="h-3 w-3" strokeWidth={2.5} />
                           {race.badge}
                         </span>
@@ -201,8 +203,8 @@ export default function RaceResults() {
                         {race.temps}
                       </span>
                     </td>
-                    <td className="border-r border-mountain-200 bg-mountain-50/60 px-4 py-4 align-top">
-                      <span className="font-mono text-base font-bold text-mountain-700">
+                    <td className="border-r border-mountain-200 bg-flame-50/70 px-4 py-4 align-top">
+                      <span className="font-mono text-base font-bold text-flame-600">
                         {race.rangFemmes}
                       </span>
                     </td>
@@ -227,7 +229,7 @@ export default function RaceResults() {
                 key={`m-${race.date}-${idx}`}
                 className={`relative overflow-hidden border-2 ${
                   isHighlight
-                    ? 'border-mountain-950 bg-mountain-100/60'
+                    ? 'border-flame-500 bg-flame-50'
                     : 'border-mountain-200 bg-white'
                 }`}
               >
@@ -265,11 +267,11 @@ export default function RaceResults() {
                         {race.temps}
                       </dd>
                     </div>
-                    <div className="bg-mountain-50 p-3">
-                      <dt className="text-[10px] font-bold uppercase tracking-widest text-mountain-500">
+                    <div className="bg-flame-50 p-3">
+                      <dt className="text-[10px] font-bold uppercase tracking-widest text-flame-700">
                         Rang F
                       </dt>
-                      <dd className="mt-1 font-mono text-sm font-bold text-mountain-700">
+                      <dd className="mt-1 font-mono text-sm font-bold text-flame-600">
                         {race.rangFemmes}
                       </dd>
                     </div>

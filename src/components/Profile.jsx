@@ -64,19 +64,21 @@ export default function Profile() {
   return (
     <section
       id="profil"
-      className="relative scroll-mt-20 bg-white py-24 sm:py-32"
+      className="relative scroll-mt-20 overflow-hidden bg-mesh-cool py-24 sm:py-32"
     >
       <div className="mx-auto max-w-6xl px-6">
         {/* En-tête de section */}
         <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-16">
           <div className="lg:col-span-5">
-            <p className="text-xs font-semibold uppercase tracking-widest text-mountain-500">
+            <p className="text-xs font-bold uppercase tracking-[0.25em] text-electric-600">
               05 — Profil
             </p>
             <h2 className="mt-3 font-display text-5xl font-bold uppercase leading-[0.95] tracking-tight text-mountain-950 sm:text-6xl">
               L'athlète,
               <br />
-              <span className="text-mountain-600">en bref.</span>
+              <span className="bg-gradient-to-r from-electric-700 via-electric-500 to-flame-500 bg-clip-text text-transparent">
+                en bref.
+              </span>
             </h2>
             <p className="mt-6 max-w-md text-base leading-relaxed text-mountain-700">
               Une approche du sport basée sur la{' '}

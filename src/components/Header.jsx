@@ -20,22 +20,17 @@ export default function Header() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // Couleurs adaptatives selon le scroll : sombre par défaut (au-dessus du Hero vidéo),
-  // clair une fois la barre fixée sur fond blanc translucide
+  // Hero clair (mesh) → texte sombre par défaut, légère élévation au scroll
   const surface = scrolled
-    ? 'bg-white/85 backdrop-blur-md border-b border-mountain-100 shadow-sm'
+    ? 'bg-white/90 backdrop-blur-md border-b border-mountain-100 shadow-sm'
     : 'bg-transparent';
-  const logoText = scrolled ? 'text-mountain-900' : 'text-white';
-  const logoDot = scrolled ? 'bg-mountain-500' : 'bg-white';
+  const logoText = 'text-mountain-950';
+  const logoDot = 'bg-flame-500';
   const linkText = scrolled
-    ? 'text-mountain-700 hover:text-mountain-500'
-    : 'text-white/85 hover:text-white';
-  const ctaClass = scrolled
-    ? 'bg-mountain-950 text-white hover:bg-mountain-800'
-    : 'bg-white text-mountain-950 hover:bg-mountain-100';
-  const burgerClass = scrolled
-    ? 'text-mountain-800 hover:bg-mountain-100'
-    : 'text-white hover:bg-white/10';
+    ? 'text-mountain-800 hover:text-flame-600'
+    : 'text-mountain-900 hover:text-flame-600';
+  const ctaClass = 'bg-flame-500 text-white hover:bg-flame-600';
+  const burgerClass = 'text-mountain-900 hover:bg-mountain-100';
 
   return (
     <header

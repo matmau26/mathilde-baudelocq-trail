@@ -26,19 +26,27 @@ export default function Palmares() {
   return (
     <section
       id="palmares"
-      className="relative scroll-mt-20 bg-zinc-50 py-24 sm:py-32"
+      className="relative scroll-mt-20 overflow-hidden bg-mesh-soft py-24 sm:py-32"
     >
-      <div className="mx-auto max-w-6xl px-6">
+      {/* Blob accent */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-20 right-1/4 h-[24rem] w-[24rem] rounded-full bg-flame-200/40 blur-[110px]"
+      />
+
+      <div className="relative mx-auto max-w-6xl px-6">
         {/* En-tête */}
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-mountain-500">
+            <p className="text-xs font-bold uppercase tracking-[0.25em] text-flame-600">
               02 — Palmarès récent
             </p>
             <h2 className="mt-3 font-display text-5xl font-bold uppercase leading-[0.95] tracking-tight text-mountain-950 sm:text-6xl">
               Référence
               <br />
-              <span className="text-mountain-600">Saison 2025.</span>
+              <span className="bg-gradient-to-r from-flame-600 via-flame-500 to-solar-400 bg-clip-text text-transparent">
+                Saison 2025.
+              </span>
             </h2>
           </div>
           <p className="max-w-md text-sm leading-relaxed text-mountain-700">
@@ -52,11 +60,11 @@ export default function Palmares() {
           {/* Highlight GR Ventoux */}
           <article className="relative bg-white p-8 sm:p-10 lg:col-span-7">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="inline-flex items-center gap-2 rounded-full bg-mountain-950 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.25em] text-white">
-                <span className="inline-block h-1.5 w-1.5 rounded-full bg-mountain-300" />
+              <span className="inline-flex items-center gap-2 rounded-full bg-flame-500 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-white">
+                <span className="inline-block h-1.5 w-1.5 rounded-full bg-white" />
                 Highlight
               </span>
-              <span className="inline-flex items-center gap-2 rounded-full border border-mountain-200 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.25em] text-mountain-700">
+              <span className="inline-flex items-center gap-2 rounded-full border border-mountain-300 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-mountain-700">
                 Saison 2025
               </span>
             </div>
@@ -71,7 +79,7 @@ export default function Palmares() {
             </p>
 
             <p className="mt-6 max-w-lg text-base leading-relaxed text-mountain-800">
-              <span className="font-display text-2xl font-semibold text-mountain-950">
+              <span className="bg-gradient-to-r from-flame-600 to-flame-500 bg-clip-text font-display text-3xl font-bold text-transparent">
                 12ᵉ femme / 320
               </span>{' '}
               — soit le Top 4 % féminin, au contact direct du peloton Élite.

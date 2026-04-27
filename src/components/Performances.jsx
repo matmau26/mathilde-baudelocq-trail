@@ -26,6 +26,7 @@ const KPIS = [
     tag: '12ᵉ femme · 112ᵉ scratch',
     progress: 82,
     progressLabel: 'Niveau Élite féminin',
+    accent: 'flame',
   },
   {
     eyebrow: 'Cote ITRA',
@@ -36,6 +37,7 @@ const KPIS = [
     tag: 'Indice global de performance',
     progress: 72,
     progressLabel: 'Référence internationale',
+    accent: 'electric',
   },
   {
     eyebrow: 'UTMB Index',
@@ -46,59 +48,93 @@ const KPIS = [
     tag: 'Indice de référence trail',
     progress: 68,
     progressLabel: 'Performances qualifiantes',
+    accent: 'solar',
   },
 ];
+
+const ACCENT_TOKENS = {
+  flame: {
+    eyebrow: 'text-flame-600',
+    valueGradient: 'from-flame-600 via-flame-500 to-solar-400',
+    metric: 'text-flame-500',
+    bar: 'from-flame-500 to-solar-400',
+    tag: 'bg-flame-50 text-flame-700 ring-flame-200',
+    indexBg: 'bg-flame-100 text-flame-700',
+  },
+  electric: {
+    eyebrow: 'text-electric-600',
+    valueGradient: 'from-electric-700 via-electric-500 to-electric-300',
+    metric: 'text-electric-500',
+    bar: 'from-electric-600 to-electric-300',
+    tag: 'bg-electric-50 text-electric-700 ring-electric-200',
+    indexBg: 'bg-electric-100 text-electric-700',
+  },
+  solar: {
+    eyebrow: 'text-solar-500',
+    valueGradient: 'from-solar-500 via-flame-400 to-flame-600',
+    metric: 'text-solar-500',
+    bar: 'from-solar-400 to-flame-500',
+    tag: 'bg-solar-200/50 text-mountain-900 ring-solar-300',
+    indexBg: 'bg-solar-200/60 text-mountain-900',
+  },
+};
 
 export default function Performances() {
   return (
     <section
       id="kpi"
-      className="relative scroll-mt-20 overflow-hidden bg-mountain-950 py-24 text-white sm:py-32"
+      className="relative scroll-mt-20 overflow-hidden bg-mesh-cool py-24 sm:py-32"
     >
+      {/* Blobs colorés */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-32 -right-24 h-[28rem] w-[28rem] rounded-full bg-flame-300/35 blur-[110px]"
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute bottom-0 -left-24 h-[26rem] w-[26rem] rounded-full bg-electric-300/30 blur-[110px]"
+      />
+
       {/* Trame technique de fond */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.07]"
+        className="pointer-events-none absolute inset-0 opacity-[0.05]"
         style={{
           backgroundImage:
-            'linear-gradient(to right, #ffffff 1px, transparent 1px), linear-gradient(to bottom, #ffffff 1px, transparent 1px)',
+            'linear-gradient(to right, #0f1c29 1px, transparent 1px), linear-gradient(to bottom, #0f1c29 1px, transparent 1px)',
           backgroundSize: '64px 64px',
         }}
       />
 
-      {/* Halo discret */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -top-40 left-1/2 h-[480px] w-[480px] -translate-x-1/2 rounded-full bg-mountain-500/20 blur-3xl"
-      />
-
       <div className="relative mx-auto max-w-6xl px-6">
         {/* Barre supérieure : style HUD */}
-        <div className="flex items-center justify-between border-b border-white/10 pb-5 text-[10px] font-semibold uppercase tracking-[0.25em] text-mountain-300">
+        <div className="flex items-center justify-between border-b-2 border-mountain-950 pb-5 text-[10px] font-bold uppercase tracking-[0.25em] text-mountain-700">
           <div className="flex items-center gap-3">
-            <span className="inline-flex h-2 w-2 animate-pulse rounded-full bg-mountain-400" />
+            <span className="inline-flex h-2 w-2 animate-pulse rounded-full bg-flame-500" />
             <span>Performance Dashboard</span>
           </div>
           <div className="hidden items-center gap-6 sm:flex">
             <span>Saison 2025–26</span>
-            <span>Live Data</span>
+            <span className="text-flame-600">Live Data</span>
           </div>
-          <span className="text-mountain-400 sm:hidden">2025–26</span>
+          <span className="sm:hidden">2025–26</span>
         </div>
 
         {/* En-tête section */}
         <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-mountain-300">
+            <p className="text-xs font-bold uppercase tracking-[0.25em] text-flame-600">
               01 — Key Metrics
             </p>
-            <h2 className="mt-3 font-display text-5xl font-bold uppercase leading-[0.95] tracking-tight text-white sm:text-6xl lg:text-7xl">
+            <h2 className="mt-3 font-display text-5xl font-bold uppercase leading-[0.95] tracking-tight text-mountain-950 sm:text-6xl lg:text-7xl">
               Trajectoire
               <br />
-              <span className="text-mountain-300">Élite.</span>
+              <span className="bg-gradient-to-r from-flame-600 via-flame-500 to-solar-400 bg-clip-text text-transparent">
+                Élite.
+              </span>
             </h2>
           </div>
-          <p className="max-w-md text-sm leading-relaxed text-mountain-200">
+          <p className="max-w-md text-sm leading-relaxed text-mountain-700">
             Trois indicateurs majeurs qui structurent la saison. Suivi
             analytique, progression mesurée, objectifs Élite à l’horizon.
           </p>
@@ -110,79 +146,92 @@ export default function Performances() {
           whileInView="visible"
           viewport={{ once: true, margin: '-80px' }}
           variants={containerVariants}
-          className="mt-12 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 sm:grid-cols-3"
+          className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-3"
         >
-          {KPIS.map((kpi, idx) => (
-            <motion.article
-              key={kpi.eyebrow}
-              variants={cardVariants}
-              className="group relative bg-mountain-950 p-8 transition-colors hover:bg-mountain-900 sm:p-10"
-            >
-              {/* Numéro KPI en filigrane */}
-              <span
-                aria-hidden="true"
-                className="pointer-events-none absolute right-6 top-6 font-display text-2xl font-bold text-white/10"
+          {KPIS.map((kpi, idx) => {
+            const a = ACCENT_TOKENS[kpi.accent];
+            return (
+              <motion.article
+                key={kpi.eyebrow}
+                variants={cardVariants}
+                className="group relative overflow-hidden rounded-2xl border-2 border-mountain-950 bg-white p-8 transition-transform duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-mountain-900/10 sm:p-9"
               >
-                {String(idx + 1).padStart(2, '0')}
-              </span>
+                {/* Numéro KPI en filigrane */}
+                <span
+                  aria-hidden="true"
+                  className={`pointer-events-none absolute right-5 top-5 inline-flex h-9 min-w-9 items-center justify-center rounded-lg px-2 font-display text-xs font-bold ${a.indexBg}`}
+                >
+                  {String(idx + 1).padStart(2, '0')}
+                </span>
 
-              <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-mountain-300">
-                {kpi.eyebrow}
-              </p>
+                <p
+                  className={`text-[10px] font-bold uppercase tracking-[0.25em] ${a.eyebrow}`}
+                >
+                  {kpi.eyebrow}
+                </p>
 
-              {/* Chiffre massif */}
-              <div className="mt-6 flex items-baseline gap-2">
-                {kpi.metric && (
-                  <span className="font-display text-4xl font-bold uppercase leading-none tracking-tight text-mountain-300 sm:text-5xl">
-                    {kpi.metric}
+                {/* Chiffre massif */}
+                <div className="mt-6 flex items-baseline gap-2">
+                  {kpi.metric && (
+                    <span
+                      className={`font-display text-4xl font-bold uppercase leading-none tracking-tight ${a.metric} sm:text-5xl`}
+                    >
+                      {kpi.metric}
+                    </span>
+                  )}
+                  <span
+                    className={`bg-gradient-to-br ${a.valueGradient} bg-clip-text font-display text-7xl font-bold leading-none tracking-tighter text-transparent sm:text-8xl`}
+                  >
+                    {kpi.value}
                   </span>
-                )}
-                <span className="font-display text-7xl font-bold leading-none tracking-tighter text-white sm:text-8xl">
-                  {kpi.value}
-                </span>
-                <span className="font-display text-2xl font-semibold uppercase tracking-widest text-mountain-300 sm:text-3xl">
-                  {kpi.suffix}
-                </span>
-              </div>
-
-              {/* Contexte */}
-              <p className="mt-5 text-sm font-semibold text-white">
-                {kpi.context}
-              </p>
-              <p className="mt-1 text-xs uppercase tracking-widest text-mountain-300">
-                {kpi.tag}
-              </p>
-
-              {/* Barre de progression style data-vis */}
-              <div className="mt-8">
-                <div className="flex items-center justify-between text-[10px] font-semibold uppercase tracking-widest text-mountain-300">
-                  <span>{kpi.progressLabel}</span>
-                  <span>{kpi.progress}%</span>
+                  <span className="font-display text-2xl font-semibold uppercase tracking-widest text-mountain-500 sm:text-3xl">
+                    {kpi.suffix}
+                  </span>
                 </div>
-                <div className="mt-2 h-1 w-full overflow-hidden rounded-full bg-white/10">
-                  <div
-                    className="h-full origin-left rounded-full bg-gradient-to-r from-mountain-400 to-white transition-all duration-700 group-hover:scale-x-105"
-                    style={{ width: `${kpi.progress}%` }}
-                  />
-                </div>
-              </div>
 
-              {/* Ligne accent en bas qui s'étend au hover */}
-              <span className="absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-gradient-to-r from-mountain-300 to-white transition-transform duration-500 group-hover:scale-x-100" />
-            </motion.article>
-          ))}
+                {/* Contexte */}
+                <p className="mt-5 text-sm font-bold text-mountain-950">
+                  {kpi.context}
+                </p>
+                <p
+                  className={`mt-2 inline-flex rounded-full px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.2em] ring-1 ring-inset ${a.tag}`}
+                >
+                  {kpi.tag}
+                </p>
+
+                {/* Barre de progression */}
+                <div className="mt-8">
+                  <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-widest text-mountain-600">
+                    <span>{kpi.progressLabel}</span>
+                    <span className={a.metric}>{kpi.progress}%</span>
+                  </div>
+                  <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-mountain-100">
+                    <div
+                      className={`h-full origin-left rounded-full bg-gradient-to-r ${a.bar} transition-all duration-700 group-hover:scale-x-105`}
+                      style={{ width: `${kpi.progress}%` }}
+                    />
+                  </div>
+                </div>
+
+                {/* Barre accent en bas */}
+                <span
+                  className={`absolute inset-x-0 bottom-0 h-1 origin-left scale-x-0 bg-gradient-to-r ${a.bar} transition-transform duration-500 group-hover:scale-x-100`}
+                />
+              </motion.article>
+            );
+          })}
         </motion.div>
 
         {/* Pied de section : tickers */}
-        <div className="mt-8 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 sm:grid-cols-4">
+        <div className="mt-8 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border-2 border-mountain-950 bg-mountain-950 sm:grid-cols-4">
           {[
-            { label: 'Discipline', value: 'Trail Running' },
-            { label: 'Distance phare', value: '20–84 km' },
-            { label: 'Niveau actuel', value: 'National' },
-            { label: 'Objectif 2026', value: 'Statut Élite' },
+            { label: 'Discipline', value: 'Trail Running', accent: 'text-mountain-200' },
+            { label: 'Distance phare', value: '20–84 km', accent: 'text-electric-300' },
+            { label: 'Niveau actuel', value: 'National', accent: 'text-mountain-200' },
+            { label: 'Objectif 2026', value: 'Statut Élite', accent: 'text-flame-300' },
           ].map((item) => (
             <div key={item.label} className="bg-mountain-950 px-5 py-4">
-              <p className="text-[10px] font-semibold uppercase tracking-widest text-mountain-300">
+              <p className={`text-[10px] font-bold uppercase tracking-widest ${item.accent}`}>
                 {item.label}
               </p>
               <p className="mt-1 font-display text-lg font-semibold uppercase tracking-wide text-white">
