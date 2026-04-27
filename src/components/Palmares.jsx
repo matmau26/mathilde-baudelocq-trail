@@ -88,7 +88,7 @@ export default function Palmares() {
               <span className="bg-gradient-to-r from-flame-600 to-flame-500 bg-clip-text font-display text-3xl font-bold text-transparent">
                 9ᵉ femme / 381
               </span>{' '}
-              — soit le Top 3 % féminin, en tête de la 2ᵉ étoile UTMB. Une
+              — soit le Top 3 % féminin, et une Victoire de catégorie. Une
               référence qui valide la trajectoire vers le statut Élite.
             </p>
 
@@ -270,7 +270,7 @@ export default function Palmares() {
             />
             <span className="absolute right-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-flame-500 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-white">
               <Trophy className="h-3 w-3" strokeWidth={2.5} />
-              Podium
+              Podium catégorie
             </span>
             <figcaption className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-5">
               <div>

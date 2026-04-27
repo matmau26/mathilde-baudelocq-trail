@@ -157,21 +157,21 @@ export default function Performances() {
                   {kpi.eyebrow}
                 </p>
 
-                {/* Chiffre massif */}
-                <div className="mt-6 flex items-baseline gap-2">
+                {/* Chiffre massif — pb-1 évite la coupe des descendants Oswald */}
+                <div className="mt-6 flex flex-wrap items-baseline gap-x-2 gap-y-1 pb-1">
                   {kpi.metric && (
                     <span
-                      className={`font-display text-4xl font-bold uppercase leading-none tracking-tight ${a.metric} sm:text-5xl`}
+                      className={`font-display text-3xl font-bold uppercase leading-[0.95] tracking-tight ${a.metric} sm:text-4xl`}
                     >
                       {kpi.metric}
                     </span>
                   )}
                   <span
-                    className={`bg-gradient-to-br ${a.valueGradient} bg-clip-text font-display text-7xl font-bold leading-none tracking-tighter text-transparent sm:text-8xl`}
+                    className={`bg-gradient-to-br ${a.valueGradient} bg-clip-text font-display text-6xl font-bold leading-[0.95] tracking-tight text-transparent sm:text-7xl`}
                   >
                     {kpi.value}
                   </span>
-                  <span className="font-display text-2xl font-semibold uppercase tracking-widest text-mountain-500 sm:text-3xl">
+                  <span className="font-display text-xl font-semibold uppercase tracking-widest text-mountain-500 sm:text-2xl">
                     {kpi.suffix}
                   </span>
                 </div>

@@ -22,17 +22,6 @@ export default function Hero() {
         className="pointer-events-none absolute top-1/2 left-1/2 h-[18rem] w-[18rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-solar-300/30 blur-[100px]"
       />
 
-      {/* Trame technique fine sur le mesh */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-10 opacity-[0.04]"
-        style={{
-          backgroundImage:
-            'linear-gradient(to right, #0f1c29 1px, transparent 1px), linear-gradient(to bottom, #0f1c29 1px, transparent 1px)',
-          backgroundSize: '64px 64px',
-        }}
-      />
-
       <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-14 px-6 lg:grid-cols-12">
         {/* Bloc texte */}
         <motion.div
