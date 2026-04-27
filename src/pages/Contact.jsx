@@ -1,11 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, ArrowLeft, Send } from 'lucide-react';
+import { Mail, ArrowLeft, Send, Loader2, CheckCircle2, AlertCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import emailjs from '@emailjs/browser';
 
-const RECIPIENT = 'mathilde.baudelocq@gmail.com'; // TODO: remplacer par l'email réel
+const RECIPIENT = 'mathilde.baudelocq@gmail.com';
 const CONTACT_VIDEO =
   'https://res.cloudinary.com/dnh2k1blz/video/upload/q_auto/f_auto/v1777295309/4610396B-0A29-45AF-96C4-0D9E53FB185B_srmuvl.mp4';
+
+// EmailJS — clé publique exposable côté client (par design)
+const EMAILJS_SERVICE_ID = 'service_qc05j83';
+const EMAILJS_TEMPLATE_ID = 'template_egmll6a';
+const EMAILJS_PUBLIC_KEY = 'KMXbPattObbv2GR1n';
 
 const SUBJECTS = [
   'Sponsoring / Représentation',
@@ -14,17 +20,21 @@ const SUBJECTS = [
   'Autre',
 ];
 
+const EMPTY_FORM = {
+  nom: '',
+  prenom: '',
+  email: '',
+  telephone: '',
+  societe: '',
+  sujet: SUBJECTS[0],
+  message: '',
+};
+
 export default function Contact() {
-  const [form, setForm] = useState({
-    nom: '',
-    prenom: '',
-    email: '',
-    telephone: '',
-    societe: '',
-    sujet: SUBJECTS[0],
-    message: '',
-  });
-  const [sent, setSent] = useState(false);
+  const formRef = useRef(null);
+  const [form, setForm] = useState(EMPTY_FORM);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [statusMessage, setStatusMessage] = useState(null); // { type: 'success' | 'error', text }
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -36,12 +46,33 @@ export default function Contact() {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`[${form.sujet}] — ${form.prenom} ${form.nom}`);
-    const body = encodeURIComponent(
-      `Prénom : ${form.prenom}\nNom : ${form.nom}\nEmail : ${form.email}\nTéléphone : ${form.telephone}\nSociété : ${form.societe}\nSujet : ${form.sujet}\n\nMessage :\n${form.message}\n`
-    );
-    window.location.href = `mailto:${RECIPIENT}?subject=${subject}&body=${body}`;
-    setSent(true);
+    if (isSubmitting) return;
+    setIsSubmitting(true);
+    setStatusMessage(null);
+
+    emailjs
+      .sendForm(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        formRef.current,
+        EMAILJS_PUBLIC_KEY
+      )
+      .then(() => {
+        setStatusMessage({
+          type: 'success',
+          text: 'Message envoyé avec succès. Nous vous recontacterons rapidement.',
+        });
+        setForm(EMPTY_FORM);
+      })
+      .catch(() => {
+        setStatusMessage({
+          type: 'error',
+          text: "Une erreur est survenue lors de l'envoi. Veuillez réessayer.",
+        });
+      })
+      .finally(() => {
+        setIsSubmitting(false);
+      });
   };
 
   return (
@@ -86,6 +117,7 @@ export default function Contact() {
             </h1>
 
             <form
+              ref={formRef}
               onSubmit={onSubmit}
               className="mt-10 rounded-2xl border-2 border-mountain-950 bg-white p-6 shadow-xl shadow-mountain-900/5 sm:p-8"
             >
@@ -96,6 +128,7 @@ export default function Contact() {
                   value={form.prenom}
                   onChange={onChange}
                   required
+                  autoComplete="given-name"
                 />
                 <Field
                   label="Nom"
@@ -103,6 +136,7 @@ export default function Contact() {
                   value={form.nom}
                   onChange={onChange}
                   required
+                  autoComplete="family-name"
                 />
               </div>
 
@@ -132,6 +166,7 @@ export default function Contact() {
                   name="societe"
                   value={form.societe}
                   onChange={onChange}
+                  autoComplete="organization"
                 />
               </div>
 
@@ -163,6 +198,7 @@ export default function Contact() {
                   className="block text-[10px] font-bold uppercase tracking-[0.25em] text-mountain-600"
                 >
                   Message
+                  <span className="ml-1 text-flame-500">*</span>
                 </label>
                 <textarea
                   id="message"
@@ -178,19 +214,41 @@ export default function Contact() {
 
               <button
                 type="submit"
-                className="group mt-8 inline-flex w-full items-center justify-center gap-3 rounded-full bg-flame-500 px-7 py-4 text-sm font-bold uppercase tracking-[0.2em] text-white shadow-lg shadow-flame-500/30 transition-all hover:bg-flame-600 hover:shadow-xl sm:w-auto"
+                disabled={isSubmitting}
+                className="group mt-8 inline-flex w-full items-center justify-center gap-3 rounded-full bg-flame-500 px-7 py-4 text-sm font-bold uppercase tracking-[0.2em] text-white shadow-lg shadow-flame-500/30 transition-all hover:bg-flame-600 hover:shadow-xl disabled:cursor-not-allowed disabled:bg-mountain-400 disabled:shadow-none disabled:hover:bg-mountain-400 sm:w-auto"
               >
-                Envoyer le message
-                <Send
-                  className="h-4 w-4 transition-transform group-hover:translate-x-1"
-                  strokeWidth={2.5}
-                />
+                {isSubmitting ? (
+                  <>
+                    Envoi en cours...
+                    <Loader2 className="h-4 w-4 animate-spin" strokeWidth={2.5} />
+                  </>
+                ) : (
+                  <>
+                    Envoyer le message
+                    <Send
+                      className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                      strokeWidth={2.5}
+                    />
+                  </>
+                )}
               </button>
 
-              {sent && (
-                <p className="mt-5 rounded-lg bg-flame-50 px-4 py-3 text-xs font-semibold text-flame-700 ring-1 ring-flame-200">
-                  Votre client mail vient de s’ouvrir avec le message
-                  pré-rempli — il ne reste plus qu’à appuyer sur Envoyer.
+              {statusMessage && (
+                <p
+                  role="status"
+                  aria-live="polite"
+                  className={`mt-5 inline-flex items-start gap-2 rounded-lg px-4 py-3 text-xs font-semibold ring-1 ring-inset ${
+                    statusMessage.type === 'success'
+                      ? 'bg-emerald-50 text-emerald-700 ring-emerald-200'
+                      : 'bg-red-50 text-red-700 ring-red-200'
+                  }`}
+                >
+                  {statusMessage.type === 'success' ? (
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0" strokeWidth={2.5} />
+                  ) : (
+                    <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" strokeWidth={2.5} />
+                  )}
+                  <span>{statusMessage.text}</span>
                 </p>
               )}
             </form>
