@@ -15,7 +15,7 @@ const PILLARS = [
     subtitle: 'R&D',
     icon: Atom,
     body:
-      "Une synergie technique : faire progresser l'athlète vers le statut Élite tout en éprouvant les technologies de pointe (Ultrashell / Blizzard) sur les terrains techniques de la Drôme.",
+      "Une synergie technique : faire progresser l'athlète vers le statut Élite tout en éprouvant les technologies de pointe. Mise à l'épreuve des prototypes de pointe sur une grande diversité de terrains techniques.",
     tags: ['Valorisation R&D', 'Tests prototypes', 'Feedback analytique'],
     accent: 'flame',
   },
@@ -31,12 +31,12 @@ const PILLARS = [
   },
   {
     code: '03',
-    title: 'Synergie & Engagement local',
-    subtitle: 'Ancrage Drôme',
+    title: 'Engagement & Projet commun',
+    subtitle: 'Partenariat stratégique',
     icon: Handshake,
     body:
-      "Aller au-delà du sponsoring. Profiter d'une proximité géographique immédiate (Montélimar / Valence) pour construire un projet commun et s'intégrer durablement au sein de l'équipe.",
-    tags: ['Team athlète', 'Projet de marque', 'Proximité Drôme'],
+      "Dépasser la logique transactionnelle du sponsoring. S'engager dans une collaboration pérenne fondée sur l'intégrité, la loyauté et une éthique de travail stricte. L'objectif est de s'assimiler à l'ADN de la marque pour soutenir un développement mutuel sur le long terme.",
+    tags: ['Vision long terme', 'ADN de marque', 'Valeurs communes'],
     accent: 'electric',
   },
 ];
