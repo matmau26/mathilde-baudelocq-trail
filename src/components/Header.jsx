@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const NAV_LINKS = [
   { href: '#athlete', label: 'Athlète' },
-  { href: '#TopPerf', label: 'Palmarès' },
+  { href: '#palmares', label: 'TopPerf' },
   { href: '#medias', label: 'Médias' },
   { href: '#resultats', label: 'Résultats' },
   { href: '#calendrier', label: 'Objectifs' },
