@@ -1,4 +1,5 @@
 import { FlaskConical, Megaphone, MapPin, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const PILLARS = [
   {
@@ -117,8 +118,8 @@ export default function Partnership() {
               <br className="hidden sm:block" /> sur la durée.
             </p>
           </div>
-          <a
-            href="#contact"
+          <Link
+            to="/contact"
             className="group inline-flex items-center gap-3 border-2 border-flame-500 bg-flame-500 px-7 py-4 text-sm font-bold uppercase tracking-[0.2em] text-white transition-colors hover:bg-flame-600 hover:border-flame-600"
           >
             Prendre contact
@@ -126,7 +127,7 @@ export default function Partnership() {
               className="h-4 w-4 transition-transform group-hover:translate-x-1"
               strokeWidth={2.5}
             />
-          </a>
+          </Link>
         </div>
       </div>
     </section>

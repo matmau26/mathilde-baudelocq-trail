@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Mathilde Baudelocq</title>
+    <script>
+      // SPA fallback : préserve le path + query et redirige vers index.html
+      var l = window.location;
+      var redirect = l.pathname + l.search + l.hash;
+      sessionStorage.setItem('spa-redirect', redirect);
+      l.replace(l.origin + '/');
+    </script>
+  </head>
+  <body></body>
+</html>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const NAV_LINKS = [
   { href: '#kpi', label: 'Performances' },
@@ -12,6 +13,9 @@ const NAV_LINKS = [
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const onHome = location.pathname === '/';
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -32,13 +36,22 @@ export default function Header() {
   const ctaClass = 'bg-flame-500 text-white hover:bg-flame-600';
   const burgerClass = 'text-mountain-900 hover:bg-mountain-100';
 
+  // Sur la page Contact, les ancres reviennent à la home puis scrollent
+  const handleAnchorClick = (e, href) => {
+    setOpen(false);
+    if (!onHome) {
+      e.preventDefault();
+      navigate('/' + href);
+    }
+  };
+
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${surface}`}
     >
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-6">
-        <a
-          href="#top"
+        <Link
+          to="/"
           className={`flex items-center gap-2 font-semibold tracking-tight transition-colors ${logoText}`}
         >
           <span
@@ -47,24 +60,25 @@ export default function Header() {
           <span className="text-sm uppercase tracking-[0.25em]">
             M. Baudelocq
           </span>
-        </a>
+        </Link>
 
         <nav className="hidden md:flex items-center gap-8">
           {NAV_LINKS.map((link) => (
             <a
               key={link.href}
               href={link.href}
+              onClick={(e) => handleAnchorClick(e, link.href)}
               className={`text-xs font-semibold uppercase tracking-[0.2em] transition-colors ${linkText}`}
             >
               {link.label}
             </a>
           ))}
-          <a
-            href="#partenariat"
+          <Link
+            to="/contact"
             className={`rounded-full px-4 py-2 text-xs font-bold uppercase tracking-[0.25em] transition-colors ${ctaClass}`}
           >
-            Media Kit
-          </a>
+            Prendre contact
+          </Link>
         </nav>
 
         <button
@@ -107,12 +121,19 @@ export default function Header() {
               <a
                 key={link.href}
                 href={link.href}
-                onClick={() => setOpen(false)}
+                onClick={(e) => handleAnchorClick(e, link.href)}
                 className="rounded-lg px-3 py-2 text-sm font-semibold uppercase tracking-[0.2em] text-mountain-800 hover:bg-mountain-50"
               >
                 {link.label}
               </a>
             ))}
+            <Link
+              to="/contact"
+              onClick={() => setOpen(false)}
+              className="mt-2 rounded-full bg-flame-500 px-4 py-2 text-center text-sm font-bold uppercase tracking-[0.25em] text-white"
+            >
+              Prendre contact
+            </Link>
           </nav>
         </div>
       )}
