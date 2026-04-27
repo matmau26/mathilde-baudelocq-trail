@@ -93,17 +93,6 @@ export default function Performances() {
         className="pointer-events-none absolute bottom-0 -left-24 h-[26rem] w-[26rem] rounded-full bg-electric-300/30 blur-[110px]"
       />
 
-      {/* Trame technique de fond */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.05]"
-        style={{
-          backgroundImage:
-            'linear-gradient(to right, #0f1c29 1px, transparent 1px), linear-gradient(to bottom, #0f1c29 1px, transparent 1px)',
-          backgroundSize: '64px 64px',
-        }}
-      />
-
       <div className="relative mx-auto max-w-6xl px-6">
         {/* Barre supérieure : style HUD */}
         <div className="flex items-center justify-between border-b-2 border-mountain-950 pb-5 text-[10px] font-bold uppercase tracking-[0.25em] text-mountain-700">
