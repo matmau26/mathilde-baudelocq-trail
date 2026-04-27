@@ -1,6 +1,17 @@
-import { Award } from 'lucide-react';
+import { Award, Mountain } from 'lucide-react';
 
 const RACES = [
+  {
+    date: '25/04/2026',
+    nom: 'Grand Raid Ventoux by UTMB — GRV',
+    distance: '26 KM',
+    dplus: '1100 M+',
+    temps: '02:37:09',
+    rangGeneral: '124/1178',
+    rangFemmes: '9/381',
+    highlight: true,
+    badge: 'Performance de Référence · Top 3% Féminin',
+  },
   {
     date: '29/11/2025',
     nom: 'La Asics SaintéLyon — SaintéSprint',
@@ -27,6 +38,7 @@ const RACES = [
     temps: '18:01:41',
     rangGeneral: '700/1621',
     rangFemmes: '41/124',
+    ultra: true,
   },
   {
     date: '27/04/2025',
@@ -36,8 +48,6 @@ const RACES = [
     temps: '02:53:08',
     rangGeneral: '112/917',
     rangFemmes: '12/320',
-    highlight: true,
-    badge: 'Performance de Référence · Top 4% Féminin',
   },
   {
     date: '09/03/2025',
@@ -180,9 +190,17 @@ export default function RaceResults() {
                           className="absolute left-0 top-0 h-full w-1 bg-flame-500"
                         />
                       )}
-                      <p className="text-sm font-semibold text-mountain-950">
-                        {race.nom}
-                      </p>
+                      <div className="flex flex-wrap items-center gap-2">
+                        <p className="text-sm font-semibold text-mountain-950">
+                          {race.nom}
+                        </p>
+                        {race.ultra && (
+                          <span className="inline-flex items-center gap-1 bg-mountain-950 px-2 py-0.5 text-[9px] font-bold uppercase tracking-[0.25em] text-white">
+                            <Mountain className="h-3 w-3" strokeWidth={2.5} />
+                            Ultra
+                          </span>
+                        )}
+                      </div>
                       {isHighlight && (
                         <span className="mt-2 inline-flex items-center gap-1.5 bg-flame-500 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-white">
                           <Award className="h-3 w-3" strokeWidth={2.5} />
@@ -236,7 +254,7 @@ export default function RaceResults() {
                 {isHighlight && (
                   <span
                     aria-hidden="true"
-                    className="absolute left-0 top-0 h-full w-1 bg-mountain-700"
+                    className="absolute left-0 top-0 h-full w-1 bg-flame-500"
                   />
                 )}
                 <div className="p-5">
@@ -248,11 +266,19 @@ export default function RaceResults() {
                       {race.distance} · {race.dplus}
                     </span>
                   </div>
-                  <h3 className="mt-3 text-base font-bold leading-snug text-mountain-950">
-                    {race.nom}
-                  </h3>
+                  <div className="mt-3 flex flex-wrap items-center gap-2">
+                    <h3 className="text-base font-bold leading-snug text-mountain-950">
+                      {race.nom}
+                    </h3>
+                    {race.ultra && (
+                      <span className="inline-flex items-center gap-1 bg-mountain-950 px-2 py-0.5 text-[9px] font-bold uppercase tracking-[0.25em] text-white">
+                        <Mountain className="h-3 w-3" strokeWidth={2.5} />
+                        Ultra
+                      </span>
+                    )}
+                  </div>
                   {isHighlight && (
-                    <span className="mt-3 inline-flex items-center gap-1.5 bg-mountain-950 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-white">
+                    <span className="mt-3 inline-flex items-center gap-1.5 bg-flame-500 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-white">
                       <Award className="h-3 w-3" strokeWidth={2.5} />
                       {race.badge}
                     </span>

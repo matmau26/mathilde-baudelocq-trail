@@ -20,10 +20,10 @@ const KPIS = [
   {
     eyebrow: 'Performance de référence',
     metric: 'TOP',
-    value: '4',
+    value: '3',
     suffix: '%',
-    context: '28 km · Grand Raid du Ventoux',
-    tag: '12ᵉ femme · 112ᵉ scratch',
+    context: '26 km · Grand Raid du Ventoux 2026',
+    tag: '9ᵉ femme · 124ᵉ scratch',
     accent: 'flame',
   },
   {

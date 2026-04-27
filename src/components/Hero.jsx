@@ -173,7 +173,7 @@ export default function Hero() {
                     GRV
                   </p>
                   <p className="mt-0.5 font-display text-xl font-bold text-white">
-                    Top 4%
+                    Top 3%
                   </p>
                 </div>
               </div>
