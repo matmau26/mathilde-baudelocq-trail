@@ -18,6 +18,8 @@ export default function Contact() {
   const [form, setForm] = useState({
     nom: '',
     prenom: '',
+    email: '',
+    telephone: '',
     societe: '',
     sujet: SUBJECTS[0],
     message: '',
@@ -36,7 +38,7 @@ export default function Contact() {
     e.preventDefault();
     const subject = encodeURIComponent(`[${form.sujet}] — ${form.prenom} ${form.nom}`);
     const body = encodeURIComponent(
-      `Prénom : ${form.prenom}\nNom : ${form.nom}\nSociété : ${form.societe}\nSujet : ${form.sujet}\n\nMessage :\n${form.message}\n`
+      `Prénom : ${form.prenom}\nNom : ${form.nom}\nEmail : ${form.email}\nTéléphone : ${form.telephone}\nSociété : ${form.societe}\nSujet : ${form.sujet}\n\nMessage :\n${form.message}\n`
     );
     window.location.href = `mailto:${RECIPIENT}?subject=${subject}&body=${body}`;
     setSent(true);
@@ -101,6 +103,26 @@ export default function Contact() {
                   value={form.nom}
                   onChange={onChange}
                   required
+                />
+              </div>
+
+              <div className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
+                <Field
+                  label="Email"
+                  name="email"
+                  type="email"
+                  value={form.email}
+                  onChange={onChange}
+                  required
+                  autoComplete="email"
+                />
+                <Field
+                  label="Téléphone"
+                  name="telephone"
+                  type="tel"
+                  value={form.telephone}
+                  onChange={onChange}
+                  autoComplete="tel"
                 />
               </div>
 
@@ -230,7 +252,15 @@ export default function Contact() {
   );
 }
 
-function Field({ label, name, value, onChange, required, type = 'text' }) {
+function Field({
+  label,
+  name,
+  value,
+  onChange,
+  required,
+  type = 'text',
+  autoComplete,
+}) {
   return (
     <div>
       <label
@@ -247,6 +277,7 @@ function Field({ label, name, value, onChange, required, type = 'text' }) {
         value={value}
         onChange={onChange}
         required={required}
+        autoComplete={autoComplete}
         className="mt-2 w-full rounded-lg border-2 border-mountain-200 bg-white px-4 py-3 text-sm font-medium text-mountain-950 placeholder:text-mountain-400 focus:border-flame-500 focus:outline-none"
       />
     </div>
