@@ -24,8 +24,6 @@ const KPIS = [
     suffix: '%',
     context: '28 km · Grand Raid du Ventoux',
     tag: '12ᵉ femme · 112ᵉ scratch',
-    progress: 82,
-    progressLabel: 'Niveau Élite féminin',
     accent: 'flame',
   },
   {
@@ -35,8 +33,6 @@ const KPIS = [
     suffix: 'pts',
     context: 'International Trail Running Association',
     tag: 'Indice global de performance',
-    progress: 72,
-    progressLabel: 'Référence internationale',
     accent: 'electric',
   },
   {
@@ -46,8 +42,6 @@ const KPIS = [
     suffix: 'pts',
     context: 'UTMB World Series · Trail',
     tag: 'Indice de référence trail',
-    progress: 68,
-    progressLabel: 'Performances qualifiantes',
     accent: 'solar',
   },
 ];
@@ -198,20 +192,6 @@ export default function Performances() {
                 >
                   {kpi.tag}
                 </p>
-
-                {/* Barre de progression */}
-                <div className="mt-8">
-                  <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-widest text-mountain-600">
-                    <span>{kpi.progressLabel}</span>
-                    <span className={a.metric}>{kpi.progress}%</span>
-                  </div>
-                  <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-mountain-100">
-                    <div
-                      className={`h-full origin-left rounded-full bg-gradient-to-r ${a.bar} transition-all duration-700 group-hover:scale-x-105`}
-                      style={{ width: `${kpi.progress}%` }}
-                    />
-                  </div>
-                </div>
 
                 {/* Barre accent en bas */}
                 <span
