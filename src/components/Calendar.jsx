@@ -34,7 +34,7 @@ export default function Calendar() {
         <ul className="mt-12 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border-2 border-mountain-950 bg-mountain-950 md:grid-cols-2">
           {OBJECTIVES.map((obj) => (
             <li
-              key={obj.title}
+              key={obj.code}
               className="group relative bg-white p-8 transition-colors hover:bg-mountain-50 sm:p-10"
             >
               {/* Code & label */}

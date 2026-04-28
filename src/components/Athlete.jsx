@@ -179,9 +179,9 @@ export default function Athlete() {
             </p>
 
             <ul className="mt-8 flex flex-wrap gap-2">
-              {t.values.map((v) => (
+              {t.values.map((v, i) => (
                 <li
-                  key={v}
+                  key={i}
                   className="rounded-full border border-mountain-200 bg-mountain-50 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-mountain-700"
                 >
                   {v}
@@ -194,9 +194,9 @@ export default function Athlete() {
           <div className="order-2 lg:col-span-7">
             {/* Grille de faits */}
             <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              {facts.map((fact) => (
+              {facts.map((fact, i) => (
                 <li
-                  key={fact.label}
+                  key={i}
                   className="group relative overflow-hidden rounded-2xl border border-mountain-100 bg-white p-6 transition-all hover:-translate-y-1 hover:border-mountain-300 hover:shadow-lg hover:shadow-mountain-900/5"
                 >
                   <div className="flex items-start justify-between">
@@ -262,7 +262,7 @@ export default function Athlete() {
                 const a = ACCENT_TOKENS[kpi.accent];
                 return (
                   <motion.article
-                    key={kpi.eyebrow}
+                    key={kpi.accent}
                     variants={cardVariants}
                     className="group relative overflow-hidden rounded-2xl border-2 border-mountain-950 bg-white p-5 transition-transform duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-mountain-900/10"
                   >
@@ -329,7 +329,7 @@ export default function Athlete() {
             {/* Ticker bas */}
             <div className="mt-4 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border-2 border-mountain-950 bg-mountain-950 sm:grid-cols-4">
               {t.ticker.map((item, i) => (
-                <div key={item.label} className="bg-mountain-950 px-4 py-3">
+                <div key={i} className="bg-mountain-950 px-4 py-3">
                   <p
                     className={`text-[9px] font-bold uppercase tracking-widest ${TICKER_ACCENT[i] ?? 'text-mountain-200'}`}
                   >

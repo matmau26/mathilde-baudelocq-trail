@@ -85,7 +85,7 @@ export default function Palmares() {
             {/* Mini-stats */}
             <dl className="mt-10 grid grid-cols-3 gap-px overflow-hidden rounded-xl border border-mountain-200 bg-mountain-200">
               {t.stats.map((stat, i) => (
-                <div key={stat.label} className="bg-white p-4">
+                <div key={i} className="bg-white p-4">
                   <dt className="text-[10px] font-semibold uppercase tracking-widest text-mountain-500">
                     {stat.label}
                   </dt>

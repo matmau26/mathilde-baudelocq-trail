@@ -158,12 +158,12 @@ export default function Partnership() {
 
                 {/* Tags techniques — style monospace propre */}
                 <ul className="mt-8 flex flex-wrap gap-1.5">
-                  {pillar.tags.map((t) => (
+                  {pillar.tags.map((tag, ti) => (
                     <li
-                      key={t}
+                      key={ti}
                       className="border border-mountain-950/80 bg-white px-2 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.18em] text-mountain-950"
                     >
-                      [{t}]
+                      [{tag}]
                     </li>
                   ))}
                 </ul>
@@ -189,11 +189,11 @@ export default function Partnership() {
           </div>
 
           <div className="grid grid-cols-1 divide-y divide-white/10 sm:grid-cols-2 sm:divide-x sm:divide-y-0">
-            {LEVERS.map((lever) => {
+            {LEVERS.map((lever, i) => {
               const Icon = lever.icon;
               return (
                 <div
-                  key={lever.code}
+                  key={i}
                   className="flex flex-col gap-4 p-6 sm:p-8"
                 >
                   <div className="flex items-center gap-3">
