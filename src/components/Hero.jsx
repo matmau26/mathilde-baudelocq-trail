@@ -32,7 +32,7 @@ export default function Hero() {
           transition={{ duration: 0.8, ease: 'easeOut' }}
           className="lg:col-span-7"
         >
-          <div className="inline-flex items-center gap-2 rounded-full border border-flame-300/60 bg-white/70 px-3 py-1 text-xs font-bold uppercase tracking-[0.25em] text-flame-700 backdrop-blur-md">
+          <div className="inline-flex items-center gap-2 rounded-full border border-flame-300/50 bg-white/60 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-flame-700 backdrop-blur-md">
             <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-flame-500" />
             {t.eyebrow}
           </div>
@@ -45,10 +45,10 @@ export default function Hero() {
             </span>
           </h1>
 
-          <p className="mt-6 max-w-xl text-lg sm:text-xl font-light text-mountain-700">
+          <p className="mt-6 max-w-xl text-base sm:text-lg font-light text-mountain-700">
             {t.subtitleSport}
             <span className="mx-3 inline-block h-1 w-1 rounded-full bg-flame-500 align-middle" />
-            <span className="font-bold uppercase tracking-wide text-mountain-950">
+            <span className="font-medium uppercase tracking-[0.12em] text-mountain-950">
               {t.subtitleProject}
             </span>
           </p>
@@ -61,15 +61,15 @@ export default function Hero() {
           >
             <a
               href="#partenariat"
-              className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full bg-flame-500 px-7 py-4 text-sm font-bold uppercase tracking-[0.2em] text-white shadow-lg shadow-flame-500/30 transition-all hover:bg-flame-600 hover:shadow-xl hover:shadow-flame-500/40"
+              className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-full bg-flame-500 px-5 py-3 text-[12px] font-semibold uppercase tracking-[0.15em] text-white shadow-md shadow-flame-500/20 transition-all hover:bg-flame-600 hover:shadow-lg hover:shadow-flame-500/30"
             >
               <span className="relative z-10">{t.ctaPrimary}</span>
               <svg
-                className="relative z-10 h-4 w-4 transition-transform group-hover:translate-x-1"
+                className="relative z-10 h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                strokeWidth="2.5"
+                strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               >
@@ -80,7 +80,7 @@ export default function Hero() {
 
             <a
               href="#athlete"
-              className="inline-flex items-center gap-2 rounded-full border-2 border-mountain-950 bg-transparent px-5 py-3 text-sm font-bold uppercase tracking-[0.2em] text-mountain-950 transition-colors hover:bg-mountain-950 hover:text-white"
+              className="inline-flex items-center gap-2 rounded-full border border-mountain-300 bg-transparent px-4 py-3 text-[12px] font-semibold uppercase tracking-[0.15em] text-mountain-700 transition-colors hover:border-mountain-950 hover:text-mountain-950"
             >
               {t.ctaSecondary}
               <span aria-hidden="true">→</span>
@@ -94,11 +94,11 @@ export default function Hero() {
             transition={{ duration: 0.7, ease: 'easeOut', delay: 0.4 }}
             className="mt-14 flex flex-wrap items-center gap-3"
           >
-            <span className="inline-flex items-center gap-2 rounded-full border border-mountain-200 bg-white/80 px-4 py-2 text-xs font-bold uppercase tracking-[0.25em] text-mountain-900 backdrop-blur-md">
+            <span className="inline-flex items-center gap-2 rounded-full border border-mountain-200 bg-white/70 px-3.5 py-1.5 text-[11px] font-medium uppercase tracking-[0.18em] text-mountain-800 backdrop-blur-md">
               <span className="inline-block h-1.5 w-1.5 rounded-full bg-electric-500" />
               {t.tagCity}
             </span>
-            <span className="inline-flex items-center gap-2 rounded-full bg-mountain-950 px-4 py-2 text-xs font-bold uppercase tracking-[0.25em] text-white">
+            <span className="inline-flex items-center gap-2 rounded-full bg-mountain-950 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-white">
               <span className="inline-block h-1.5 w-1.5 rounded-full bg-flame-400" />
               {t.tagProject}
             </span>
@@ -137,38 +137,38 @@ export default function Hero() {
               />
 
               {/* Bandeau bas avec stats */}
-              <div className="absolute inset-x-0 bottom-0 flex flex-col gap-3 p-4">
-              <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-[0.25em] text-white/80">
-                <span>{t.snapshot}</span>
-                <span>{t.snapshotPeriod}</span>
+              <div className="absolute inset-x-0 bottom-0 flex flex-col gap-2.5 p-4">
+                <div className="flex items-center justify-between text-[10px] font-medium uppercase tracking-[0.2em] text-white/70">
+                  <span>{t.snapshot}</span>
+                  <span>{t.snapshotPeriod}</span>
+                </div>
+                <div className="grid grid-cols-3 gap-1.5">
+                  <div className="rounded-lg border border-white/10 bg-white/[0.07] px-2.5 py-2 backdrop-blur-md">
+                    <p className="text-[9px] font-medium uppercase tracking-[0.18em] text-flame-300/90">
+                      ITRA
+                    </p>
+                    <p className="mt-0.5 font-display text-lg font-semibold text-white">
+                      565
+                    </p>
+                  </div>
+                  <div className="rounded-lg border border-white/10 bg-white/[0.07] px-2.5 py-2 backdrop-blur-md">
+                    <p className="text-[9px] font-medium uppercase tracking-[0.18em] text-electric-300/90">
+                      UTMB
+                    </p>
+                    <p className="mt-0.5 font-display text-lg font-semibold text-white">
+                      568
+                    </p>
+                  </div>
+                  <div className="rounded-lg border border-flame-400/40 bg-flame-500/15 px-2.5 py-2 backdrop-blur-md">
+                    <p className="text-[9px] font-medium uppercase tracking-[0.18em] text-flame-200">
+                      GRV
+                    </p>
+                    <p className="mt-0.5 font-display text-lg font-semibold text-white">
+                      {t.grvBadge}
+                    </p>
+                  </div>
+                </div>
               </div>
-              <div className="grid grid-cols-3 gap-2">
-                <div className="rounded-xl border border-white/15 bg-white/10 p-2.5 backdrop-blur-md">
-                  <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-flame-300">
-                    ITRA
-                  </p>
-                  <p className="mt-0.5 font-display text-xl font-bold text-white">
-                    565
-                  </p>
-                </div>
-                <div className="rounded-xl border border-white/15 bg-white/10 p-2.5 backdrop-blur-md">
-                  <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-electric-300">
-                    UTMB
-                  </p>
-                  <p className="mt-0.5 font-display text-xl font-bold text-white">
-                    568
-                  </p>
-                </div>
-                <div className="rounded-xl border border-flame-400/50 bg-flame-500/20 p-2.5 backdrop-blur-md">
-                  <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-flame-200">
-                    GRV
-                  </p>
-                  <p className="mt-0.5 font-display text-xl font-bold text-white">
-                    {t.grvBadge}
-                  </p>
-                </div>
-              </div>
-            </div>
           </div>
           </div>
         </motion.div>
