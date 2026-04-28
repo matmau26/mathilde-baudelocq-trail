@@ -86,7 +86,7 @@ export default function Contact() {
         {/* Lien retour */}
         <Link
           to="/"
-          className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.25em] text-mountain-700 transition-colors hover:text-flame-600"
+          className="inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-mountain-700 transition-colors hover:text-flame-600"
         >
           <ArrowLeft className="h-4 w-4" strokeWidth={2.5} />
           {t.back}
@@ -100,7 +100,7 @@ export default function Contact() {
             transition={{ duration: 0.7, ease: 'easeOut' }}
             className="lg:col-span-7"
           >
-            <p className="text-xs font-bold uppercase tracking-[0.25em] text-flame-600">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-flame-600">
               {t.eyebrow}
             </p>
             <h1 className="mt-3 font-display text-5xl font-bold uppercase leading-[0.9] tracking-tight text-mountain-950 sm:text-6xl">

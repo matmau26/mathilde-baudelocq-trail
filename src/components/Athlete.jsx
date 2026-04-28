@@ -109,7 +109,7 @@ export default function Athlete() {
       <div className="relative mx-auto max-w-6xl px-6">
         {/* En-tête section */}
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-          <p className="text-xs font-bold uppercase tracking-[0.25em] text-flame-600">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-flame-600">
             {t.eyebrow}
           </p>
           <p className="max-w-md text-sm leading-relaxed text-mountain-700">
@@ -182,7 +182,7 @@ export default function Athlete() {
               {t.values.map((v) => (
                 <li
                   key={v}
-                  className="rounded-full border border-mountain-200 bg-mountain-50 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.25em] text-mountain-700"
+                  className="rounded-full border border-mountain-200 bg-mountain-50 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-mountain-700"
                 >
                   {v}
                 </li>

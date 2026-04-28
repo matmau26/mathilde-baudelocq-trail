@@ -55,7 +55,7 @@ export default function Partnership() {
         <div className="border-t-2 border-mountain-950 pt-10">
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
             <div className="lg:col-span-7">
-              <p className="text-xs font-bold uppercase tracking-[0.25em] text-flame-600">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-flame-600">
                 {t.eyebrow}
               </p>
               <h2 className="mt-3 font-display text-5xl font-bold uppercase leading-[0.92] tracking-tight text-mountain-950 sm:text-6xl lg:text-7xl">

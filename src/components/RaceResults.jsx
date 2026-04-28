@@ -197,7 +197,7 @@ export default function RaceResults() {
         {/* En-tête */}
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="text-xs font-bold uppercase tracking-[0.25em] text-flame-600">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-flame-600">
               {t.eyebrow}
             </p>
             <h2 className="mt-3 font-display text-5xl font-bold uppercase leading-[0.95] tracking-tight text-mountain-950 sm:text-6xl">

@@ -41,26 +41,26 @@ export default function Header() {
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${surface}`}
     >
-      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-3 px-6">
+      <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-6">
         <Link
           to="/"
-          className={`flex items-center gap-2 font-semibold tracking-tight transition-colors ${logoText}`}
+          className={`flex shrink-0 items-center gap-2 font-medium tracking-tight transition-colors ${logoText}`}
         >
           <span
-            className={`inline-block h-2.5 w-2.5 rounded-full transition-colors ${logoDot}`}
+            className={`inline-block h-2 w-2 rounded-full transition-colors ${logoDot}`}
           />
-          <span className="text-sm uppercase tracking-[0.25em]">
+          <span className="whitespace-nowrap text-[13px] uppercase tracking-[0.18em]">
             {t.logoSubtitle}
           </span>
         </Link>
 
-        <nav className="hidden md:flex items-center gap-7">
+        <nav className="hidden md:flex items-center gap-6">
           {t.nav.map((link) => (
             <a
               key={link.href}
               href={link.href}
               onClick={(e) => handleAnchorClick(e, link.href)}
-              className={`text-xs font-semibold uppercase tracking-[0.2em] transition-colors ${linkText}`}
+              className={`whitespace-nowrap text-[11px] font-medium uppercase tracking-[0.16em] transition-colors ${linkText}`}
             >
               {link.label}
             </a>
@@ -68,13 +68,13 @@ export default function Header() {
           <LanguageSwitch />
           <Link
             to="/contact"
-            className={`rounded-full px-4 py-2 text-xs font-bold uppercase tracking-[0.25em] transition-colors ${ctaClass}`}
+            className={`whitespace-nowrap rounded-full px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.18em] transition-colors ${ctaClass}`}
           >
             {t.cta}
           </Link>
         </nav>
 
-        <div className="flex items-center gap-3 md:hidden">
+        <div className="flex items-center gap-2 md:hidden">
           <LanguageSwitch variant="mobile" />
           <button
             type="button"
