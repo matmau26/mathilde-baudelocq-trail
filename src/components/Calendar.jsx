@@ -1,37 +1,10 @@
 import { Target, Zap, Flag } from 'lucide-react';
-
-const OBJECTIVES = [
-  {
-    code: 'A.01',
-    title: 'Marathon du Mont-Blanc',
-    distance: '42 km',
-    location: 'Chamonix · Haute-Savoie',
-    period: '28 juin 2026',
-    note: 'Vitrine internationale · format marathon montagne',
-  },
-  {
-    code: 'A.02',
-    title: 'UltraTrail du Vercors',
-    distance: '84 km',
-    location: 'Massif du Vercors · Drôme / Isère',
-    period: '12 septembre 2026',
-    note: '2eme ultra · terrain de jeu local',
-  },
-];
-
-const SECONDARY_OBJECTIVE = {
-  code: 'B.01',
-  category: 'Objectif Visibilité & Vitesse',
-  title: 'La SainteSprint',
-  distance: '25 km',
-  location: 'Lyon · Rhône',
-  period: '28 novembre 2026',
-  badge: 'Événement de clôture de saison',
-  context:
-    '5ᵉ participation consécutive à l’événement — progression constante du classement féminin sur les formats courts à longs.',
-};
+import { useT } from '../i18n/useT.js';
 
 export default function Calendar() {
+  const t = useT('calendar');
+  const OBJECTIVES = t.objectives;
+  const SECONDARY_OBJECTIVE = t.secondary;
   return (
     <section
       id="calendrier"
@@ -42,19 +15,18 @@ export default function Calendar() {
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.25em] text-flame-600">
-              05 — Objectifs 2026
+              {t.eyebrow}
             </p>
             <h2 className="mt-3 font-display text-5xl font-bold uppercase leading-[0.95] tracking-tight text-mountain-950 sm:text-6xl">
-              Cibles de
+              {t.title1}
               <br />
               <span className="bg-gradient-to-r from-flame-600 via-flame-500 to-solar-400 bg-clip-text text-transparent">
-                Performance Majeures.
+                {t.title2}
               </span>
             </h2>
           </div>
           <p className="max-w-md text-sm leading-relaxed text-mountain-700">
-            Deux courses structurent la saison. Préparation ciblée, pic de
-            forme aligné, validation du passage au statut Élite.
+            {t.kicker}
           </p>
         </div>
 
@@ -69,7 +41,7 @@ export default function Calendar() {
               <div className="flex items-center justify-between">
                 <span className="inline-flex items-center gap-2 rounded-none border border-flame-500 bg-flame-500 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-white">
                   <Target className="h-3 w-3" strokeWidth={2.5} />
-                  Objectif A
+                  {t.objectiveALabel}
                 </span>
                 <span className="font-display text-sm font-bold uppercase tracking-widest text-mountain-400">
                   {obj.code}
@@ -95,7 +67,7 @@ export default function Calendar() {
               <dl className="mt-8 divide-y divide-mountain-200 border-y border-mountain-200">
                 <div className="flex items-center justify-between py-3">
                   <dt className="text-[10px] font-bold uppercase tracking-[0.25em] text-mountain-500">
-                    Lieu
+                    {t.objectiveLieu}
                   </dt>
                   <dd className="text-sm font-semibold text-mountain-900">
                     {obj.location}
@@ -103,7 +75,7 @@ export default function Calendar() {
                 </div>
                 <div className="flex items-center justify-between py-3">
                   <dt className="text-[10px] font-bold uppercase tracking-[0.25em] text-mountain-500">
-                    Période
+                    {t.objectivePeriode}
                   </dt>
                   <dd className="text-sm font-semibold text-mountain-900">
                     {obj.period}
@@ -127,7 +99,7 @@ export default function Calendar() {
               <div className="flex items-center justify-between">
                 <span className="inline-flex items-center gap-2 border border-electric-500 bg-electric-500 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-white">
                   <Zap className="h-3 w-3" strokeWidth={2.5} />
-                  Objectif B
+                  {t.objectiveBLabel}
                 </span>
                 <span className="font-display text-sm font-bold uppercase tracking-widest text-mountain-400">
                   {SECONDARY_OBJECTIVE.code}
@@ -159,14 +131,14 @@ export default function Calendar() {
                   {SECONDARY_OBJECTIVE.badge}
                 </span>
                 <span className="inline-flex items-center gap-2 border border-mountain-300 bg-white px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.25em] text-mountain-700">
-                  Format court · Vitesse
+                  {t.formatLabel}
                 </span>
               </div>
 
               <dl className="mt-6 grid grid-cols-2 gap-px overflow-hidden border border-mountain-200 bg-mountain-200 sm:grid-cols-3">
                 <div className="bg-white p-4">
                   <dt className="text-[10px] font-bold uppercase tracking-[0.25em] text-mountain-500">
-                    Période
+                    {t.secondaryLabels.period}
                   </dt>
                   <dd className="mt-1 font-display text-base font-bold uppercase tracking-wide text-mountain-950">
                     {SECONDARY_OBJECTIVE.period}
@@ -174,7 +146,7 @@ export default function Calendar() {
                 </div>
                 <div className="bg-white p-4">
                   <dt className="text-[10px] font-bold uppercase tracking-[0.25em] text-mountain-500">
-                    Lieu
+                    {t.secondaryLabels.location}
                   </dt>
                   <dd className="mt-1 font-display text-base font-bold uppercase tracking-wide text-mountain-950">
                     {SECONDARY_OBJECTIVE.location}
@@ -182,10 +154,10 @@ export default function Calendar() {
                 </div>
                 <div className="bg-white p-4 sm:col-span-1 col-span-2">
                   <dt className="text-[10px] font-bold uppercase tracking-[0.25em] text-mountain-500">
-                    Récurrence
+                    {t.secondaryLabels.recurrence}
                   </dt>
                   <dd className="mt-1 font-display text-base font-bold uppercase tracking-wide text-mountain-950">
-                    5ᵉ participation
+                    {t.secondaryLabels.recurrenceValue}
                   </dd>
                 </div>
               </dl>

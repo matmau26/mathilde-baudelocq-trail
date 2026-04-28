@@ -7,39 +7,15 @@ import {
   ShieldCheck,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useT } from '../i18n/useT.js';
 
-const PILLARS = [
-  {
-    code: '01',
-    title: 'Performance & Co-développement',
-    subtitle: 'R&D',
-    icon: Atom,
-    body:
-      "Une synergie technique : faire progresser l'athlète vers le statut Élite tout en éprouvant les technologies de pointe. Mise à l'épreuve des prototypes de pointe sur une grande diversité de terrains techniques.",
-    tags: ['Valorisation R&D', 'Tests prototypes', 'Feedback analytique'],
-    accent: 'flame',
-  },
-  {
-    code: '02',
-    title: 'Rayonnement & Ambition Élite',
-    subtitle: 'Image de marque',
-    icon: Globe,
-    body:
-      "Incarner l'image de la marque sur le circuit national et international. Une présence authentique et performante sur les événements phares (Mont-Blanc, Vercors, SaintéLyon).",
-    tags: ['Représentation', 'Visibilité événementielle', 'Valeurs sportives'],
-    accent: 'solar',
-  },
-  {
-    code: '03',
-    title: 'Engagement & Projet commun',
-    subtitle: 'Partenariat stratégique',
-    icon: Handshake,
-    body:
-      "Dépasser la logique transactionnelle du sponsoring. S'engager dans une collaboration pérenne fondée sur l'intégrité, la loyauté et une éthique de travail stricte. L'objectif est de s'assimiler à l'ADN de la marque pour soutenir un développement mutuel sur le long terme.",
-    tags: ['Vision long terme', 'ADN de marque', 'Valeurs communes'],
-    accent: 'electric',
-  },
+const PILLAR_META = [
+  { icon: Atom, accent: 'flame' },
+  { icon: Globe, accent: 'solar' },
+  { icon: Handshake, accent: 'electric' },
 ];
+
+const LEVER_ICONS = [Box, ShieldCheck];
 
 const ACCENT = {
   flame: {
@@ -65,24 +41,10 @@ const ACCENT = {
   },
 };
 
-const LEVERS = [
-  {
-    code: 'Levier A',
-    title: 'Soutien matériel & technique personnalisé',
-    description:
-      'Dotation produit ciblée, accès prototypes, suivi technique adapté à la saison.',
-    icon: Box,
-  },
-  {
-    code: 'Levier B',
-    title: 'Intégration officielle au Team Athlètes Élite',
-    description:
-      "Appartenance pleine au projet de marque : représentation, événements, communication, R&D.",
-    icon: ShieldCheck,
-  },
-];
-
 export default function Partnership() {
+  const t = useT('partnership');
+  const PILLARS = t.pillars.map((p, i) => ({ ...p, ...PILLAR_META[i] }));
+  const LEVERS = t.levers.map((l, i) => ({ ...l, icon: LEVER_ICONS[i] }));
   return (
     <section
       id="partenariat"
@@ -94,29 +56,29 @@ export default function Partnership() {
           <div className="grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">
             <div className="lg:col-span-7">
               <p className="text-xs font-bold uppercase tracking-[0.25em] text-flame-600">
-                06 — Partenariat
+                {t.eyebrow}
               </p>
               <h2 className="mt-3 font-display text-5xl font-bold uppercase leading-[0.92] tracking-tight text-mountain-950 sm:text-6xl lg:text-7xl">
-                Vision de
+                {t.title1}
                 <br />
                 <span className="bg-gradient-to-r from-flame-600 via-flame-500 to-electric-500 bg-clip-text text-transparent">
-                  collaboration.
+                  {t.title2}
                 </span>
               </h2>
               <p className="mt-6 max-w-xl text-base leading-relaxed text-mountain-700 sm:text-lg">
-                Une collaboration articulée autour de la{' '}
+                {t.kickerIntro}{' '}
                 <span className="font-semibold text-mountain-950">
-                  performance mutuelle
+                  {t.kickerMutual}
                 </span>
-                , de l’
+                {t.kickerComma}
                 <span className="font-semibold text-mountain-950">
-                  ancrage territorial
+                  {t.kickerLocal}
                 </span>{' '}
-                et de l’
+                {t.kickerAnd}{' '}
                 <span className="font-semibold text-mountain-950">
-                  intégration au projet de marque
+                  {t.kickerBrand}
                 </span>
-                .
+                {t.kickerEnd}
               </p>
             </div>
 
@@ -126,7 +88,7 @@ export default function Partnership() {
                 <div className="relative aspect-[5/7] w-full">
                   <img
                     src="/Ventoux2025-crop.jpg"
-                    alt="Mathilde Baudelocq en course au Grand Raid du Ventoux"
+                    alt={t.photoAlt}
                     className="absolute inset-0 h-full w-full object-cover"
                     loading="lazy"
                     decoding="async"
@@ -136,14 +98,14 @@ export default function Partnership() {
                     className="absolute inset-0 bg-gradient-to-t from-mountain-950/70 via-mountain-950/0 to-mountain-950/30"
                   />
                   <span className="absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full bg-flame-500 px-2.5 py-1 text-[9px] font-bold uppercase tracking-[0.25em] text-white">
-                    GR Ventoux
+                    {t.photoPill}
                   </span>
                   <figcaption className="absolute inset-x-0 bottom-0 p-4">
                     <p className="text-[9px] font-bold uppercase tracking-[0.3em] text-flame-300">
-                      En course · 2025
+                      {t.photoEyebrow}
                     </p>
                     <p className="mt-1 font-display text-base font-bold uppercase tracking-wide text-white">
-                      Trail technique
+                      {t.photoCaption}
                     </p>
                   </figcaption>
                 </div>
@@ -219,10 +181,10 @@ export default function Partnership() {
         <div className="mt-12 overflow-hidden rounded-2xl border-2 border-mountain-950 bg-mountain-950 text-white">
           <div className="border-b border-white/10 p-6 sm:p-8">
             <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-flame-300">
-              Modalités
+              {t.footerEyebrow}
             </p>
             <p className="mt-3 font-display text-2xl font-bold uppercase leading-tight tracking-tight text-white sm:text-3xl">
-              Deux leviers de collaboration envisageables
+              {t.footerTitle}
             </p>
           </div>
 
@@ -256,13 +218,13 @@ export default function Partnership() {
           {/* CTA bandeau bas */}
           <div className="flex flex-col items-start justify-between gap-4 border-t border-white/10 bg-white/[0.03] p-6 sm:flex-row sm:items-center sm:p-8">
             <p className="text-sm leading-relaxed text-mountain-200">
-              Discutons du modèle qui correspond à votre projet de marque.
+              {t.footerTagline}
             </p>
             <Link
               to="/contact"
               className="group inline-flex items-center gap-3 border-2 border-flame-500 bg-flame-500 px-6 py-3 text-sm font-bold uppercase tracking-[0.2em] text-white transition-colors hover:bg-flame-600 hover:border-flame-600"
             >
-              Prendre contact
+              {t.footerCta}
               <ArrowRight
                 className="h-4 w-4 transition-transform group-hover:translate-x-1"
                 strokeWidth={2.5}

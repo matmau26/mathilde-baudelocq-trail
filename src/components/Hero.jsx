@@ -1,8 +1,10 @@
 import { motion } from 'framer-motion';
+import { useT } from '../i18n/useT.js';
 
 const HERO_IMAGE = '/Maxi2025-1.jpg';
 
 export default function Hero() {
+  const t = useT('hero');
   return (
     <section
       id="top"
@@ -32,22 +34,22 @@ export default function Hero() {
         >
           <div className="inline-flex items-center gap-2 rounded-full border border-flame-300/60 bg-white/70 px-3 py-1 text-xs font-bold uppercase tracking-[0.25em] text-flame-700 backdrop-blur-md">
             <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-flame-500" />
-            Media Kit · Saison 2026
+            {t.eyebrow}
           </div>
 
           <h1 className="mt-6 font-display text-6xl font-bold uppercase leading-[0.88] tracking-tight text-mountain-950 sm:text-7xl lg:text-[7.5rem]">
-            Mathilde
+            {t.titleFirst}
             <br />
             <span className="bg-gradient-to-r from-flame-600 via-flame-500 to-solar-400 bg-clip-text text-transparent">
-              Baudelocq
+              {t.titleLast}
             </span>
           </h1>
 
           <p className="mt-6 max-w-xl text-lg sm:text-xl font-light text-mountain-700">
-            Athlète Trail Running
+            {t.subtitleSport}
             <span className="mx-3 inline-block h-1 w-1 rounded-full bg-flame-500 align-middle" />
             <span className="font-bold uppercase tracking-wide text-mountain-950">
-              Trajectoire Élite
+              {t.subtitleProject}
             </span>
           </p>
 
@@ -61,7 +63,7 @@ export default function Hero() {
               href="#partenariat"
               className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full bg-flame-500 px-7 py-4 text-sm font-bold uppercase tracking-[0.2em] text-white shadow-lg shadow-flame-500/30 transition-all hover:bg-flame-600 hover:shadow-xl hover:shadow-flame-500/40"
             >
-              <span className="relative z-10">Proposition de collaboration</span>
+              <span className="relative z-10">{t.ctaPrimary}</span>
               <svg
                 className="relative z-10 h-4 w-4 transition-transform group-hover:translate-x-1"
                 viewBox="0 0 24 24"
@@ -80,7 +82,7 @@ export default function Hero() {
               href="#athlete"
               className="inline-flex items-center gap-2 rounded-full border-2 border-mountain-950 bg-transparent px-5 py-3 text-sm font-bold uppercase tracking-[0.2em] text-mountain-950 transition-colors hover:bg-mountain-950 hover:text-white"
             >
-              Voir les performances
+              {t.ctaSecondary}
               <span aria-hidden="true">→</span>
             </a>
           </motion.div>
@@ -94,11 +96,11 @@ export default function Hero() {
           >
             <span className="inline-flex items-center gap-2 rounded-full border border-mountain-200 bg-white/80 px-4 py-2 text-xs font-bold uppercase tracking-[0.25em] text-mountain-900 backdrop-blur-md">
               <span className="inline-block h-1.5 w-1.5 rounded-full bg-electric-500" />
-              26 — Montélimar
+              {t.tagCity}
             </span>
             <span className="inline-flex items-center gap-2 rounded-full bg-mountain-950 px-4 py-2 text-xs font-bold uppercase tracking-[0.25em] text-white">
               <span className="inline-block h-1.5 w-1.5 rounded-full bg-flame-400" />
-              Projet 2026 · Statut Élite
+              {t.tagProject}
             </span>
           </motion.div>
         </motion.div>
@@ -122,7 +124,7 @@ export default function Hero() {
               {/* Photo */}
               <img
                 src={HERO_IMAGE}
-                alt="Mathilde Baudelocq, athlète trail running, en course"
+                alt={t.photoAlt}
                 className="absolute inset-0 h-full w-full object-cover"
                 loading="eager"
                 decoding="async"
@@ -137,8 +139,8 @@ export default function Hero() {
               {/* Bandeau bas avec stats */}
               <div className="absolute inset-x-0 bottom-0 flex flex-col gap-3 p-4">
               <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-[0.25em] text-white/80">
-                <span>Snapshot</span>
-                <span>2025–26</span>
+                <span>{t.snapshot}</span>
+                <span>{t.snapshotPeriod}</span>
               </div>
               <div className="grid grid-cols-3 gap-2">
                 <div className="rounded-xl border border-white/15 bg-white/10 p-2.5 backdrop-blur-md">
@@ -162,7 +164,7 @@ export default function Hero() {
                     GRV
                   </p>
                   <p className="mt-0.5 font-display text-xl font-bold text-white">
-                    Top 3%
+                    {t.grvBadge}
                   </p>
                 </div>
               </div>

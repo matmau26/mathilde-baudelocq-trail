@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Play, Loader2 } from 'lucide-react';
+import { useT } from '../i18n/useT.js';
 
 const MEDIA = [
   { type: 'photo', src: '/Ventoux2025.jpeg', alt: 'Mathilde Baudelocq · GR Ventoux 2025' },
@@ -80,7 +81,7 @@ function shouldPreload() {
   return true;
 }
 
-function MediaVideo({ src }) {
+function MediaVideo({ src, label }) {
   const [playing, setPlaying] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const [mounted, setMounted] = useState(false); // <video> rendu (= byte fetch démarré)
@@ -148,7 +149,7 @@ function MediaVideo({ src }) {
         <button
           type="button"
           onClick={handleClick}
-          aria-label="Lire la vidéo"
+          aria-label={label || 'Play video'}
           className="absolute inset-0 flex items-center justify-center"
         >
           <span
@@ -175,6 +176,7 @@ function MediaVideo({ src }) {
 }
 
 export default function Gallery() {
+  const t = useT('gallery');
   return (
     <section
       id="medias"
@@ -185,34 +187,32 @@ export default function Gallery() {
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.25em] text-electric-600">
-              03 — Médias
+              {t.eyebrow}
             </p>
             <h2 className="mt-3 font-display text-5xl font-black uppercase leading-[0.9] tracking-tight text-mountain-950 sm:text-6xl lg:text-7xl">
-              Sur le
+              {t.title1}
               <br />
               <span className="bg-gradient-to-r from-electric-700 via-electric-500 to-flame-500 bg-clip-text text-transparent">
-                terrain.
+                {t.title2}
               </span>
             </h2>
           </div>
           <p className="max-w-md text-sm leading-relaxed text-mountain-700">
-            Bibliothèque vivante — photos et vidéos de course, sorties et
-            entraînements. Visuels haute définition libres de droits sur
-            demande.
+            {t.kicker}
           </p>
         </div>
 
         {/* Compteurs */}
         <div className="mt-8 flex flex-wrap items-center gap-2 text-[10px] font-bold uppercase tracking-[0.25em]">
           <span className="rounded-full border border-mountain-200 bg-white/80 px-3 py-1 text-mountain-700">
-            {MEDIA.filter((m) => m.type === 'photo').length} Photos
+            {MEDIA.filter((m) => m.type === 'photo').length} {t.countPhotos}
           </span>
           <span className="inline-flex items-center gap-1 rounded-full bg-flame-500 px-3 py-1 text-white">
             <Play className="h-3 w-3 fill-white" strokeWidth={0} />
-            {MEDIA.filter((m) => m.type === 'video').length} Vidéos
+            {MEDIA.filter((m) => m.type === 'video').length} {t.countVideos}
           </span>
           <span className="rounded-full border border-mountain-200 bg-white/80 px-3 py-1 text-mountain-700">
-            HD · Sur demande
+            {t.hdTag}
           </span>
         </div>
 
@@ -240,15 +240,14 @@ export default function Gallery() {
                   />
                 </>
               ) : (
-                <MediaVideo src={item.src} />
+                <MediaVideo src={item.src} label={t.playLabel} />
               )}
             </motion.figure>
           ))}
         </motion.div>
 
         <p className="mt-8 text-[10px] uppercase tracking-widest text-mountain-500">
-          Crédits photographes mentionnés sur demande · Vidéos hébergées via
-          Cloudinary
+          {t.footnote}
         </p>
       </div>
     </section>

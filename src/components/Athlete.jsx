@@ -1,77 +1,47 @@
 import { motion } from 'framer-motion';
+import { useT } from '../i18n/useT.js';
 
-const FACTS = [
+const FACT_ICONS = [
+  <path d="M12 8v4l3 2M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20Z" />,
+  (
+    <>
+      <path d="M12 21s-7-6.2-7-12a7 7 0 1 1 14 0c0 5.8-7 12-7 12Z" />
+      <circle cx="12" cy="9" r="2.5" />
+    </>
+  ),
+  (
+    <>
+      <path d="M3 20l4-6 4 4 5-9 5 11" />
+      <circle cx="14" cy="5" r="1.5" />
+    </>
+  ),
+  (
+    <>
+      <polyline points="3 17 9 11 13 15 21 7" />
+      <polyline points="14 7 21 7 21 14" />
+    </>
+  ),
+];
+
+const KPI_META = [
+  { accent: 'flame' },
   {
-    label: 'Âge',
-    value: '34 ans',
-    icon: <path d="M12 8v4l3 2M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20Z" />,
+    accent: 'electric',
+    logo: '/itra-logo.png',
+    logoAlt: 'Logo officiel ITRA',
   },
   {
-    label: 'Ville',
-    value: 'Montélimar (26)',
-    icon: (
-      <>
-        <path d="M12 21s-7-6.2-7-12a7 7 0 1 1 14 0c0 5.8-7 12-7 12Z" />
-        <circle cx="12" cy="9" r="2.5" />
-      </>
-    ),
-  },
-  {
-    label: 'Expérience',
-    value: '5 ans de pratique du trail',
-    icon: (
-      <>
-        <path d="M3 20l4-6 4 4 5-9 5 11" />
-        <circle cx="14" cy="5" r="1.5" />
-      </>
-    ),
-  },
-  {
-    label: 'Niveau',
-    value: 'De local à Top féminine',
-    icon: (
-      <>
-        <polyline points="3 17 9 11 13 15 21 7" />
-        <polyline points="14 7 21 7 21 14" />
-      </>
-    ),
+    accent: 'solar',
+    logo: '/logo-utmb-index.png',
+    logoAlt: 'Logo officiel UTMB Index',
   },
 ];
 
-const VALUES = ['Simplicité', 'Intégrité', 'Loyauté'];
-
-const KPIS = [
-  {
-    eyebrow: 'Performance de référence',
-    metric: 'TOP',
-    value: '3',
-    suffix: '%',
-    context: '26 km · Grand Raid du Ventoux 2026',
-    tag: '9ᵉ femme · 124ᵉ scratch',
-    accent: 'flame',
-  },
-  {
-    eyebrow: 'Cote ITRA',
-    metric: '',
-    value: '565',
-    suffix: 'pts',
-    context: 'International Trail Running Association',
-    logo: '/itra-logo.png',
-    logoAlt: 'Logo officiel ITRA',
-    tag: 'Indice global de performance',
-    accent: 'electric',
-  },
-  {
-    eyebrow: 'UTMB Index',
-    metric: '',
-    value: '568',
-    suffix: 'pts',
-    context: 'UTMB World Series · Trail',
-    logo: '/logo-utmb-index.png',
-    logoAlt: 'Logo officiel UTMB Index',
-    tag: 'Indice de référence trail',
-    accent: 'solar',
-  },
+const TICKER_ACCENT = [
+  'text-mountain-200',
+  'text-electric-300',
+  'text-mountain-200',
+  'text-flame-300',
 ];
 
 const ACCENT_TOKENS = {
@@ -118,6 +88,9 @@ const cardVariants = {
 };
 
 export default function Athlete() {
+  const t = useT('athlete');
+  const facts = t.facts.map((f, i) => ({ ...f, icon: FACT_ICONS[i] }));
+  const kpis = t.kpis.map((k, i) => ({ ...k, ...KPI_META[i] }));
   return (
     <section
       id="athlete"
@@ -137,11 +110,10 @@ export default function Athlete() {
         {/* En-tête section */}
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <p className="text-xs font-bold uppercase tracking-[0.25em] text-flame-600">
-            01 — Athlète
+            {t.eyebrow}
           </p>
           <p className="max-w-md text-sm leading-relaxed text-mountain-700">
-            Profil, faits clés et indicateurs de performance — la trajectoire
-            Élite condensée en un seul coup d’œil.
+            {t.kicker}
           </p>
         </div>
 
@@ -153,7 +125,7 @@ export default function Athlete() {
               <div className="relative aspect-[3/4] w-full">
                 <img
                   src="/Mathilde.jpeg"
-                  alt="Mathilde Baudelocq, portrait civil"
+                  alt={t.photoAlt}
                   className="absolute inset-0 h-full w-full object-cover"
                   loading="lazy"
                   decoding="async"
@@ -166,10 +138,10 @@ export default function Athlete() {
 
                 {/* Titre superposé top-left */}
                 <h2 className="absolute left-5 top-5 max-w-[85%] font-display text-4xl font-bold uppercase leading-[0.9] tracking-tight text-white sm:text-5xl">
-                  L'athlète,
+                  {t.overlayLine1}
                   <br />
                   <span className="bg-gradient-to-r from-flame-300 via-flame-400 to-solar-300 bg-clip-text text-transparent drop-shadow">
-                    en bref.
+                    {t.overlayLine2}
                   </span>
                 </h2>
 
@@ -177,35 +149,37 @@ export default function Athlete() {
                 <figcaption className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-4">
                   <div>
                     <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-flame-300">
-                      Portrait
+                      {t.captionPortrait}
                     </p>
                     <p className="mt-1 font-display text-base font-bold uppercase tracking-wide text-white">
-                      Mathilde Baudelocq
+                      {t.captionName}
                     </p>
                   </div>
                   <span className="rounded-full border border-white/30 bg-white/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-white backdrop-blur">
-                    Drôme
+                    {t.captionRegion}
                   </span>
                 </figcaption>
               </div>
             </figure>
 
             <p className="mt-8 max-w-md text-base leading-relaxed text-mountain-700">
-              Exigence compétitive et ancrage territorial. En pleine ascension
-              vers le niveau Élite, sa progression s’appuie sur une éthique de
-              travail stricte :{' '}
-              <span className="font-semibold text-mountain-950">simplicité</span>,{' '}
-              <span className="font-semibold text-mountain-950">intégrité</span>{' '}
-              et{' '}
-              <span className="font-semibold text-mountain-950">loyauté</span>.
-              Professionnelle de l’éducation basée dans la Drôme, elle incarne
-              factuellement le cœur de cible outdoor. Un profil structuré pour
-              la performance, calibré pour représenter un équipementier local
-              et s’investir dans sa R&D technique.
+              {t.description.intro}{' '}
+              <span className="font-semibold text-mountain-950">
+                {t.description.valueSimplicite}
+              </span>
+              ,{' '}
+              <span className="font-semibold text-mountain-950">
+                {t.description.valueIntegrite}
+              </span>{' '}
+              {t.description.valueAnd}{' '}
+              <span className="font-semibold text-mountain-950">
+                {t.description.valueLoyaute}
+              </span>
+              {t.description.outro}
             </p>
 
             <ul className="mt-8 flex flex-wrap gap-2">
-              {VALUES.map((v) => (
+              {t.values.map((v) => (
                 <li
                   key={v}
                   className="rounded-full border border-mountain-200 bg-mountain-50 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.25em] text-mountain-700"
@@ -220,7 +194,7 @@ export default function Athlete() {
           <div className="order-2 lg:col-span-7">
             {/* Grille de faits */}
             <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              {FACTS.map((fact) => (
+              {facts.map((fact) => (
                 <li
                   key={fact.label}
                   className="group relative overflow-hidden rounded-2xl border border-mountain-100 bg-white p-6 transition-all hover:-translate-y-1 hover:border-mountain-300 hover:shadow-lg hover:shadow-mountain-900/5"
@@ -241,7 +215,7 @@ export default function Athlete() {
                       </svg>
                     </div>
                     <span className="text-[10px] uppercase tracking-widest text-mountain-400">
-                      Fact
+                      {t.factTag}
                     </span>
                   </div>
                   <p className="mt-6 text-xs uppercase tracking-widest text-mountain-500">
@@ -259,20 +233,20 @@ export default function Athlete() {
             <div className="mt-10 flex items-center justify-between border-b-2 border-mountain-950 pb-5 text-[10px] font-bold uppercase tracking-[0.25em] text-mountain-700">
               <div className="flex items-center gap-3">
                 <span className="inline-flex h-2 w-2 animate-pulse rounded-full bg-flame-500" />
-                <span>Performance Dashboard</span>
+                <span>{t.dashboardLabel}</span>
               </div>
               <div className="hidden items-center gap-6 sm:flex">
-                <span>Saison 2025–26</span>
-                <span className="text-flame-600">Live Data</span>
+                <span>{t.season}</span>
+                <span className="text-flame-600">{t.liveData}</span>
               </div>
-              <span className="sm:hidden">2025–26</span>
+              <span className="sm:hidden">{t.snapshotPeriod || '2025–26'}</span>
             </div>
 
             {/* Titre Trajectoire Élite */}
             <h3 className="mt-6 font-display text-4xl font-bold uppercase leading-[0.95] tracking-tight text-mountain-950 sm:text-5xl">
-              Trajectoire{' '}
+              {t.sectionTitle1}{' '}
               <span className="bg-gradient-to-r from-flame-600 via-flame-500 to-solar-400 bg-clip-text text-transparent">
-                Élite.
+                {t.sectionTitle2}
               </span>
             </h3>
 
@@ -284,7 +258,7 @@ export default function Athlete() {
               variants={containerVariants}
               className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-3"
             >
-              {KPIS.map((kpi, idx) => {
+              {kpis.map((kpi, idx) => {
                 const a = ACCENT_TOKENS[kpi.accent];
                 return (
                   <motion.article
@@ -354,14 +328,11 @@ export default function Athlete() {
 
             {/* Ticker bas */}
             <div className="mt-4 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border-2 border-mountain-950 bg-mountain-950 sm:grid-cols-4">
-              {[
-                { label: 'Discipline', value: 'Trail Running', accent: 'text-mountain-200' },
-                { label: 'Distance phare', value: '20–80 km', accent: 'text-electric-300' },
-                { label: 'Niveau actuel', value: 'National', accent: 'text-mountain-200' },
-                { label: 'Objectif 2026', value: 'Statut Élite', accent: 'text-flame-300' },
-              ].map((item) => (
+              {t.ticker.map((item, i) => (
                 <div key={item.label} className="bg-mountain-950 px-4 py-3">
-                  <p className={`text-[9px] font-bold uppercase tracking-widest ${item.accent}`}>
+                  <p
+                    className={`text-[9px] font-bold uppercase tracking-widest ${TICKER_ACCENT[i] ?? 'text-mountain-200'}`}
+                  >
                     {item.label}
                   </p>
                   <p className="mt-1 font-display text-base font-semibold uppercase tracking-wide text-white">

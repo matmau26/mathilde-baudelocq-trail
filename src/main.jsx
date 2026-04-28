@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App.jsx';
+import { LanguageProvider } from './i18n/LanguageContext.jsx';
 import './index.css';
 
 // Récupère l'URL d'origine si on a transité par 404.html (GitHub Pages SPA fallback)
@@ -16,7 +17,9 @@ if (redirect) {
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <LanguageProvider>
+        <App />
+      </LanguageProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

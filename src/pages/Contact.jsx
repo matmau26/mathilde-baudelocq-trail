@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Mail, ArrowLeft, Send, Loader2, CheckCircle2, AlertCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import emailjs from '@emailjs/browser';
+import { useT } from '../i18n/useT.js';
 
 const RECIPIENT = 'mathilde.baudelocq@gmail.com';
 const CONTACT_VIDEO =
@@ -13,26 +14,20 @@ const EMAILJS_SERVICE_ID = 'service_qc05j83';
 const EMAILJS_TEMPLATE_ID = 'template_egmll6a';
 const EMAILJS_PUBLIC_KEY = 'KMXbPattObbv2GR1n';
 
-const SUBJECTS = [
-  'Sponsoring / Représentation',
-  'Intégration team',
-  'Demande presse',
-  'Autre',
-];
-
-const EMPTY_FORM = {
+const buildEmptyForm = (subjects) => ({
   nom: '',
   prenom: '',
   email: '',
   telephone: '',
   societe: '',
-  sujet: SUBJECTS[0],
+  sujet: subjects[0],
   message: '',
-};
+});
 
 export default function Contact() {
+  const t = useT('contact');
   const formRef = useRef(null);
-  const [form, setForm] = useState(EMPTY_FORM);
+  const [form, setForm] = useState(() => buildEmptyForm(t.subjects));
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [statusMessage, setStatusMessage] = useState(null); // { type: 'success' | 'error', text }
 
@@ -60,14 +55,14 @@ export default function Contact() {
       .then(() => {
         setStatusMessage({
           type: 'success',
-          text: 'Message envoyé avec succès. Nous vous recontacterons rapidement.',
+          text: t.success,
         });
-        setForm(EMPTY_FORM);
+        setForm(buildEmptyForm(t.subjects));
       })
       .catch(() => {
         setStatusMessage({
           type: 'error',
-          text: "Une erreur est survenue lors de l'envoi. Veuillez réessayer.",
+          text: t.error,
         });
       })
       .finally(() => {
@@ -94,7 +89,7 @@ export default function Contact() {
           className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-[0.25em] text-mountain-700 transition-colors hover:text-flame-600"
         >
           <ArrowLeft className="h-4 w-4" strokeWidth={2.5} />
-          Retour au Media Kit
+          {t.back}
         </Link>
 
         <div className="mt-10 grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-14">
@@ -106,13 +101,13 @@ export default function Contact() {
             className="lg:col-span-7"
           >
             <p className="text-xs font-bold uppercase tracking-[0.25em] text-flame-600">
-              Contact
+              {t.eyebrow}
             </p>
             <h1 className="mt-3 font-display text-5xl font-bold uppercase leading-[0.9] tracking-tight text-mountain-950 sm:text-6xl">
-              Construisons
+              {t.title1}
               <br />
               <span className="bg-gradient-to-r from-flame-600 via-flame-500 to-solar-400 bg-clip-text text-transparent">
-                ensemble.
+                {t.title2}
               </span>
             </h1>
 
@@ -123,7 +118,7 @@ export default function Contact() {
             >
               <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                 <Field
-                  label="Prénom"
+                  label={t.labels.prenom}
                   name="prenom"
                   value={form.prenom}
                   onChange={onChange}
@@ -131,7 +126,7 @@ export default function Contact() {
                   autoComplete="given-name"
                 />
                 <Field
-                  label="Nom"
+                  label={t.labels.nom}
                   name="nom"
                   value={form.nom}
                   onChange={onChange}
@@ -142,7 +137,7 @@ export default function Contact() {
 
               <div className="mt-5 grid grid-cols-1 gap-5 sm:grid-cols-2">
                 <Field
-                  label="Email"
+                  label={t.labels.email}
                   name="email"
                   type="email"
                   value={form.email}
@@ -151,7 +146,7 @@ export default function Contact() {
                   autoComplete="email"
                 />
                 <Field
-                  label="Téléphone"
+                  label={t.labels.telephone}
                   name="telephone"
                   type="tel"
                   value={form.telephone}
@@ -162,7 +157,7 @@ export default function Contact() {
 
               <div className="mt-5">
                 <Field
-                  label="Société"
+                  label={t.labels.societe}
                   name="societe"
                   value={form.societe}
                   onChange={onChange}
@@ -175,7 +170,7 @@ export default function Contact() {
                   htmlFor="sujet"
                   className="block text-[10px] font-bold uppercase tracking-[0.25em] text-mountain-600"
                 >
-                  Sujet
+                  {t.labels.sujet}
                 </label>
                 <select
                   id="sujet"
@@ -184,7 +179,7 @@ export default function Contact() {
                   onChange={onChange}
                   className="mt-2 w-full appearance-none rounded-lg border-2 border-mountain-200 bg-white px-4 py-3 text-sm font-medium text-mountain-950 focus:border-flame-500 focus:outline-none"
                 >
-                  {SUBJECTS.map((s) => (
+                  {t.subjects.map((s) => (
                     <option key={s} value={s}>
                       {s}
                     </option>
@@ -197,7 +192,7 @@ export default function Contact() {
                   htmlFor="message"
                   className="block text-[10px] font-bold uppercase tracking-[0.25em] text-mountain-600"
                 >
-                  Message
+                  {t.labels.message}
                   <span className="ml-1 text-flame-500">*</span>
                 </label>
                 <textarea
@@ -207,7 +202,7 @@ export default function Contact() {
                   onChange={onChange}
                   rows={6}
                   required
-                  placeholder="Présentez brièvement votre projet, contexte, échéances…"
+                  placeholder={t.messagePlaceholder}
                   className="mt-2 w-full resize-none rounded-lg border-2 border-mountain-200 bg-white px-4 py-3 text-sm text-mountain-950 placeholder:text-mountain-400 focus:border-flame-500 focus:outline-none"
                 />
               </div>
@@ -219,12 +214,12 @@ export default function Contact() {
               >
                 {isSubmitting ? (
                   <>
-                    Envoi en cours...
+                    {t.submitting}
                     <Loader2 className="h-4 w-4 animate-spin" strokeWidth={2.5} />
                   </>
                 ) : (
                   <>
-                    Envoyer le message
+                    {t.submit}
                     <Send
                       className="h-4 w-4 transition-transform group-hover:translate-x-1"
                       strokeWidth={2.5}
@@ -257,7 +252,7 @@ export default function Contact() {
             <div className="mt-6 flex items-center gap-3 text-sm text-mountain-700">
               <Mail className="h-4 w-4 text-flame-600" strokeWidth={2.5} />
               <span>
-                Ou par mail direct :{' '}
+                {t.directLabel}{' '}
                 <a
                   href={`mailto:${RECIPIENT}`}
                   className="font-bold text-mountain-950 underline-offset-4 hover:underline"
@@ -300,7 +295,7 @@ export default function Contact() {
               </div>
 
               <p className="mt-5 text-center text-[10px] font-bold uppercase tracking-[0.25em] text-mountain-600">
-                Vidéo de présentation
+                {t.videoCaption}
               </p>
             </div>
           </motion.aside>

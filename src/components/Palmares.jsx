@@ -1,13 +1,5 @@
 import { TrendingUp, Trophy } from 'lucide-react';
-
-const PROGRESSION = [
-  { year: '2021', label: 'Régional' },
-  { year: '2022', label: 'Régional+' },
-  { year: '2023', label: 'Inter-régional' },
-  { year: '2024', label: 'National' },
-  { year: '2025', label: 'Top National' },
-  { year: '2026', label: 'Élite — Top 3 %' },
-];
+import { useT } from '../i18n/useT.js';
 
 // Coordonnées normalisées du tracé (0-100) — 6 points
 const POINTS = [
@@ -25,6 +17,7 @@ const linePath = POINTS.map(
 const areaPath = `${linePath} L 100 100 L 0 100 Z`;
 
 export default function Palmares() {
+  const t = useT('palmares');
   return (
     <section
       id="palmares"
@@ -41,20 +34,18 @@ export default function Palmares() {
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.25em] text-flame-600">
-              02 — Palmarès récent
+              {t.eyebrow}
             </p>
             <h2 className="mt-3 font-display text-5xl font-bold uppercase leading-[0.95] tracking-tight text-mountain-950 sm:text-6xl">
-              Référence
+              {t.title1}
               <br />
               <span className="bg-gradient-to-r from-flame-600 via-flame-500 to-solar-400 bg-clip-text text-transparent">
-                Saison 2026.
+                {t.title2}
               </span>
             </h2>
           </div>
           <p className="max-w-md text-sm leading-relaxed text-mountain-700">
-            Une performance phare cristallise la trajectoire : une percée au
-            contact du peloton Élite sur l’un des trails les plus relevés du
-            Sud-Est.
+            {t.kicker}
           </p>
         </div>
 
@@ -65,59 +56,48 @@ export default function Palmares() {
             <div className="flex flex-wrap items-center gap-2">
               <span className="inline-flex items-center gap-2 rounded-full bg-flame-500 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-white">
                 <span className="inline-block h-1.5 w-1.5 rounded-full bg-white" />
-                Highlight
+                {t.highlightPill}
               </span>
               <span className="inline-flex items-center gap-2 rounded-full border border-mountain-300 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-mountain-700">
-                Saison 2026
+                {t.seasonPill}
               </span>
               <span className="inline-flex items-center gap-2 rounded-full bg-mountain-950 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-white">
-                25 / 04 / 2026
+                {t.datePill}
               </span>
             </div>
 
             <h3 className="mt-6 font-display text-4xl font-bold uppercase leading-[0.95] tracking-tight text-mountain-950 sm:text-5xl">
-              Grand Raid
+              {t.raceTitle1}
               <br />
-              du Ventoux
+              {t.raceTitle2}
             </h3>
             <p className="mt-3 text-sm font-semibold uppercase tracking-widest text-mountain-600">
-              26 km · 1 100 m+ · Massif du Ventoux
+              {t.raceSub}
             </p>
 
             <p className="mt-6 max-w-lg text-base leading-relaxed text-mountain-800">
               <span className="bg-gradient-to-r from-flame-600 to-flame-500 bg-clip-text font-display text-3xl font-bold text-transparent">
-                9ᵉ femme / 381
-              </span>{' '}
-              — soit le Top 3 % féminin, et une Victoire de catégorie. Une
-              référence qui valide la trajectoire vers le statut Élite.
+                {t.bigStat}
+              </span>
+              {t.bigStatExplain}
             </p>
 
             {/* Mini-stats */}
             <dl className="mt-10 grid grid-cols-3 gap-px overflow-hidden rounded-xl border border-mountain-200 bg-mountain-200">
-              <div className="bg-white p-4">
-                <dt className="text-[10px] font-semibold uppercase tracking-widest text-mountain-500">
-                  Rang Femmes
-                </dt>
-                <dd className="mt-1 font-display text-2xl font-bold text-flame-600">
-                  9 / 381
-                </dd>
-              </div>
-              <div className="bg-white p-4">
-                <dt className="text-[10px] font-semibold uppercase tracking-widest text-mountain-500">
-                  Temps
-                </dt>
-                <dd className="mt-1 font-mono text-2xl font-bold text-mountain-950">
-                  02:37:09
-                </dd>
-              </div>
-              <div className="bg-white p-4">
-                <dt className="text-[10px] font-semibold uppercase tracking-widest text-mountain-500">
-                  Scratch
-                </dt>
-                <dd className="mt-1 font-display text-2xl font-bold text-mountain-950">
-                  124 / 1178
-                </dd>
-              </div>
+              {t.stats.map((stat, i) => (
+                <div key={stat.label} className="bg-white p-4">
+                  <dt className="text-[10px] font-semibold uppercase tracking-widest text-mountain-500">
+                    {stat.label}
+                  </dt>
+                  <dd
+                    className={`mt-1 ${i === 1 ? 'font-mono' : 'font-display'} text-2xl font-bold ${
+                      i === 0 ? 'text-flame-600' : 'text-mountain-950'
+                    }`}
+                  >
+                    {stat.value}
+                  </dd>
+                </div>
+              ))}
             </dl>
           </article>
 
@@ -125,7 +105,7 @@ export default function Palmares() {
           <figure className="relative min-h-[280px] bg-mountain-950 lg:col-span-5">
             <img
               src="/Ventoux1.jpeg"
-              alt="Mathilde Baudelocq en course au Grand Raid du Ventoux 2026"
+              alt={t.photoAlt}
               className="absolute inset-0 h-full w-full object-cover"
               loading="lazy"
               decoding="async"
@@ -137,10 +117,10 @@ export default function Palmares() {
             <figcaption className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-5">
               <div>
                 <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-flame-300">
-                  En course · GRV 2026
+                  {t.photoEyebrow}
                 </p>
                 <p className="mt-1 font-display text-lg font-bold uppercase tracking-wide text-white">
-                  Massif du Ventoux
+                  {t.photoCaption}
                 </p>
               </div>
               <span className="rounded-full border border-white/30 bg-white/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-white backdrop-blur">
@@ -160,14 +140,14 @@ export default function Palmares() {
                   <TrendingUp className="h-5 w-5" strokeWidth={2} />
                 </span>
                 <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-mountain-300">
-                  Progression · 6 ans
+                  {t.progressionLabel}
                 </p>
               </div>
               <p className="mt-5 font-display text-2xl font-semibold uppercase leading-tight tracking-tight text-white sm:text-3xl">
-                Progression constante
+                {t.progressionTitle1}
                 <br />
                 <span className="bg-gradient-to-r from-flame-400 to-solar-400 bg-clip-text text-transparent">
-                  vers le statut Élite.
+                  {t.progressionTitle2}
                 </span>
               </p>
             </div>
@@ -176,7 +156,7 @@ export default function Palmares() {
             <div className="mt-8 rounded-xl border border-white/10 bg-black/20 p-5">
               <svg
                 role="img"
-                aria-label="Courbe de progression sur 6 ans, ascendante"
+                aria-label={t.progressionAriaLabel}
                 viewBox="0 0 100 100"
                 preserveAspectRatio="none"
                 className="h-32 w-full"
@@ -236,22 +216,22 @@ export default function Palmares() {
 
               {/* Étiquettes années */}
               <div className="mt-3 flex justify-between text-[10px] font-semibold uppercase tracking-widest text-mountain-300">
-                {PROGRESSION.map((p, i) => (
+                {t.progressionYears.map((year, i) => (
                   <span
-                    key={p.year}
+                    key={year}
                     className={
-                      i === PROGRESSION.length - 1 ? 'text-solar-300' : ''
+                      i === t.progressionYears.length - 1 ? 'text-solar-300' : ''
                     }
                   >
-                    {p.year}
+                    {year}
                   </span>
                 ))}
               </div>
             </div>
 
             <div className="mt-6 flex items-center justify-between border-t border-white/10 pt-4 text-[10px] font-semibold uppercase tracking-widest">
-              <span className="text-mountain-300">Départ : Régional</span>
-              <span className="text-solar-300">Aujourd’hui : Top Féminine</span>
+              <span className="text-mountain-300">{t.progressionStart}</span>
+              <span className="text-solar-300">{t.progressionEnd}</span>
             </div>
           </aside>
 
@@ -259,7 +239,7 @@ export default function Palmares() {
           <figure className="relative min-h-[280px] bg-mountain-950 lg:col-span-5">
             <img
               src="/VentouxPodium.jpeg"
-              alt="Mathilde Baudelocq sur le podium du Grand Raid du Ventoux 2026"
+              alt={t.podiumAlt}
               className="absolute inset-0 h-full w-full object-cover"
               loading="lazy"
               decoding="async"
@@ -270,15 +250,15 @@ export default function Palmares() {
             />
             <span className="absolute right-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-flame-500 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-white">
               <Trophy className="h-3 w-3" strokeWidth={2.5} />
-              Podium catégorie
+              {t.podiumPill}
             </span>
             <figcaption className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-5">
               <div>
                 <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-solar-300">
-                  Cérémonie · GRV 2026
+                  {t.podiumEyebrow}
                 </p>
                 <p className="mt-1 font-display text-lg font-bold uppercase tracking-wide text-white">
-                  Top 3 % Féminin
+                  {t.podiumCaption}
                 </p>
               </div>
               <span className="rounded-full border border-white/30 bg-white/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-white backdrop-blur">

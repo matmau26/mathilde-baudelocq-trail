@@ -1,4 +1,5 @@
 import { Award, Mountain, Trophy, TrendingUp } from 'lucide-react';
+import { useT } from '../i18n/useT.js';
 
 const BADGE_STYLES = {
   Podium: {
@@ -17,7 +18,7 @@ const BADGE_STYLES = {
   },
 };
 
-function RaceBadges({ badges }) {
+function RaceBadges({ badges, labels }) {
   if (!badges || badges.length === 0) return null;
   return (
     <>
@@ -25,13 +26,14 @@ function RaceBadges({ badges }) {
         const style = BADGE_STYLES[badge];
         if (!style) return null;
         const Icon = style.icon;
+        const label = labels?.[badge] || badge;
         return (
           <span
             key={badge}
             className={`inline-flex items-center gap-1 px-2 py-0.5 text-[9px] font-bold uppercase tracking-[0.25em] ${style.className}`}
           >
             {Icon && <Icon className="h-3 w-3" strokeWidth={2.5} />}
-            {badge}
+            {label}
           </span>
         );
       })}
@@ -185,6 +187,7 @@ const RACES = [
 ];
 
 export default function RaceResults() {
+  const t = useT('races');
   return (
     <section
       id="resultats"
@@ -195,19 +198,18 @@ export default function RaceResults() {
         <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="text-xs font-bold uppercase tracking-[0.25em] text-flame-600">
-              04 — Résultats détaillés
+              {t.eyebrow}
             </p>
             <h2 className="mt-3 font-display text-5xl font-bold uppercase leading-[0.95] tracking-tight text-mountain-950 sm:text-6xl">
-              Historique
+              {t.title1}
               <br />
               <span className="bg-gradient-to-r from-mountain-900 via-electric-600 to-flame-500 bg-clip-text text-transparent">
-                des courses.
+                {t.title2}
               </span>
             </h2>
           </div>
           <p className="max-w-md text-sm leading-relaxed text-mountain-700">
-            Données de course brutes — temps officiels, classement femmes et
-            scratch général. Le rang femmes est l’indicateur de référence.
+            {t.kicker}
           </p>
         </div>
 
@@ -217,22 +219,22 @@ export default function RaceResults() {
             <thead>
               <tr className="bg-mountain-950 text-white">
                 <th className="border-r border-white/10 px-4 py-3 text-[10px] font-bold uppercase tracking-[0.25em]">
-                  Date
+                  {t.headers.date}
                 </th>
                 <th className="border-r border-white/10 px-4 py-3 text-[10px] font-bold uppercase tracking-[0.25em]">
-                  Course
+                  {t.headers.race}
                 </th>
                 <th className="border-r border-white/10 px-4 py-3 text-[10px] font-bold uppercase tracking-[0.25em]">
-                  Distance / D+
+                  {t.headers.distance}
                 </th>
                 <th className="border-r border-white/10 px-4 py-3 text-[10px] font-bold uppercase tracking-[0.25em]">
-                  Temps
+                  {t.headers.time}
                 </th>
                 <th className="border-r border-white/10 bg-flame-500 px-4 py-3 text-[10px] font-bold uppercase tracking-[0.25em]">
-                  Rang Femmes
+                  {t.headers.women}
                 </th>
                 <th className="px-4 py-3 text-[10px] font-bold uppercase tracking-[0.25em]">
-                  Rang Général
+                  {t.headers.general}
                 </th>
               </tr>
             </thead>
@@ -264,12 +266,12 @@ export default function RaceResults() {
                         <p className="text-sm font-semibold text-mountain-950">
                           {race.nom}
                         </p>
-                        <RaceBadges badges={race.badges} />
+                        <RaceBadges badges={race.badges} labels={t.badges} />
                       </div>
                       {isHighlight && (
                         <span className="mt-2 inline-flex items-center gap-1.5 bg-flame-500 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-white">
                           <Award className="h-3 w-3" strokeWidth={2.5} />
-                          {race.badge}
+                          {t.highlightBadge}
                         </span>
                       )}
                     </td>
@@ -335,7 +337,7 @@ export default function RaceResults() {
                     <h3 className="text-base font-bold leading-snug text-mountain-950">
                       {race.nom}
                     </h3>
-                    <RaceBadges badges={race.badges} />
+                    <RaceBadges badges={race.badges} labels={t.badges} />
                   </div>
                   {isHighlight && (
                     <span className="mt-3 inline-flex items-center gap-1.5 bg-flame-500 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-white">
@@ -347,7 +349,7 @@ export default function RaceResults() {
                   <dl className="mt-4 grid grid-cols-3 gap-px overflow-hidden border border-mountain-200 bg-mountain-200">
                     <div className="bg-white p-3">
                       <dt className="text-[10px] font-bold uppercase tracking-widest text-mountain-500">
-                        Temps
+                        {t.mobileLabels.time}
                       </dt>
                       <dd className="mt-1 font-mono text-sm font-semibold text-mountain-900">
                         {race.temps}
@@ -355,7 +357,7 @@ export default function RaceResults() {
                     </div>
                     <div className="bg-flame-50 p-3">
                       <dt className="text-[10px] font-bold uppercase tracking-widest text-flame-700">
-                        Rang F
+                        {t.mobileLabels.women}
                       </dt>
                       <dd className="mt-1 font-mono text-sm font-bold text-flame-600">
                         {race.rangFemmes}
@@ -363,7 +365,7 @@ export default function RaceResults() {
                     </div>
                     <div className="bg-white p-3">
                       <dt className="text-[10px] font-bold uppercase tracking-widest text-mountain-500">
-                        Rang G
+                        {t.mobileLabels.general}
                       </dt>
                       <dd className="mt-1 font-mono text-sm text-mountain-600">
                         {race.rangGeneral}
@@ -378,8 +380,7 @@ export default function RaceResults() {
 
         {/* Pied : note méthodologique */}
         <p className="mt-6 text-[10px] uppercase tracking-widest text-mountain-500">
-          Source : résultats officiels des organisateurs · Mise à jour saison
-          2025–26
+          {t.footnote}
         </p>
       </div>
     </section>
