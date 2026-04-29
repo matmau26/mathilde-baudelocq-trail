@@ -54,17 +54,28 @@ export default function Header() {
           </span>
         </Link>
 
-        <nav className="hidden md:flex items-center gap-6">
-          {t.nav.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              onClick={(e) => handleAnchorClick(e, link.href)}
-              className={`whitespace-nowrap text-[11px] font-medium uppercase tracking-[0.16em] transition-colors ${linkText}`}
-            >
-              {link.label}
-            </a>
-          ))}
+        <nav className="hidden md:flex items-center gap-5 lg:gap-6">
+          {t.nav.map((link) =>
+            link.external ? (
+              <Link
+                key={link.href}
+                to={link.href}
+                onClick={() => setOpen(false)}
+                className={`whitespace-nowrap text-[11px] font-medium uppercase tracking-[0.16em] transition-colors ${linkText}`}
+              >
+                {link.label}
+              </Link>
+            ) : (
+              <a
+                key={link.href}
+                href={link.href}
+                onClick={(e) => handleAnchorClick(e, link.href)}
+                className={`whitespace-nowrap text-[11px] font-medium uppercase tracking-[0.16em] transition-colors ${linkText}`}
+              >
+                {link.label}
+              </a>
+            )
+          )}
           <LanguageSwitch />
           <Link
             to="/contact"
@@ -113,16 +124,27 @@ export default function Header() {
       {open && (
         <div className="md:hidden border-t border-mountain-100 bg-white/95 backdrop-blur">
           <nav className="mx-auto flex max-w-6xl flex-col gap-1 px-6 py-4">
-            {t.nav.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={(e) => handleAnchorClick(e, link.href)}
-                className="rounded-lg px-3 py-2 text-sm font-semibold uppercase tracking-[0.2em] text-mountain-800 hover:bg-mountain-50"
-              >
-                {link.label}
-              </a>
-            ))}
+            {t.nav.map((link) =>
+              link.external ? (
+                <Link
+                  key={link.href}
+                  to={link.href}
+                  onClick={() => setOpen(false)}
+                  className="rounded-lg px-3 py-2 text-sm font-semibold uppercase tracking-[0.2em] text-mountain-800 hover:bg-mountain-50"
+                >
+                  {link.label}
+                </Link>
+              ) : (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={(e) => handleAnchorClick(e, link.href)}
+                  className="rounded-lg px-3 py-2 text-sm font-semibold uppercase tracking-[0.2em] text-mountain-800 hover:bg-mountain-50"
+                >
+                  {link.label}
+                </a>
+              )
+            )}
             <Link
               to="/contact"
               onClick={() => setOpen(false)}

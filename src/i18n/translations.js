@@ -18,6 +18,7 @@ export const translations = {
         { href: '#resultats', label: 'Résultats' },
         { href: '#calendrier', label: 'Objectifs' },
         { href: '#partenariat', label: 'Partenariat' },
+        { href: '/communiques', label: 'Communiqués', external: true },
       ],
       cta: 'Prendre contact',
       menuOpen: 'Ouvrir le menu',
@@ -293,6 +294,25 @@ export const translations = {
         'Discutons du modèle qui correspond à votre projet de marque.',
     },
 
+    communiques: {
+      eyebrow: 'Communiqués',
+      title1: 'Communiqués',
+      title2: 'de course.',
+      kicker:
+        "Récits de courses, retours analytiques et photos officielles : la trace écrite de chaque temps fort de la saison.",
+      back: 'Retour au Media Kit',
+      backToList: 'Retour aux communiqués',
+      readMore: 'Lire le communiqué',
+      published: 'Publié',
+      labels: {
+        location: 'Lieu',
+        distance: 'Distance',
+        elevation: 'Dénivelé',
+        start: 'Départ',
+      },
+      empty: 'Aucun communiqué pour le moment.',
+    },
+
     contact: {
       back: 'Retour au Media Kit',
       eyebrow: 'Contact',
@@ -343,6 +363,7 @@ export const translations = {
         { href: '#resultats', label: 'Results' },
         { href: '#calendrier', label: 'Goals' },
         { href: '#partenariat', label: 'Partnership' },
+        { href: '/communiques', label: 'Press', external: true },
       ],
       cta: 'Get in touch',
       menuOpen: 'Open menu',
@@ -616,6 +637,25 @@ export const translations = {
       footerCta: 'Get in touch',
       footerTagline:
         'Let’s discuss the model that fits your brand project.',
+    },
+
+    communiques: {
+      eyebrow: 'Press releases',
+      title1: 'Race',
+      title2: 'press releases.',
+      kicker:
+        'Race recaps, analytical takeaways and official photos: the written trace of every season highlight.',
+      back: 'Back to Media Kit',
+      backToList: 'Back to press releases',
+      readMore: 'Read the release',
+      published: 'Published',
+      labels: {
+        location: 'Location',
+        distance: 'Distance',
+        elevation: 'Elevation',
+        start: 'Start',
+      },
+      empty: 'No press releases yet.',
     },
 
     contact: {
