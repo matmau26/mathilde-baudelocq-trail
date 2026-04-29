@@ -10,6 +10,7 @@ const MEDIA = [
     src: 'https://res.cloudinary.com/dnh2k1blz/video/upload/q_auto/f_auto/v1777299247/D696A555-9A4B-49A1-9954-3B65EC3ACB5B_xaeuo6.mp4',
   },
   { type: 'photo', src: '/Maxi2025-1.jpg', alt: 'MaXi-Race 2025 · 100 km' },
+  { type: 'photo', src: '/MBMaxi.jpg', alt: 'MaXi-Race · sur la ligne' },
   { type: 'photo', src: '/Ventoux1.jpeg', alt: 'Trail · Massif du Ventoux' },
   {
     type: 'video',
