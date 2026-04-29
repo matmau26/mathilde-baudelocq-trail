@@ -52,43 +52,47 @@ function RaceVideoPlayer({ src }) {
   };
 
   return (
-    <div className="relative overflow-hidden rounded-2xl border-2 border-mountain-950 bg-mountain-950">
-      <video
-        ref={videoRef}
-        src={streamUrl}
-        poster={poster}
-        preload="auto"
-        muted
-        playsInline
-        controls={playing}
-        onCanPlay={() => setLoaded(true)}
-        onPlaying={() => setLoaded(true)}
-        className="block aspect-video w-full object-cover"
-      />
-      {!playing && (
-        <button
-          type="button"
-          onClick={handleClick}
-          aria-label="Play"
-          className="absolute inset-0 flex items-center justify-center"
-        >
-          <span
-            aria-hidden="true"
-            className="absolute inset-0 bg-mountain-950/20 transition-colors duration-300 hover:bg-mountain-950/30"
+    <div className="mx-auto w-full max-w-[20rem] sm:max-w-xs">
+      <div className="rounded-[2.25rem] border-2 border-flame-500 p-2 shadow-2xl shadow-mountain-900/20">
+        <div className="relative aspect-[9/16] w-full overflow-hidden rounded-[1.75rem] bg-mountain-950">
+          <video
+            ref={videoRef}
+            src={streamUrl}
+            poster={poster}
+            preload="auto"
+            muted
+            playsInline
+            controls={playing}
+            onCanPlay={() => setLoaded(true)}
+            onPlaying={() => setLoaded(true)}
+            className="absolute inset-0 h-full w-full object-cover"
           />
-          <span className="relative flex h-16 w-16 items-center justify-center rounded-full bg-flame-500 text-white shadow-xl shadow-mountain-900/30 transition-transform duration-300 hover:scale-110 sm:h-20 sm:w-20">
-            <Play
-              className="h-7 w-7 translate-x-0.5 fill-white sm:h-8 sm:w-8"
-              strokeWidth={0}
-            />
-          </span>
-        </button>
-      )}
-      {playing && !loaded && (
-        <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-mountain-950/55 backdrop-blur-sm">
-          <Loader2 className="h-10 w-10 animate-spin text-white" strokeWidth={2.5} />
+          {!playing && (
+            <button
+              type="button"
+              onClick={handleClick}
+              aria-label="Play"
+              className="absolute inset-0 flex items-center justify-center"
+            >
+              <span
+                aria-hidden="true"
+                className="absolute inset-0 bg-mountain-950/20 transition-colors duration-300 hover:bg-mountain-950/30"
+              />
+              <span className="relative flex h-16 w-16 items-center justify-center rounded-full bg-flame-500 text-white shadow-xl shadow-mountain-900/30 transition-transform duration-300 hover:scale-110">
+                <Play
+                  className="h-7 w-7 translate-x-0.5 fill-white"
+                  strokeWidth={0}
+                />
+              </span>
+            </button>
+          )}
+          {playing && !loaded && (
+            <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-mountain-950/55 backdrop-blur-sm">
+              <Loader2 className="h-10 w-10 animate-spin text-white" strokeWidth={2.5} />
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 }

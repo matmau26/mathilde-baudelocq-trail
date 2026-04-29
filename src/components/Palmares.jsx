@@ -1,14 +1,14 @@
 import { TrendingUp, Trophy } from 'lucide-react';
 import { useT } from '../i18n/useT.js';
 
-// Coordonnées normalisées du tracé (0-100) — 6 points
+// Coordonnées normalisées du tracé (0-100) — 5 points calés sur les valeurs
+// 2022:400, 2023:432, 2024:457, 2025:540, 2026:570 (y inversé : 0 = haut)
 const POINTS = [
-  { x: 0, y: 82 },
-  { x: 20, y: 66 },
-  { x: 40, y: 52 },
-  { x: 60, y: 38 },
-  { x: 80, y: 22 },
-  { x: 100, y: 8 },
+  { x: 0, y: 85 },   // 2022 — 400
+  { x: 25, y: 71 },  // 2023 — 432
+  { x: 50, y: 60 },  // 2024 — 457
+  { x: 75, y: 23 },  // 2025 — 540
+  { x: 100, y: 10 }, // 2026 — 570
 ];
 
 const linePath = POINTS.map(

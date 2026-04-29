@@ -1,4 +1,5 @@
-import { Award, Mountain, Trophy, TrendingUp } from 'lucide-react';
+import { Award, Mountain, Trophy, TrendingUp, FileText, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useT } from '../i18n/useT.js';
 
 const BADGE_STYLES = {
@@ -188,6 +189,7 @@ const RACES = [
 
 export default function RaceResults() {
   const t = useT('races');
+  const tc = useT('communiques');
   return (
     <section
       id="resultats"
@@ -377,6 +379,33 @@ export default function RaceResults() {
             );
           })}
         </ul>
+
+        {/* CTA Communiqués */}
+        <div className="mt-10 flex flex-col items-start justify-between gap-4 rounded-2xl border-2 border-mountain-950 bg-mountain-950 p-6 text-white sm:flex-row sm:items-center sm:p-7">
+          <div className="flex items-start gap-3">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-white/10 text-flame-300">
+              <FileText className="h-5 w-5" strokeWidth={2} />
+            </span>
+            <div>
+              <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-flame-300">
+                {tc.eyebrow}
+              </p>
+              <p className="mt-1 font-display text-base font-bold uppercase leading-tight tracking-wide text-white sm:text-lg">
+                {tc.kicker}
+              </p>
+            </div>
+          </div>
+          <Link
+            to="/communiques"
+            className="group inline-flex shrink-0 items-center gap-2 rounded-full bg-flame-500 px-5 py-2.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-white transition-colors hover:bg-flame-600"
+          >
+            {tc.eyebrow}
+            <ArrowRight
+              className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5"
+              strokeWidth={2.5}
+            />
+          </Link>
+        </div>
 
         {/* Pied : note méthodologique */}
         <p className="mt-6 text-[10px] uppercase tracking-widest text-mountain-500">
