@@ -37,6 +37,18 @@ export default function Header() {
     }
   };
 
+  const handleLogoClick = (e) => {
+    setOpen(false);
+    if (onHome) {
+      // Déjà sur la home : on stoppe la nav et on remonte simplement en haut
+      e.preventDefault();
+    }
+    // Quel que soit le cas (home ou autre route), on remonte en haut
+    requestAnimationFrame(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  };
+
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${surface}`}
@@ -44,6 +56,8 @@ export default function Header() {
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-6">
         <Link
           to="/"
+          onClick={handleLogoClick}
+          aria-label="Retour en haut"
           className={`flex shrink-0 items-center gap-2 font-medium tracking-tight transition-colors ${logoText}`}
         >
           <span
