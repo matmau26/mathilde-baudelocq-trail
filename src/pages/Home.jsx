@@ -1,6 +1,6 @@
 import Hero from '../components/Hero.jsx';
 import VelocityMarquee from '../components/VelocityMarquee.jsx';
-import Athlete from '../components/Athlete.jsx';
+import AthleteStoryScroll from '../components/AthleteStoryScroll.jsx';
 import PullQuote from '../components/PullQuote.jsx';
 import TopPerf from '../components/Palmares.jsx';
 import Gallery from '../components/Gallery.jsx';
@@ -13,7 +13,7 @@ export default function Home() {
     <main>
       <Hero />
       <VelocityMarquee />
-      <Athlete />
+      <AthleteStoryScroll />
       <PullQuote />
       <TopPerf />
       <Gallery />

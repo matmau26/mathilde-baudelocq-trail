@@ -1,32 +1,30 @@
-import { useRef } from 'react';
-import {
-  motion,
-  useMotionValue,
-  useScroll,
-  useSpring,
-  useTransform,
-} from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import AnimatedCounter from './AnimatedCounter.jsx';
 import { useT } from '../i18n/useT.js';
 
-const HERO_IMAGE = '/Maxi2025-1.jpg';
+const HERO_VIDEO =
+  'https://res.cloudinary.com/dnh2k1blz/video/upload/q_auto:good,f_auto,w_1600,vc_h264/v1777299247/D696A555-9A4B-49A1-9954-3B65EC3ACB5B_xaeuo6.mp4';
+const HERO_POSTER =
+  'https://res.cloudinary.com/dnh2k1blz/video/upload/q_auto:good,f_jpg,w_1600/v1777299247/D696A555-9A4B-49A1-9954-3B65EC3ACB5B_xaeuo6.jpg';
+const FALLBACK_IMAGE = '/Maxi2025-1.jpg';
 
-// Variants pour la révélation char-par-char du titre
 const titleContainer = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.04, delayChildren: 0.2 } },
-};
-
-const charVariant = {
-  hidden: { y: '110%', opacity: 0 },
   visible: {
-    y: 0,
-    opacity: 1,
-    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
+    transition: { staggerChildren: 0.05, delayChildren: 0.4 },
   },
 };
 
-function SplitText({ text, className = '' }) {
+const charVariant = {
+  hidden: { y: '110%' },
+  visible: {
+    y: 0,
+    transition: { duration: 0.9, ease: [0.16, 1, 0.3, 1] },
+  },
+};
+
+function SplitWord({ text, className = '', accent = false }) {
   return (
     <motion.span
       variants={titleContainer}
@@ -40,7 +38,11 @@ function SplitText({ text, className = '' }) {
           key={i}
           variants={charVariant}
           aria-hidden="true"
-          className="inline-block"
+          className={`inline-block ${
+            accent
+              ? 'bg-gradient-to-b from-flame-300 via-flame-400 to-solar-400 bg-clip-text text-transparent'
+              : 'text-white'
+          }`}
         >
           {char === ' ' ? ' ' : char}
         </motion.span>
@@ -52,244 +54,228 @@ function SplitText({ text, className = '' }) {
 export default function Hero() {
   const t = useT('hero');
   const containerRef = useRef(null);
-  const photoWrapperRef = useRef(null);
+  const videoRef = useRef(null);
+  const [videoReady, setVideoReady] = useState(false);
 
-  // Parallax au scroll : la photo glisse plus lentement que le texte
+  // Force la lecture sur iOS Safari (il ignore parfois autoPlay)
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.muted = true;
+    v.setAttribute('muted', '');
+    v.play().catch(() => {});
+  }, []);
+
+  // Parallax content + zoom léger de la vidéo au scroll
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end start'],
   });
-  const photoY = useTransform(scrollYProgress, [0, 1], ['0%', '15%']);
-  const photoScale = useTransform(scrollYProgress, [0, 1], [1, 1.08]);
-
-  // Tilt 3D mouse-follow sur le panneau photo (desktop only)
-  const tiltX = useMotionValue(0);
-  const tiltY = useMotionValue(0);
-  const rotateX = useSpring(useTransform(tiltY, [-0.5, 0.5], [6, -6]), {
-    stiffness: 200,
-    damping: 20,
-  });
-  const rotateY = useSpring(useTransform(tiltX, [-0.5, 0.5], [-6, 6]), {
-    stiffness: 200,
-    damping: 20,
-  });
-
-  const handleMouseMove = (e) => {
-    if (!photoWrapperRef.current) return;
-    const rect = photoWrapperRef.current.getBoundingClientRect();
-    const px = (e.clientX - rect.left) / rect.width - 0.5;
-    const py = (e.clientY - rect.top) / rect.height - 0.5;
-    tiltX.set(px);
-    tiltY.set(py);
-  };
-
-  const handleMouseLeave = () => {
-    tiltX.set(0);
-    tiltY.set(0);
-  };
+  const videoScale = useTransform(scrollYProgress, [0, 1], [1.05, 1.18]);
+  const videoY = useTransform(scrollYProgress, [0, 1], ['0%', '8%']);
+  const overlayOpacity = useTransform(scrollYProgress, [0, 1], [0.55, 0.85]);
+  const contentY = useTransform(scrollYProgress, [0, 1], ['0%', '-20%']);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
 
   return (
     <section
       ref={containerRef}
       id="top"
-      className="relative isolate flex min-h-[100svh] items-center overflow-hidden bg-mesh-warm pt-32 pb-24 sm:pt-40 sm:pb-28"
+      className="relative isolate min-h-[100svh] overflow-hidden bg-mountain-950 text-white"
     >
-      {/* Blobs animés en arrière-plan */}
+      {/* VIDÉO PLEIN ÉCRAN — Mathilde en course */}
+      <motion.div
+        style={{ scale: videoScale, y: videoY }}
+        className="absolute inset-0 -z-10 will-change-transform"
+      >
+        <img
+          src={FALLBACK_IMAGE}
+          alt=""
+          aria-hidden="true"
+          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
+            videoReady ? 'opacity-0' : 'opacity-100'
+          }`}
+        />
+        <video
+          ref={videoRef}
+          src={HERO_VIDEO}
+          poster={HERO_POSTER}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          onCanPlay={() => setVideoReady(true)}
+          onPlaying={() => setVideoReady(true)}
+          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
+            videoReady ? 'opacity-100' : 'opacity-0'
+          }`}
+          aria-hidden="true"
+        />
+      </motion.div>
+
+      {/* OVERLAY GRADIENT pour lisibilité du texte */}
       <motion.div
         aria-hidden="true"
-        animate={{ scale: [1, 1.15, 1], opacity: [0.6, 0.85, 0.6] }}
-        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-        className="pointer-events-none absolute -top-32 -left-32 h-[36rem] w-[36rem] rounded-full bg-flame-300/40 blur-[120px]"
-      />
-      <motion.div
-        aria-hidden="true"
-        animate={{ scale: [1.1, 1, 1.1], opacity: [0.5, 0.75, 0.5] }}
-        transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
-        className="pointer-events-none absolute -bottom-40 right-[-10rem] h-[34rem] w-[34rem] rounded-full bg-electric-300/40 blur-[120px]"
+        style={{ opacity: overlayOpacity }}
+        className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-mountain-950/70 via-mountain-950/40 to-mountain-950/95"
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute top-1/2 left-1/2 h-[18rem] w-[18rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-solar-300/30 blur-[100px]"
+        className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-t from-mountain-950 via-transparent to-transparent"
+      />
+      {/* Touche flame en bas */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -bottom-32 left-1/2 -z-10 h-[28rem] w-[40rem] -translate-x-1/2 rounded-full bg-flame-500/30 blur-[120px]"
       />
 
-      {/* Année en filigrane */}
-      <motion.span
-        aria-hidden="true"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.06 }}
-        transition={{ duration: 2, delay: 0.5 }}
-        className="pointer-events-none absolute -bottom-4 right-2 select-none font-display text-[16rem] font-bold leading-none tracking-tighter text-mountain-950 sm:-bottom-8 sm:right-4 sm:text-[22rem] lg:text-[28rem]"
+      {/* CONTENU PRINCIPAL */}
+      <motion.div
+        style={{ y: contentY, opacity: contentOpacity }}
+        className="relative flex min-h-[100svh] flex-col justify-between px-6 pb-10 pt-32 sm:pt-36 lg:px-12"
       >
-        2026
-      </motion.span>
-
-      <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-14 px-6 lg:grid-cols-12">
-        {/* Bloc texte */}
+        {/* Top strip — meta */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: 'easeOut' }}
-          className="lg:col-span-7"
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="mx-auto flex w-full max-w-7xl items-center justify-between gap-4 text-[10px] font-semibold uppercase tracking-[0.25em] text-white/70 sm:text-[11px]"
         >
-          <div className="inline-flex items-center gap-2 rounded-full border border-flame-300/50 bg-white/60 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-flame-700 backdrop-blur-md">
+          <span className="inline-flex items-center gap-2">
             <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-flame-500" />
             {t.eyebrow}
-          </div>
-
-          <h1 className="mt-6 font-display text-6xl font-bold uppercase leading-[0.88] tracking-tight text-mountain-950 sm:text-7xl lg:text-[7.5rem]">
-            <SplitText text={t.titleFirst} className="block" />
-            <SplitText
-              text={t.titleLast}
-              className="block bg-gradient-to-r from-flame-600 via-flame-500 to-solar-400 bg-clip-text text-transparent"
-            />
-          </h1>
-
-          <motion.p
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: 'easeOut', delay: 0.55 }}
-            className="mt-6 max-w-xl text-base sm:text-lg font-light text-mountain-700"
-          >
-            {t.subtitleSport}
-            <span className="mx-3 inline-block h-1 w-1 rounded-full bg-flame-500 align-middle" />
-            <span className="font-medium uppercase tracking-[0.12em] text-mountain-950">
-              {t.subtitleProject}
-            </span>
-          </motion.p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: 'easeOut', delay: 0.7 }}
-            className="mt-10 flex flex-wrap items-center gap-4"
-          >
-            <a
-              href="#partenariat"
-              className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-full bg-flame-500 px-5 py-3 text-[12px] font-semibold uppercase tracking-[0.15em] text-white shadow-md shadow-flame-500/20 transition-all hover:bg-flame-600 hover:shadow-lg hover:shadow-flame-500/30"
-            >
-              <span className="relative z-10">{t.ctaPrimary}</span>
-              <svg
-                className="relative z-10 h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <line x1="5" y1="12" x2="19" y2="12" />
-                <polyline points="12 5 19 12 12 19" />
-              </svg>
-            </a>
-
-            <a
-              href="#athlete"
-              className="inline-flex items-center gap-2 rounded-full border border-mountain-300 bg-transparent px-4 py-3 text-[12px] font-semibold uppercase tracking-[0.15em] text-mountain-700 transition-colors hover:border-mountain-950 hover:text-mountain-950"
-            >
-              {t.ctaSecondary}
-              <span aria-hidden="true">→</span>
-            </a>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: 'easeOut', delay: 0.85 }}
-            className="mt-14 flex flex-wrap items-center gap-3"
-          >
-            <span className="inline-flex items-center gap-2 rounded-full border border-mountain-200 bg-white/70 px-3.5 py-1.5 text-[11px] font-medium uppercase tracking-[0.18em] text-mountain-800 backdrop-blur-md">
-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-electric-500" />
-              {t.tagCity}
-            </span>
-            <span className="inline-flex items-center gap-2 rounded-full bg-mountain-950 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-white">
-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-flame-400" />
-              {t.tagProject}
-            </span>
-          </motion.div>
+          </span>
+          <span className="hidden sm:inline">{t.snapshotPeriod}</span>
         </motion.div>
 
-        {/* Panneau photo : parallax + tilt 3D */}
-        <motion.div
-          ref={photoWrapperRef}
-          onMouseMove={handleMouseMove}
-          onMouseLeave={handleMouseLeave}
-          initial={{ opacity: 0, x: 24 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.9, ease: 'easeOut', delay: 0.4 }}
-          style={{ perspective: 1200 }}
-          className="relative mx-auto w-full max-w-[22rem] lg:col-span-5 lg:max-w-sm"
-        >
-          <motion.div
-            style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
-            className="rounded-3xl border-2 border-flame-500 p-2 shadow-2xl shadow-mountain-900/20"
-          >
-            <div className="relative aspect-[2/3] w-full overflow-hidden rounded-2xl bg-mountain-950">
-              <div
-                aria-hidden="true"
-                className="absolute inset-0 bg-gradient-to-br from-mountain-700 via-mountain-900 to-flame-900"
-              />
-              <motion.img
-                src={HERO_IMAGE}
-                alt={t.photoAlt}
-                style={{ y: photoY, scale: photoScale }}
-                className="absolute inset-0 h-[115%] w-full object-cover will-change-transform"
-                loading="eager"
-                decoding="async"
-              />
-              <div
-                aria-hidden="true"
-                className="absolute inset-0 bg-gradient-to-t from-mountain-950/70 via-mountain-950/10 to-transparent"
-              />
+        {/* Titre central plein cadre */}
+        <div className="mx-auto flex w-full max-w-7xl flex-1 items-center">
+          <div className="w-full">
+            <h1 className="font-display text-[18vw] font-bold uppercase leading-[0.85] tracking-[-0.02em] sm:text-[14vw] lg:text-[12vw]">
+              <SplitWord text={t.titleFirst} className="block" />
+              <SplitWord text={t.titleLast} className="block" accent />
+            </h1>
 
-              {/* Bandeau bas avec compteurs animés */}
-              <div className="absolute inset-x-0 bottom-0 flex flex-col gap-2.5 p-4">
-                <div className="flex items-center justify-between text-[10px] font-medium uppercase tracking-[0.2em] text-white/70">
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 1.2 }}
+              className="mt-6 max-w-xl text-base font-light text-white/80 sm:text-lg"
+            >
+              {t.subtitleSport}
+              <span className="mx-3 inline-block h-1 w-1 rounded-full bg-flame-500 align-middle" />
+              <span className="font-medium uppercase tracking-[0.12em] text-white">
+                {t.subtitleProject}
+              </span>
+            </motion.p>
+          </div>
+        </div>
+
+        {/* Bottom HUD : CTAs + stats card flottante */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 1.4 }}
+          className="mx-auto w-full max-w-7xl"
+        >
+          <div className="grid grid-cols-1 items-end gap-6 lg:grid-cols-12 lg:gap-8">
+            {/* CTAs + tags */}
+            <div className="space-y-5 lg:col-span-7">
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-[11px] font-medium uppercase tracking-[0.18em] text-white backdrop-blur-md">
+                  <span className="inline-block h-1.5 w-1.5 rounded-full bg-electric-400" />
+                  {t.tagCity}
+                </span>
+                <span className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-mountain-950">
+                  <span className="inline-block h-1.5 w-1.5 rounded-full bg-flame-500" />
+                  {t.tagProject}
+                </span>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-3">
+                <a
+                  href="#partenariat"
+                  className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-full bg-flame-500 px-5 py-3 text-[12px] font-semibold uppercase tracking-[0.15em] text-white shadow-lg shadow-flame-500/40 transition-all hover:bg-flame-600"
+                >
+                  <span className="relative z-10">{t.ctaPrimary}</span>
+                  <svg
+                    className="relative z-10 h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                    <polyline points="12 5 19 12 12 19" />
+                  </svg>
+                </a>
+                <a
+                  href="#athlete"
+                  className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/5 px-4 py-3 text-[12px] font-semibold uppercase tracking-[0.15em] text-white backdrop-blur-md transition-colors hover:border-white hover:bg-white/15"
+                >
+                  {t.ctaSecondary}
+                  <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            </div>
+
+            {/* Card stats glassmorphism */}
+            <div className="lg:col-span-5">
+              <div className="rounded-2xl border border-white/15 bg-white/[0.07] p-4 backdrop-blur-2xl sm:p-5">
+                <div className="mb-3 flex items-center justify-between text-[10px] font-medium uppercase tracking-[0.2em] text-white/70">
                   <span>{t.snapshot}</span>
-                  <span>{t.snapshotPeriod}</span>
+                  <span className="inline-flex items-center gap-1.5">
+                    <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-emerald-400" />
+                    Live
+                  </span>
                 </div>
-                <div className="grid grid-cols-3 gap-1.5">
-                  <div className="rounded-lg border border-white/10 bg-white/[0.07] px-2.5 py-2 backdrop-blur-md">
-                    <p className="text-[9px] font-medium uppercase tracking-[0.18em] text-flame-300/90">
-                      ITRA
-                    </p>
-                    <p className="mt-0.5 font-display text-lg font-semibold text-white">
-                      <AnimatedCounter to={565} duration={1.8} />
-                    </p>
-                  </div>
-                  <div className="rounded-lg border border-white/10 bg-white/[0.07] px-2.5 py-2 backdrop-blur-md">
-                    <p className="text-[9px] font-medium uppercase tracking-[0.18em] text-electric-300/90">
-                      UTMB
-                    </p>
-                    <p className="mt-0.5 font-display text-lg font-semibold text-white">
-                      <AnimatedCounter to={568} duration={1.8} />
-                    </p>
-                  </div>
-                  <div className="rounded-lg border border-flame-400/40 bg-flame-500/15 px-2.5 py-2 backdrop-blur-md">
-                    <p className="text-[9px] font-medium uppercase tracking-[0.18em] text-flame-200">
-                      GRV
-                    </p>
-                    <p className="mt-0.5 font-display text-lg font-semibold text-white">
-                      {t.grvBadge}
-                    </p>
-                  </div>
+                <div className="grid grid-cols-3 gap-2">
+                  <StatBlock label="ITRA" value={565} accent="text-flame-300" />
+                  <StatBlock label="UTMB" value={568} accent="text-electric-300" />
+                  <StatBlock label="GRV" raw={t.grvBadge} accent="text-solar-300" highlight />
                 </div>
               </div>
             </div>
-          </motion.div>
+          </div>
         </motion.div>
-      </div>
+      </motion.div>
 
-      {/* Indicateur scroll */}
-      <a
+      {/* Scroll indicator */}
+      <motion.a
         href="#athlete"
-        aria-label="Faire défiler vers les performances"
-        className="absolute left-1/2 bottom-6 hidden -translate-x-1/2 flex-col items-center gap-2 text-mountain-700 sm:flex"
+        aria-label="Faire défiler"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.6, delay: 1.8 }}
+        className="absolute right-6 bottom-6 hidden flex-col items-center gap-2 text-[10px] font-semibold uppercase tracking-[0.25em] text-white/60 transition-colors hover:text-white sm:flex"
       >
-        <span className="text-[10px] font-bold uppercase tracking-[0.25em]">
-          Défiler
+        <span className="block h-10 w-px overflow-hidden bg-white/20">
+          <span className="block h-full w-full animate-bounce-slow bg-gradient-to-b from-flame-500 to-transparent" />
         </span>
-        <span className="block h-8 w-px bg-flame-500 animate-bounce-slow" />
-      </a>
+        Scroll
+      </motion.a>
     </section>
+  );
+}
+
+function StatBlock({ label, value, raw, accent, highlight = false }) {
+  return (
+    <div
+      className={`rounded-xl border ${
+        highlight
+          ? 'border-flame-400/40 bg-flame-500/10'
+          : 'border-white/10 bg-white/[0.05]'
+      } px-2.5 py-2.5 backdrop-blur-md`}
+    >
+      <p className={`text-[9px] font-medium uppercase tracking-[0.18em] ${accent}`}>
+        {label}
+      </p>
+      <p className="mt-1 font-display text-xl font-semibold text-white sm:text-2xl">
+        {raw ?? <AnimatedCounter to={value} duration={2} />}
+      </p>
+    </div>
   );
 }
