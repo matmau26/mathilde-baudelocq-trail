@@ -23,19 +23,7 @@ export default function Scene03Numbers({ direction }) {
   const isNumeric = /^\d+$/.test(kpi.value);
 
   return (
-    <SceneWrapper direction={direction} className="bg-mountain-950">
-      {/* Halo flame oversize qui change de position pour chaque KPI */}
-      <motion.div
-        key={`halo-${current}`}
-        initial={{ scale: 0.6, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
-        aria-hidden="true"
-        className="pointer-events-none absolute -bottom-40 left-1/2 -z-10 h-[60rem] w-[60rem] -translate-x-1/2 rounded-full bg-flame-700/40 blur-[180px]"
-      />
-      <div aria-hidden="true" className="absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.7)_100%)]" />
-
-      <FilmGrain opacity={0.08} blendMode="overlay" />
+    <SceneWrapper direction={direction}>
 
       {/* Méta + label */}
       <div className="relative z-10 flex h-full w-full flex-col justify-center px-6 sm:px-12">

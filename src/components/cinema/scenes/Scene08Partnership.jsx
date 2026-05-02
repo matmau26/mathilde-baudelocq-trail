@@ -10,18 +10,6 @@ export default function Scene08Partnership({ direction }) {
 
   return (
     <SceneWrapper direction={direction}>
-      <div className="absolute inset-0 -z-10">
-        <img
-          src="/Ventoux2025-2.jpeg"
-          alt=""
-          aria-hidden="true"
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-        <div aria-hidden="true" className="absolute inset-0 bg-black/75" />
-        <div aria-hidden="true" className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(0,0,0,0.7)_100%)]" />
-      </div>
-
-      <FilmGrain opacity={0.1} blendMode="overlay" />
 
       <div className="relative z-10 mx-auto flex h-full w-full max-w-7xl flex-col justify-center px-6 py-24 sm:px-12 sm:py-32">
         <motion.p

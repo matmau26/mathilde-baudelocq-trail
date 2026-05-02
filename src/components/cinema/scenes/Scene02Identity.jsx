@@ -8,18 +8,6 @@ export default function Scene02Identity({ direction }) {
 
   return (
     <SceneWrapper direction={direction}>
-      {/* Background portrait full bleed */}
-      <div className="absolute inset-0 -z-10">
-        <img
-          src="/Mathilde.jpeg"
-          alt={t.photoAlt}
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-        <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-r from-black via-black/60 to-transparent" />
-        <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent" />
-      </div>
-
-      <FilmGrain opacity={0.1} blendMode="overlay" />
 
       <div className="relative z-10 mx-auto flex h-full w-full max-w-7xl flex-col justify-center gap-10 px-6 py-20 sm:px-12 lg:flex-row lg:items-end lg:justify-between">
         {/* Côté gauche — texte hero */}

@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
-import { AnimatePresence } from 'framer-motion';
+import { lazy, Suspense, useEffect, useRef, useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
 
 import Scene01Cover from './scenes/Scene01Cover.jsx';
 import Scene02Identity from './scenes/Scene02Identity.jsx';
@@ -9,6 +9,10 @@ import Scene05Gallery from './scenes/Scene05Gallery.jsx';
 import Scene06History from './scenes/Scene06History.jsx';
 import Scene07Goals from './scenes/Scene07Goals.jsx';
 import Scene08Partnership from './scenes/Scene08Partnership.jsx';
+import FilmGrain from './FilmGrain.jsx';
+
+// Le monde 3D persistent — chunk séparé, chargé en lazy
+const World3D = lazy(() => import('../world/World3D.jsx'));
 
 const SCENES = [
   { id: 'cover', label: 'Ouverture', component: Scene01Cover },
@@ -21,18 +25,30 @@ const SCENES = [
   { id: 'partnership', label: 'Partenariat', component: Scene08Partnership },
 ];
 
-const SCROLL_LOCK_MS = 900;
+const SCROLL_LOCK_MS = 1100;
 const TOUCH_THRESHOLD = 60;
 
 export default function CinemaPresentation() {
   const [index, setIndex] = useState(0);
   const [direction, setDirection] = useState(1);
+  const [enable3D, setEnable3D] = useState(false);
   const lockedUntil = useRef(0);
   const touchStartY = useRef(null);
   const containerRef = useRef(null);
 
   const total = SCENES.length;
   const SceneComponent = SCENES[index].component;
+
+  // Active la 3D seulement si l'appareil est capable
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const reduced = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
+    const cores = navigator.hardwareConcurrency || 4;
+    const fine = window.matchMedia('(pointer: fine)').matches;
+    if (!reduced && (cores >= 4 || fine)) setEnable3D(true);
+  }, []);
 
   const advance = (dir) => {
     const now = Date.now();
@@ -59,7 +75,6 @@ export default function CinemaPresentation() {
 
   useEffect(() => {
     const onWheel = (e) => {
-      // Locking only when user has clearly intended a swipe
       if (Math.abs(e.deltaY) < 6) return;
       e.preventDefault();
       advance(e.deltaY > 0 ? 1 : -1);
@@ -111,28 +126,44 @@ export default function CinemaPresentation() {
       className="fixed inset-0 overflow-hidden bg-black text-white"
       style={{ touchAction: 'none' }}
     >
+      {/* MONDE 3D PERSISTENT — la caméra se déplace selon `index` */}
+      {enable3D && (
+        <Suspense fallback={<World3DFallback />}>
+          <div className="absolute inset-0 z-0">
+            <World3D scene={index} photoUrl="/Maxi2025-1.jpg" />
+          </div>
+        </Suspense>
+      )}
+      {!enable3D && <World3DFallback />}
+
+      {/* Voile dynamique pour lisibilité — opacité différente selon la scène */}
+      <SceneVeil index={index} />
+
+      {/* Grain pellicule global */}
+      <FilmGrain opacity={0.07} blendMode="overlay" />
+
+      {/* CONTENU OVERLAY — change selon scene, transition crossfade */}
       <AnimatePresence mode="wait" custom={direction}>
-        <SceneComponent
+        <motion.div
           key={SCENES[index].id}
-          direction={direction}
-          index={index}
-          total={total}
-          onNext={() => advance(1)}
-          onPrev={() => advance(-1)}
-        />
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1, transition: { duration: 0.7, delay: 0.4 } }}
+          exit={{ opacity: 0, transition: { duration: 0.4 } }}
+          className="pointer-events-auto absolute inset-0 z-10"
+        >
+          <SceneComponent
+            direction={direction}
+            index={index}
+            total={total}
+            onNext={() => advance(1)}
+            onPrev={() => advance(-1)}
+          />
+        </motion.div>
       </AnimatePresence>
 
-      {/* HUD permanent — masthead caméra */}
+      {/* HUD — caméra + scène + navigation */}
       <CinemaHUD index={index} total={total} label={SCENES[index].label} />
-
-      {/* Navigation latérale — points cliquables */}
-      <SceneNavigation
-        scenes={SCENES}
-        current={index}
-        onChange={goTo}
-      />
-
-      {/* Boutons next/prev */}
+      <SceneNavigation scenes={SCENES} current={index} onChange={goTo} />
       <NavButtons
         index={index}
         total={total}
@@ -143,12 +174,58 @@ export default function CinemaPresentation() {
   );
 }
 
+/**
+ * Voile dégradé adapté à chaque scène pour assurer la lisibilité du texte.
+ */
+function SceneVeil({ index }) {
+  // Voile par défaut pour cover
+  let veil =
+    'bg-gradient-to-b from-black/55 via-black/15 to-black/85';
+  if (index === 1) veil = 'bg-gradient-to-r from-black/85 via-black/40 to-black/15';
+  if (index === 2) veil = 'bg-black/60';
+  if (index === 3) veil = 'bg-gradient-to-r from-black/85 via-black/40 to-transparent';
+  if (index === 5) veil = 'bg-black/55';
+  if (index === 6) veil = 'bg-black/55';
+  if (index === 7) veil = 'bg-black/65';
+
+  return (
+    <motion.div
+      key={index}
+      aria-hidden="true"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1, transition: { duration: 1 } }}
+      className={`pointer-events-none absolute inset-0 z-[5] ${veil}`}
+    />
+  );
+}
+
+function World3DFallback() {
+  return (
+    <div className="absolute inset-0 z-0">
+      <img
+        src="/Maxi2025-1.jpg"
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 h-full w-full object-cover opacity-70"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-gradient-to-br from-mountain-950 via-mountain-900/70 to-flame-900/70"
+      />
+    </div>
+  );
+}
+
 function CinemaHUD({ index, total, label }) {
   return (
     <div className="pointer-events-none fixed inset-x-0 top-0 z-50 px-6 pt-6 sm:px-10 sm:pt-8">
       <div className="flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.3em] text-white/70 sm:text-[11px]">
         <div className="flex items-center gap-3">
-          <span aria-hidden="true" className="inline-block h-2 w-2 rounded-full bg-flame-500" style={{ animation: 'recBlink 1.4s ease-in-out infinite' }} />
+          <span
+            aria-hidden="true"
+            className="inline-block h-2 w-2 rounded-full bg-flame-500"
+            style={{ animation: 'recBlink 1.4s ease-in-out infinite' }}
+          />
           <span>Mathilde · Media Kit 2026</span>
         </div>
         <div className="hidden items-center gap-3 sm:flex">
@@ -186,7 +263,9 @@ function SceneNavigation({ scenes, current, onChange }) {
               >
                 <span
                   className={`whitespace-nowrap transition-opacity ${
-                    active ? 'opacity-100 text-white' : 'opacity-0 group-hover:opacity-100'
+                    active
+                      ? 'opacity-100 text-white'
+                      : 'opacity-0 group-hover:opacity-100'
                   }`}
                 >
                   {s.label}

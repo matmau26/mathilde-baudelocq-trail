@@ -9,17 +9,6 @@ export default function Scene04Reference({ direction }) {
 
   return (
     <SceneWrapper direction={direction}>
-      <div className="absolute inset-0 -z-10">
-        <img
-          src="/Ventoux1.jpeg"
-          alt={t.photoAlt}
-          className="absolute inset-0 h-full w-full object-cover"
-        />
-        <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-r from-black/95 via-black/60 to-black/40" />
-        <div aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
-      </div>
-
-      <FilmGrain opacity={0.1} blendMode="overlay" />
 
       <div className="relative z-10 mx-auto flex h-full w-full max-w-7xl flex-col justify-end px-6 pb-24 pt-24 sm:px-12 sm:pb-32 sm:pt-32">
         <motion.p
