@@ -1,5 +1,5 @@
 import Hero from '../components/Hero.jsx';
-import Marquee from '../components/Marquee.jsx';
+import VelocityMarquee from '../components/VelocityMarquee.jsx';
 import Athlete from '../components/Athlete.jsx';
 import PullQuote from '../components/PullQuote.jsx';
 import TopPerf from '../components/Palmares.jsx';
@@ -12,7 +12,7 @@ export default function Home() {
   return (
     <main>
       <Hero />
-      <Marquee />
+      <VelocityMarquee />
       <Athlete />
       <PullQuote />
       <TopPerf />

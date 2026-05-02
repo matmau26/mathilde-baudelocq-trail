@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import AnimatedCounter from './AnimatedCounter.jsx';
 import { useT } from '../i18n/useT.js';
 
 const FACT_ICONS = [
@@ -290,7 +291,11 @@ export default function Athlete() {
                       <span
                         className={`bg-gradient-to-br ${a.valueGradient} bg-clip-text font-display text-5xl font-bold leading-[0.95] tracking-tight text-transparent`}
                       >
-                        {kpi.value}
+                        {/^\d+$/.test(kpi.value) ? (
+                          <AnimatedCounter to={Number(kpi.value)} duration={2} />
+                        ) : (
+                          kpi.value
+                        )}
                       </span>
                       <span className="font-display text-base font-semibold uppercase tracking-widest text-mountain-500">
                         {kpi.suffix}
