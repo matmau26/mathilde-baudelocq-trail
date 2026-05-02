@@ -294,6 +294,13 @@ export const translations = {
         'Discutons du modèle qui correspond à votre projet de marque.',
     },
 
+    pullquote: {
+      aria: 'Citation signature',
+      quote:
+        "La performance ne se décrète pas, elle se construit jour après jour, avec exigence et loyauté.",
+      attribution: 'Mathilde Baudelocq',
+    },
+
     communiques: {
       eyebrow: 'Communiqués',
       title1: 'Communiqués',
@@ -637,6 +644,13 @@ export const translations = {
       footerCta: 'Get in touch',
       footerTagline:
         'Let’s discuss the model that fits your brand project.',
+    },
+
+    pullquote: {
+      aria: 'Signature quote',
+      quote:
+        "Performance is not declared. It is built, day after day, with discipline and loyalty.",
+      attribution: 'Mathilde Baudelocq',
     },
 
     communiques: {

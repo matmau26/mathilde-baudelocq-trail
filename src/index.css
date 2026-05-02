@@ -16,7 +16,28 @@ body {
   background-attachment: fixed;
 }
 
+@keyframes marquee-x {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none !important;
+  }
+  .animate-bounce-slow,
+  .animate-fade-up {
+    animation: none !important;
+  }
+}
+
 @layer utilities {
+  .animate-marquee {
+    animation: marquee-x 40s linear infinite;
+  }
+  .animate-marquee-slow {
+    animation: marquee-x 60s linear infinite;
+  }
   .bg-mesh-warm {
     background-color: #fffaf3;
     background-image:
