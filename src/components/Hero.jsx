@@ -1,13 +1,12 @@
-import { useEffect, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import AnimatedCounter from './AnimatedCounter.jsx';
 import { useT } from '../i18n/useT.js';
 
-const HERO_VIDEO =
-  'https://res.cloudinary.com/dnh2k1blz/video/upload/q_auto:good,f_auto,w_1600,vc_h264/v1777299247/D696A555-9A4B-49A1-9954-3B65EC3ACB5B_xaeuo6.mp4';
-const HERO_POSTER =
-  'https://res.cloudinary.com/dnh2k1blz/video/upload/q_auto:good,f_jpg,w_1600/v1777299247/D696A555-9A4B-49A1-9954-3B65EC3ACB5B_xaeuo6.jpg';
-const FALLBACK_IMAGE = '/Maxi2025-1.jpg';
+// Scène 3D chargée à la volée (lazy) — réduit le bundle initial
+const Hero3DScene = lazy(() => import('./Hero3DScene.jsx'));
+
+const HERO_PHOTO = '/Maxi2025-1.jpg';
 
 const titleContainer = {
   hidden: {},
@@ -53,89 +52,56 @@ function SplitWord({ text, className = '', accent = false }) {
 
 export default function Hero() {
   const t = useT('hero');
-  const containerRef = useRef(null);
-  const videoRef = useRef(null);
-  const [videoReady, setVideoReady] = useState(false);
+  const [enable3D, setEnable3D] = useState(false);
 
-  // Force la lecture sur iOS Safari (il ignore parfois autoPlay)
+  // 3D activée seulement si pointer fine + pas de reduced-motion + pas mobile bas de gamme
   useEffect(() => {
-    const v = videoRef.current;
-    if (!v) return;
-    v.muted = true;
-    v.setAttribute('muted', '');
-    v.play().catch(() => {});
+    if (typeof window === 'undefined') return;
+    const reduced = window.matchMedia(
+      '(prefers-reduced-motion: reduce)'
+    ).matches;
+    const cores = navigator.hardwareConcurrency || 4;
+    if (!reduced && cores >= 4) setEnable3D(true);
   }, []);
 
-  // Parallax content + zoom léger de la vidéo au scroll
+  // Parallax content
   const { scrollYProgress } = useScroll({
-    target: containerRef,
     offset: ['start start', 'end start'],
   });
-  const videoScale = useTransform(scrollYProgress, [0, 1], [1.05, 1.18]);
-  const videoY = useTransform(scrollYProgress, [0, 1], ['0%', '8%']);
-  const overlayOpacity = useTransform(scrollYProgress, [0, 1], [0.55, 0.85]);
-  const contentY = useTransform(scrollYProgress, [0, 1], ['0%', '-20%']);
+  const contentY = useTransform(scrollYProgress, [0, 1], ['0%', '-30%']);
   const contentOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
 
   return (
     <section
-      ref={containerRef}
       id="top"
       className="relative isolate min-h-[100svh] overflow-hidden bg-mountain-950 text-white"
     >
-      {/* VIDÉO PLEIN ÉCRAN — Mathilde en course */}
-      <motion.div
-        style={{ scale: videoScale, y: videoY }}
-        className="absolute inset-0 -z-10 will-change-transform"
-      >
-        <img
-          src={FALLBACK_IMAGE}
-          alt=""
-          aria-hidden="true"
-          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
-            videoReady ? 'opacity-0' : 'opacity-100'
-          }`}
-        />
-        <video
-          ref={videoRef}
-          src={HERO_VIDEO}
-          poster={HERO_POSTER}
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="auto"
-          onCanPlay={() => setVideoReady(true)}
-          onPlaying={() => setVideoReady(true)}
-          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-700 ${
-            videoReady ? 'opacity-100' : 'opacity-0'
-          }`}
-          aria-hidden="true"
-        />
-      </motion.div>
+      {/* SCÈNE 3D PLEIN ÉCRAN */}
+      <div className="absolute inset-0 -z-10">
+        {enable3D ? (
+          <Suspense fallback={<HeroFallback />}>
+            <Hero3DScene photoUrl={HERO_PHOTO} />
+          </Suspense>
+        ) : (
+          <HeroFallback />
+        )}
+      </div>
 
-      {/* OVERLAY GRADIENT pour lisibilité du texte */}
-      <motion.div
-        aria-hidden="true"
-        style={{ opacity: overlayOpacity }}
-        className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-mountain-950/70 via-mountain-950/40 to-mountain-950/95"
-      />
+      {/* Vignette pour ancrer le texte */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-t from-mountain-950 via-transparent to-transparent"
+        className="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-mountain-950/60 via-transparent to-mountain-950/95"
       />
-      {/* Touche flame en bas */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute -bottom-32 left-1/2 -z-10 h-[28rem] w-[40rem] -translate-x-1/2 rounded-full bg-flame-500/30 blur-[120px]"
       />
 
-      {/* CONTENU PRINCIPAL */}
       <motion.div
         style={{ y: contentY, opacity: contentOpacity }}
         className="relative flex min-h-[100svh] flex-col justify-between px-6 pb-10 pt-32 sm:pt-36 lg:px-12"
       >
-        {/* Top strip — meta */}
+        {/* Top strip */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -149,10 +115,10 @@ export default function Hero() {
           <span className="hidden sm:inline">{t.snapshotPeriod}</span>
         </motion.div>
 
-        {/* Titre central plein cadre */}
+        {/* Titre central — typographie poster, mêlée à la 3D */}
         <div className="mx-auto flex w-full max-w-7xl flex-1 items-center">
           <div className="w-full">
-            <h1 className="font-display text-[18vw] font-bold uppercase leading-[0.85] tracking-[-0.02em] sm:text-[14vw] lg:text-[12vw]">
+            <h1 className="font-display font-bold uppercase leading-[0.85] tracking-[-0.02em] text-[18vw] sm:text-[14vw] lg:text-[12vw]">
               <SplitWord text={t.titleFirst} className="block" />
               <SplitWord text={t.titleLast} className="block" accent />
             </h1>
@@ -161,7 +127,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 1.2 }}
-              className="mt-6 max-w-xl text-base font-light text-white/80 sm:text-lg"
+              className="mt-6 max-w-xl text-base font-light text-white/85 sm:text-lg"
             >
               {t.subtitleSport}
               <span className="mx-3 inline-block h-1 w-1 rounded-full bg-flame-500 align-middle" />
@@ -172,7 +138,7 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Bottom HUD : CTAs + stats card flottante */}
+        {/* Bottom — CTA + stats */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -180,7 +146,6 @@ export default function Hero() {
           className="mx-auto w-full max-w-7xl"
         >
           <div className="grid grid-cols-1 items-end gap-6 lg:grid-cols-12 lg:gap-8">
-            {/* CTAs + tags */}
             <div className="space-y-5 lg:col-span-7">
               <div className="flex flex-wrap items-center gap-2">
                 <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-3 py-1.5 text-[11px] font-medium uppercase tracking-[0.18em] text-white backdrop-blur-md">
@@ -192,7 +157,6 @@ export default function Hero() {
                   {t.tagProject}
                 </span>
               </div>
-
               <div className="flex flex-wrap items-center gap-3">
                 <a
                   href="#partenariat"
@@ -222,7 +186,6 @@ export default function Hero() {
               </div>
             </div>
 
-            {/* Card stats glassmorphism */}
             <div className="lg:col-span-5">
               <div className="rounded-2xl border border-white/15 bg-white/[0.07] p-4 backdrop-blur-2xl sm:p-5">
                 <div className="mb-3 flex items-center justify-between text-[10px] font-medium uppercase tracking-[0.2em] text-white/70">
@@ -243,7 +206,6 @@ export default function Hero() {
         </motion.div>
       </motion.div>
 
-      {/* Scroll indicator */}
       <motion.a
         href="#athlete"
         aria-label="Faire défiler"
@@ -258,6 +220,23 @@ export default function Hero() {
         Scroll
       </motion.a>
     </section>
+  );
+}
+
+function HeroFallback() {
+  return (
+    <div className="absolute inset-0">
+      <img
+        src={HERO_PHOTO}
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 h-full w-full object-cover opacity-70"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-gradient-to-br from-mountain-950 via-mountain-900/70 to-flame-900/70"
+      />
+    </div>
   );
 }
 
