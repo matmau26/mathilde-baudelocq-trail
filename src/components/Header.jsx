@@ -68,7 +68,7 @@ export default function Header() {
           </span>
         </Link>
 
-        <nav className="hidden md:flex items-center gap-5 lg:gap-6">
+        <nav className="hidden lg:flex items-center gap-5 xl:gap-6">
           {t.nav.map((link) =>
             link.external ? (
               <Link
@@ -99,7 +99,7 @@ export default function Header() {
           </Link>
         </nav>
 
-        <div className="flex items-center gap-2 md:hidden">
+        <div className="flex items-center gap-2 lg:hidden">
           <LanguageSwitch variant="mobile" />
           <button
             type="button"
@@ -136,7 +136,7 @@ export default function Header() {
       </div>
 
       {open && (
-        <div className="md:hidden border-t border-mountain-100 bg-white/95 backdrop-blur">
+        <div className="lg:hidden border-t border-mountain-100 bg-white/95 backdrop-blur">
           <nav className="mx-auto flex max-w-6xl flex-col gap-1 px-6 py-4">
             {t.nav.map((link) =>
               link.external ? (

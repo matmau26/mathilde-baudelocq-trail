@@ -7,15 +7,15 @@ export default function PullQuote() {
   return (
     <section
       aria-label={t.aria}
-      className="relative overflow-hidden bg-cream-50 py-24 sm:py-32"
+      className="relative overflow-hidden bg-cream-50 py-20 sm:py-28 lg:py-32"
     >
       {/* Halo très doux, presque imperceptible */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -top-32 left-1/2 h-[28rem] w-[28rem] -translate-x-1/2 rounded-full bg-flame-200/30 blur-[120px]"
+        className="pointer-events-none absolute -top-32 left-1/2 h-[20rem] w-[20rem] -translate-x-1/2 rounded-full bg-flame-200/30 blur-[100px] sm:h-[28rem] sm:w-[28rem] sm:blur-[120px]"
       />
 
-      <div className="relative mx-auto max-w-4xl px-6">
+      <div className="relative mx-auto max-w-4xl px-6 sm:px-8">
         <motion.figure
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -25,15 +25,15 @@ export default function PullQuote() {
         >
           <span
             aria-hidden="true"
-            className="block font-editorial text-7xl font-medium italic leading-none text-flame-500 sm:text-8xl"
+            className="block font-editorial text-6xl font-medium italic leading-none text-flame-500 sm:text-7xl lg:text-8xl"
           >
             “
           </span>
-          <blockquote className="mt-2 font-editorial text-3xl font-medium italic leading-[1.2] tracking-tight text-mountain-950 sm:text-5xl lg:text-6xl">
+          <blockquote className="mt-3 text-balance font-editorial text-2xl font-medium italic leading-[1.25] tracking-tight text-mountain-950 sm:mt-4 sm:text-4xl sm:leading-[1.2] md:text-5xl lg:text-6xl">
             {t.quote}
           </blockquote>
-          <figcaption className="mt-10 inline-flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.25em] text-mountain-700">
-            <span aria-hidden="true" className="block h-px w-8 bg-flame-500" />
+          <figcaption className="mt-8 inline-flex items-center gap-3 text-[10px] font-semibold uppercase tracking-[0.22em] text-mountain-700 sm:mt-10 sm:text-[11px] sm:tracking-[0.25em]">
+            <span aria-hidden="true" className="block h-px w-6 bg-flame-500 sm:w-8" />
             {t.attribution}
           </figcaption>
         </motion.figure>
