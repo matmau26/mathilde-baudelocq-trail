@@ -1,5 +1,6 @@
 import CinemaCover from '../components/cinema/CinemaCover.jsx';
 import ChapterCard from '../components/cinema/ChapterCard.jsx';
+import RunningCompanion from '../components/cinema/RunningCompanion.jsx';
 import VelocityMarquee from '../components/VelocityMarquee.jsx';
 import NumbersTheatre from '../components/numbers/NumbersTheatre.jsx';
 import PullQuote from '../components/PullQuote.jsx';
@@ -12,9 +13,24 @@ import Partnership from '../components/Partnership.jsx';
 const RACE_VIDEO =
   'https://res.cloudinary.com/dnh2k1blz/video/upload/q_auto:eco,f_auto,w_1400,vc_h264/v1777299247/D696A555-9A4B-49A1-9954-3B65EC3ACB5B_xaeuo6.mp4';
 
+const CHECKPOINTS = [
+  { label: 'Départ' },
+  { label: 'KM 01 — Trajectoire' },
+  { label: 'KM 02 — Credo' },
+  { label: 'KM 03 — Référence' },
+  { label: 'KM 04 — Terrain' },
+  { label: 'KM 05 — Historique' },
+  { label: 'KM 06 — Cap 2026' },
+  { label: 'KM 07 — Partenariat' },
+  { label: 'Arrivée' },
+];
+
 export default function Home() {
   return (
     <main className="bg-black">
+      {/* COMPAGNON QUI COURT — Mathilde te guide pendant le scroll */}
+      <RunningCompanion checkpoints={CHECKPOINTS} />
+
       {/* OUVERTURE */}
       <CinemaCover />
 
