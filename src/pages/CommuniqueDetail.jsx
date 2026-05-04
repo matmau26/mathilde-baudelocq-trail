@@ -279,34 +279,6 @@ function MetaStrip({ item, t }) {
   );
 }
 
-/* ------------------------- PULL QUOTE ------------------------- */
-
-function PullQuote({ text }) {
-  return (
-    <motion.figure
-      initial={{ opacity: 0, y: 16 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-100px' }}
-      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-      className="my-16 border-y border-mountain-300/60 py-10 text-center sm:my-20 sm:py-14"
-    >
-      <span
-        aria-hidden="true"
-        className="block font-editorial text-7xl font-medium italic leading-none text-flame-500 sm:text-8xl"
-      >
-        “
-      </span>
-      <blockquote className="mx-auto mt-2 max-w-3xl text-balance font-editorial text-2xl font-medium italic leading-[1.25] tracking-tight text-mountain-950 sm:text-4xl lg:text-5xl">
-        {text}
-      </blockquote>
-      <figcaption className="mt-8 inline-flex items-center gap-3 font-mono text-[10px] uppercase tracking-[0.25em] text-mountain-700">
-        <span aria-hidden="true" className="block h-px w-8 bg-flame-500" />
-        Mathilde Baudelocq
-      </figcaption>
-    </motion.figure>
-  );
-}
-
 /* --------------------- BLOC RÉSULTATS DESIGN --------------------- */
 
 function ResultsShowcase({ localized, item }) {
@@ -371,10 +343,6 @@ function ResultsShowcase({ localized, item }) {
             <span className="bg-gradient-to-b from-white via-white to-flame-200 bg-clip-text text-transparent">
               {time?.value || '—'}
             </span>
-          </p>
-          <p className="mt-4 font-editorial text-lg italic leading-snug text-white/70 sm:text-xl">
-            « Les derniers kilomètres avalés avec la même intensité que les premiers,
-            dans un effort maîtrisé de bout en bout. »
           </p>
         </div>
 
@@ -518,7 +486,7 @@ function PhotoMosaic({ photos, title }) {
 
 /* ----------------------- BLOC VIDÉO ----------------------- */
 
-function VideoSection({ src, title, item }) {
+function VideoSection({ src, localized }) {
   if (!src) return null;
   return (
     <motion.section
@@ -533,21 +501,17 @@ function VideoSection({ src, title, item }) {
       </div>
       <div className="lg:col-span-7">
         <p className="font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-flame-600 sm:text-[11px]">
-          {title}
+          {localized.videoTitle}
         </p>
-        <h3 className="mt-3 font-display text-3xl font-bold uppercase leading-[1] tracking-tight text-mountain-950 sm:text-4xl lg:text-5xl">
-          Vivre la course,
+        <h3 className="mt-3 font-display text-3xl font-bold uppercase leading-[1.05] tracking-tight text-mountain-950 sm:text-4xl lg:text-5xl">
+          {localized.videoHeading1}
           <br />
           <span className="bg-gradient-to-r from-flame-600 via-flame-500 to-solar-400 bg-clip-text text-transparent">
-            depuis le départ.
+            {localized.videoHeading2}
           </span>
         </h3>
-        <p className="mt-5 max-w-md font-editorial text-lg italic leading-snug text-mountain-700 sm:text-xl">
-          Capture en vue subjective, dossard 10981. Le rythme, le souffle,
-          le tracé du Ventoux à la première personne.
-        </p>
-        <p className="mt-4 font-mono text-[10px] uppercase tracking-[0.25em] text-mountain-500">
-          Format vertical · Cloudinary · {item.distance}
+        <p className="mt-5 max-w-xl text-base leading-relaxed text-mountain-700 sm:text-lg">
+          {localized.videoTagline}
         </p>
       </div>
     </motion.section>
@@ -568,12 +532,6 @@ export default function CommuniqueDetail() {
 
   if (!item) return <Navigate to="/communiques" replace />;
   const localized = item[lang] || item.fr;
-
-  // Choisit un "pull quote" depuis le 4e ou 3e paragraphe
-  const quote =
-    localized.paragraphs[3] ||
-    localized.paragraphs[2] ||
-    localized.paragraphs[0];
 
   return (
     <main className="bg-cream-50 text-mountain-950">
@@ -632,31 +590,8 @@ export default function CommuniqueDetail() {
           </motion.figure>
         )}
 
-        {/* Paragraphes 2 et 3 */}
-        {[1, 2].map((idx) =>
-          localized.paragraphs[idx] ? (
-            <motion.p
-              key={idx}
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.7 }}
-              className="mt-6 text-base leading-relaxed text-mountain-800 sm:mt-7 sm:text-[17px]"
-            >
-              {localized.paragraphs[idx]}
-            </motion.p>
-          ) : null
-        )}
-      </article>
-
-      {/* PULL QUOTE — citation oversize */}
-      <div className="mx-auto max-w-5xl px-6 sm:px-8">
-        <PullQuote text={quote} />
-      </div>
-
-      {/* Suite des paragraphes (à partir du 4e) */}
-      <article className="mx-auto max-w-3xl px-6 sm:px-8">
-        {localized.paragraphs.slice(3).map((p, i) => (
+        {/* Paragraphes 2 et suivants */}
+        {localized.paragraphs.slice(1).map((p, i) => (
           <motion.p
             key={i}
             initial={{ opacity: 0, y: 12 }}
@@ -677,7 +612,7 @@ export default function CommuniqueDetail() {
 
       {/* VIDÉO */}
       <div className="mx-auto max-w-5xl px-6 sm:px-8">
-        <VideoSection src={item.video} title={localized.videoTitle} item={item} />
+        <VideoSection src={item.video} localized={localized} />
       </div>
 
       {/* GALERIE */}

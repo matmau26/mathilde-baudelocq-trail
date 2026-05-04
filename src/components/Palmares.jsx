@@ -51,7 +51,7 @@ export default function Palmares() {
 
         {/* Row 1 : highlight + photo course */}
         <div className="mt-12 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border-2 border-mountain-950 bg-mountain-950 lg:grid-cols-12">
-          {/* Highlight GR Ventoux 2026 */}
+          {/* Highlight GRV by UTMB 2026 */}
           <article className="relative bg-white p-8 sm:p-10 lg:col-span-7">
             <div className="flex flex-wrap items-center gap-2">
               <span className="inline-flex items-center gap-2 rounded-full bg-flame-500 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-white">

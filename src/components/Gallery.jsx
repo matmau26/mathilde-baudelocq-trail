@@ -4,7 +4,7 @@ import { Play, Loader2 } from 'lucide-react';
 import { useT } from '../i18n/useT.js';
 
 const MEDIA = [
-  { type: 'photo', src: '/Ventoux2025.jpeg', alt: 'Mathilde Baudelocq · GR Ventoux 2025' },
+  { type: 'photo', src: '/Ventoux2025.jpeg', alt: 'Mathilde Baudelocq · GRV by UTMB 2025' },
   {
     type: 'video',
     src: 'https://res.cloudinary.com/dnh2k1blz/video/upload/q_auto/f_auto/v1777299247/D696A555-9A4B-49A1-9954-3B65EC3ACB5B_xaeuo6.mp4',
@@ -22,7 +22,7 @@ const MEDIA = [
     type: 'video',
     src: 'https://res.cloudinary.com/dnh2k1blz/video/upload/q_auto/f_auto/v1777295344/1A98EE77-7DF1-412F-858D-7F0C39814491_zinypp.mp4',
   },
-  { type: 'photo', src: '/Ventoux2025-2.jpeg', alt: 'GR Ventoux · 2ᵉ moment' },
+  { type: 'photo', src: '/Ventoux2025-2.jpeg', alt: 'GRV by UTMB · 2ᵉ moment' },
   { type: 'photo', src: '/VentouxOrigine2025.jpeg', alt: 'Trail Ventoux · LE 46 Origine' },
   {
     type: 'video',
