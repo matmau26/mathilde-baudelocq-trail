@@ -448,8 +448,8 @@ function PhotoMosaic({ photos, title }) {
               className="h-full w-full object-cover transition-transform duration-700 hover:scale-[1.03]"
             />
           </div>
-          <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-mountain-950/80 via-mountain-950/30 to-transparent p-5">
-            <p className="font-editorial text-base italic text-white sm:text-lg">
+          <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-mountain-950/80 to-transparent p-4">
+            <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/90">
               {big.alt}
             </p>
           </figcaption>
@@ -471,8 +471,8 @@ function PhotoMosaic({ photos, title }) {
                   className="h-full w-full object-cover transition-transform duration-700 hover:scale-[1.03]"
                 />
               </div>
-              <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-mountain-950/80 to-transparent p-3">
-                <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/90">
+              <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-mountain-950/80 to-transparent p-4">
+                <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/90">
                   {p.alt}
                 </p>
               </figcaption>

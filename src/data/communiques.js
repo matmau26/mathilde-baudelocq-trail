@@ -45,7 +45,7 @@ export const COMMUNIQUES = [
       photosTitle: 'Reportage photo',
       videoTitle: 'Vidéo de course',
       videoHeading1: 'Vivre la course,',
-      videoHeading2: 'caméra embarquée à mi parcours',
+      videoHeading2: 'caméra embarquée',
       videoTagline:
         'Suivi vidéo à mi parcours, arrivée au point culminant pour basculer sur la 2ème partie de course en descente.',
     },
@@ -72,7 +72,7 @@ export const COMMUNIQUES = [
       photosTitle: 'Photo report',
       videoTitle: 'Race video',
       videoHeading1: 'Live the race,',
-      videoHeading2: 'on-board camera at mid-course',
+      videoHeading2: 'on-board camera',
       videoTagline:
         'Video coverage from mid-course, reaching the highest point before switching to the second half — the descent.',
     },
