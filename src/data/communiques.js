@@ -13,12 +13,9 @@ export const COMMUNIQUES = [
     elevation: '1 100 m D+',
     startTime: '08:30',
     photos: [
-      { src: '/Ventoux1.jpeg', alt: 'En course · GRV by UTMB' },
-      { src: '/Ventous2026.jpeg', alt: 'En course · GRV by UTMB 2026' },
-      {
-        src: '/VentouxPodium.jpeg',
-        alt: 'Podium catégorie · Mathilde Baudelocq',
-      },
+      { src: '/Ventoux1.jpeg' },
+      { src: '/Ventous2026.jpeg' },
+      { src: '/VentouxPodium.jpeg' },
     ],
     video:
       'https://res.cloudinary.com/dnh2k1blz/video/upload/q_auto/f_auto/v1777299247/D696A555-9A4B-49A1-9954-3B65EC3ACB5B_xaeuo6.mp4',
@@ -48,6 +45,11 @@ export const COMMUNIQUES = [
       videoHeading2: 'caméra embarquée',
       videoTagline:
         'Suivi vidéo à mi parcours, arrivée au point culminant pour basculer sur la 2ème partie de course en descente.',
+      photoAlts: [
+        'En course · GRV by UTMB',
+        'En course · GRV by UTMB 2026',
+        'Podium catégorie · Mathilde Baudelocq',
+      ],
     },
     en: {
       title: 'Grand Raid du Ventoux by UTMB — Malaucène',
@@ -75,6 +77,11 @@ export const COMMUNIQUES = [
       videoHeading2: 'on-board camera',
       videoTagline:
         'Video coverage from mid-course, reaching the highest point before switching to the second half — the descent.',
+      photoAlts: [
+        'Racing · GRV by UTMB',
+        'Racing · GRV by UTMB 2026',
+        'Category podium · Mathilde Baudelocq',
+      ],
     },
   },
 ];

@@ -118,7 +118,7 @@ function RaceVideoPlayer({ src }) {
 
 /* ------------------------ HERO PLEIN ÉCRAN ------------------------ */
 
-function CinemaHero({ item, localized, lang }) {
+function CinemaHero({ item, localized, lang, t }) {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -157,6 +157,15 @@ function CinemaHero({ item, localized, lang }) {
         className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,transparent_0%,rgba(15,28,41,0.55)_100%)]"
       />
 
+      {/* Lien retour — placé sous le header fixe pour rester cliquable */}
+      <Link
+        to="/communiques"
+        className="absolute left-4 top-20 z-20 inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-4 py-2 font-mono text-[10px] font-semibold uppercase tracking-[0.25em] text-white backdrop-blur-md transition-colors hover:border-white hover:bg-white/20 sm:left-6"
+      >
+        <ArrowLeft className="h-3.5 w-3.5" strokeWidth={2.5} />
+        {t.backToList}
+      </Link>
+
       <motion.div
         style={{ y: titleY }}
         className="relative flex min-h-[88svh] flex-col justify-end px-6 pb-12 pt-32 sm:px-10 sm:pb-16 sm:pt-36 lg:px-14"
@@ -169,7 +178,7 @@ function CinemaHero({ item, localized, lang }) {
             transition={{ duration: 0.6 }}
             className="flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[10px] font-medium uppercase tracking-[0.3em] text-flame-300 sm:text-[11px]"
           >
-            <span>Communiqué N°01</span>
+            <span>{t.pressNumber}</span>
             <span aria-hidden="true" className="block h-px w-12 bg-flame-500/70" />
             <span className="text-white/80">{formatDateShort(item.date)}</span>
             <span aria-hidden="true" className="hidden h-px w-12 bg-white/30 sm:block" />
@@ -233,7 +242,7 @@ function CinemaHero({ item, localized, lang }) {
         <span className="block h-8 w-px overflow-hidden bg-white/15">
           <span className="block h-full w-full animate-bounce-slow bg-gradient-to-b from-flame-400 to-transparent" />
         </span>
-        Lire le récit
+        {t.scrollHint}
       </motion.div>
     </section>
   );
@@ -281,7 +290,7 @@ function MetaStrip({ item, t }) {
 
 /* --------------------- BLOC RÉSULTATS DESIGN --------------------- */
 
-function ResultsShowcase({ localized, item }) {
+function ResultsShowcase({ localized, item, t }) {
   // Identifie les 3 stats clés pour les mettre en valeur visuellement
   const findResult = (...keywords) =>
     localized.results.find((r) =>
@@ -327,7 +336,7 @@ function ResultsShowcase({ localized, item }) {
             {localized.resultsTitle}
           </p>
           <p className="hidden font-mono text-[10px] uppercase tracking-[0.3em] text-white/50 sm:block">
-            Officiel · Organisateur
+            {t.resultsSource}
           </p>
         </div>
       </div>
@@ -362,7 +371,7 @@ function ResultsShowcase({ localized, item }) {
                 {category.value}
               </p>
               <p className="mt-3 text-sm text-white/70">
-                Une référence solide pour valider le passage au niveau Élite.
+                {t.categoryNote}
               </p>
             </div>
           )}
@@ -414,10 +423,12 @@ function ResultsShowcase({ localized, item }) {
 
 /* ----------------------- GALERIE EN MOSAÏQUE ----------------------- */
 
-function PhotoMosaic({ photos, title }) {
+function PhotoMosaic({ photos, alts, title, t }) {
   if (!photos || photos.length === 0) return null;
   // Layout : 1 grande + 2 petites empilées
+  const altFor = (i) => alts?.[i] || photos[i]?.alt || '';
   const [big, ...rest] = photos;
+  const bigAlt = altFor(0);
 
   return (
     <motion.section
@@ -432,7 +443,7 @@ function PhotoMosaic({ photos, title }) {
           {title}
         </p>
         <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-mountain-500">
-          {photos.length} clichés
+          {photos.length} {t.clichesLabel}
         </p>
       </div>
 
@@ -442,7 +453,7 @@ function PhotoMosaic({ photos, title }) {
           <div className="aspect-[4/3] w-full">
             <img
               src={big.src}
-              alt={big.alt}
+              alt={bigAlt}
               loading="lazy"
               decoding="async"
               className="h-full w-full object-cover transition-transform duration-700 hover:scale-[1.03]"
@@ -450,34 +461,37 @@ function PhotoMosaic({ photos, title }) {
           </div>
           <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-mountain-950/80 to-transparent p-4">
             <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/90">
-              {big.alt}
+              {bigAlt}
             </p>
           </figcaption>
         </figure>
 
         {/* Petites photos */}
         <div className="flex flex-col gap-3 sm:gap-4 lg:col-span-4">
-          {rest.map((p, i) => (
-            <figure
-              key={i}
-              className="relative overflow-hidden rounded-2xl border border-mountain-200 bg-mountain-100"
-            >
-              <div className="aspect-[4/3] w-full">
-                <img
-                  src={p.src}
-                  alt={p.alt}
-                  loading="lazy"
-                  decoding="async"
-                  className="h-full w-full object-cover transition-transform duration-700 hover:scale-[1.03]"
-                />
-              </div>
-              <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-mountain-950/80 to-transparent p-4">
-                <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/90">
-                  {p.alt}
-                </p>
-              </figcaption>
-            </figure>
-          ))}
+          {rest.map((p, i) => {
+            const a = altFor(i + 1);
+            return (
+              <figure
+                key={i}
+                className="relative overflow-hidden rounded-2xl border border-mountain-200 bg-mountain-100"
+              >
+                <div className="aspect-[4/3] w-full">
+                  <img
+                    src={p.src}
+                    alt={a}
+                    loading="lazy"
+                    decoding="async"
+                    className="h-full w-full object-cover transition-transform duration-700 hover:scale-[1.03]"
+                  />
+                </div>
+                <figcaption className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-mountain-950/80 to-transparent p-4">
+                  <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/90">
+                    {a}
+                  </p>
+                </figcaption>
+              </figure>
+            );
+          })}
         </div>
       </div>
     </motion.section>
@@ -535,17 +549,8 @@ export default function CommuniqueDetail() {
 
   return (
     <main className="bg-cream-50 text-mountain-950">
-      {/* Lien retour fixe en haut à gauche */}
-      <Link
-        to="/communiques"
-        className="fixed left-4 top-4 z-40 inline-flex items-center gap-2 rounded-full border border-mountain-200 bg-white/85 px-4 py-2 font-mono text-[10px] font-semibold uppercase tracking-[0.25em] text-mountain-700 backdrop-blur-md transition-all hover:border-mountain-950 hover:text-mountain-950 sm:left-6 sm:top-6"
-      >
-        <ArrowLeft className="h-3.5 w-3.5" strokeWidth={2.5} />
-        {t.backToList}
-      </Link>
-
       {/* HERO PLEIN ÉCRAN */}
-      <CinemaHero item={item} localized={localized} lang={lang} />
+      <CinemaHero item={item} localized={localized} lang={lang} t={t} />
 
       {/* MÉTA STICKY */}
       <MetaStrip item={item} t={t} />
@@ -578,14 +583,14 @@ export default function CommuniqueDetail() {
             <div className="aspect-[16/10] w-full">
               <img
                 src={item.photos[0].src}
-                alt={item.photos[0].alt}
+                alt={localized.photoAlts?.[0] || item.photos[0].alt || ''}
                 loading="lazy"
                 decoding="async"
                 className="h-full w-full object-cover"
               />
             </div>
             <figcaption className="bg-mountain-950 px-5 py-3 font-mono text-[10px] uppercase tracking-[0.25em] text-white/80">
-              {item.photos[0].alt}
+              {localized.photoAlts?.[0] || item.photos[0].alt || ''}
             </figcaption>
           </motion.figure>
         )}
@@ -607,7 +612,7 @@ export default function CommuniqueDetail() {
 
       {/* RÉSULTATS — bloc design asymétrique */}
       <div className="mx-auto max-w-5xl px-6 sm:px-8">
-        <ResultsShowcase localized={localized} item={item} />
+        <ResultsShowcase localized={localized} item={item} t={t} />
       </div>
 
       {/* VIDÉO */}
@@ -617,7 +622,12 @@ export default function CommuniqueDetail() {
 
       {/* GALERIE */}
       <div className="mx-auto max-w-6xl px-6 sm:px-8">
-        <PhotoMosaic photos={item.photos} title={localized.photosTitle} />
+        <PhotoMosaic
+          photos={item.photos}
+          alts={localized.photoAlts}
+          title={localized.photosTitle}
+          t={t}
+        />
       </div>
 
       {/* FOOTER CTA */}
@@ -625,11 +635,11 @@ export default function CommuniqueDetail() {
         <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-6 px-6 py-12 sm:flex-row sm:items-center sm:px-8 sm:py-16">
           <div>
             <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-flame-400">
-              Et après ?
+              {t.nextEyebrow}
             </p>
             <p className="mt-3 font-display text-2xl font-bold uppercase leading-tight tracking-tight text-white sm:text-3xl">
-              Discutons d’un projet
-              <br className="hidden sm:block" /> sur la durée.
+              {t.nextTitle1}
+              <br className="hidden sm:block" /> {t.nextTitle2}
             </p>
           </div>
           <div className="flex flex-wrap items-center gap-3">
@@ -644,7 +654,7 @@ export default function CommuniqueDetail() {
               to="/contact"
               className="group inline-flex items-center gap-2 rounded-full bg-flame-500 px-5 py-2.5 font-mono text-[10px] font-semibold uppercase tracking-[0.22em] text-white shadow-lg shadow-flame-500/40 transition-colors hover:bg-flame-600"
             >
-              Prendre contact
+              {t.nextCta}
               <ArrowRight
                 className="h-3 w-3 transition-transform group-hover:translate-x-0.5"
                 strokeWidth={2.5}
