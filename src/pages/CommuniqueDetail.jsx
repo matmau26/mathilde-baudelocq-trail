@@ -250,7 +250,7 @@ function MetaStrip({ item, t }) {
   ];
   return (
     <div className="sticky top-16 z-30 border-y border-mountain-200 bg-cream-50/85 backdrop-blur-md">
-      <div className="mx-auto flex max-w-6xl items-stretch divide-x divide-mountain-200 overflow-x-auto px-6 sm:px-10">
+      <div className="mx-auto flex max-w-3xl items-stretch justify-center divide-x divide-mountain-200 overflow-x-auto px-6 sm:px-8">
         {items.map((m, i) => {
           const Icon = m.icon;
           return (
