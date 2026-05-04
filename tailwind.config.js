@@ -63,6 +63,7 @@ export default {
           'sans-serif',
         ],
         display: ['Oswald', 'Inter', 'sans-serif'],
+        editorial: ['"Playfair Display"', 'Georgia', 'serif'],
       },
       letterSpacing: {
         widest: '0.25em',
