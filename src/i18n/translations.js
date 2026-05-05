@@ -38,6 +38,8 @@ export const translations = {
       snapshotPeriod: '2025–26',
       grvBadge: 'Top 3%',
       photoAlt: 'Mathilde Baudelocq, athlète trail running, en course',
+      scrollLabel: 'Défiler',
+      scrollAria: 'Faire défiler vers les performances',
     },
 
     athlete: {
@@ -392,6 +394,8 @@ export const translations = {
       snapshotPeriod: '2025–26',
       grvBadge: 'Top 3%',
       photoAlt: 'Mathilde Baudelocq, trail running athlete, racing',
+      scrollLabel: 'Scroll',
+      scrollAria: 'Scroll down to performances',
     },
 
     athlete: {

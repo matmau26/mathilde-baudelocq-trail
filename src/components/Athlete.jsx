@@ -192,39 +192,39 @@ export default function Athlete() {
 
           {/* COLONNE DROITE — Faits + KPI dashboard */}
           <div className="order-2 lg:col-span-7">
-            {/* Grille de faits */}
-            <ul className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {/* Grille de faits — cartes compactes avec accent flame */}
+            <ul className="grid grid-cols-2 gap-3 sm:gap-4">
               {facts.map((fact, i) => (
                 <li
                   key={i}
-                  className="group relative overflow-hidden rounded-2xl border border-mountain-100 bg-white p-6 transition-all hover:-translate-y-1 hover:border-mountain-300 hover:shadow-lg hover:shadow-mountain-900/5"
+                  className="group relative overflow-hidden rounded-xl border border-mountain-200/80 bg-white p-3.5 transition-all duration-300 hover:-translate-y-0.5 hover:border-flame-300 hover:shadow-md hover:shadow-mountain-900/5 sm:p-4"
                 >
-                  <div className="flex items-start justify-between">
-                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-mountain-50 text-mountain-600 transition-colors group-hover:bg-mountain-600 group-hover:text-white">
+                  <div className="flex items-center gap-2.5">
+                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-mountain-50 text-mountain-700 transition-colors duration-300 group-hover:bg-flame-500 group-hover:text-white">
                       <svg
-                        className="h-5 w-5"
+                        className="h-4 w-4"
                         viewBox="0 0 24 24"
                         fill="none"
                         stroke="currentColor"
-                        strokeWidth="1.8"
+                        strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
                         aria-hidden="true"
                       >
                         {fact.icon}
                       </svg>
-                    </div>
-                    <span className="text-[10px] uppercase tracking-widest text-mountain-400">
-                      {t.factTag}
+                    </span>
+                    <span className="font-mono text-[9px] font-semibold uppercase tracking-[0.2em] text-mountain-500">
+                      {String(i + 1).padStart(2, '0')}
                     </span>
                   </div>
-                  <p className="mt-6 text-xs uppercase tracking-widest text-mountain-500">
+                  <p className="mt-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-mountain-500">
                     {fact.label}
                   </p>
-                  <p className="mt-1 text-lg font-semibold text-mountain-900">
+                  <p className="mt-0.5 font-display text-base font-semibold leading-tight text-mountain-950 sm:text-lg">
                     {fact.value}
                   </p>
-                  <span className="absolute inset-x-6 bottom-0 h-px scale-x-0 bg-gradient-to-r from-mountain-400 to-mountain-700 transition-transform duration-500 group-hover:scale-x-100 origin-left" />
+                  <span className="absolute inset-x-3.5 bottom-0 h-px origin-left scale-x-0 bg-gradient-to-r from-flame-500 to-solar-400 transition-transform duration-500 group-hover:scale-x-100 sm:inset-x-4" />
                 </li>
               ))}
             </ul>

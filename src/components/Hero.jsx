@@ -177,11 +177,11 @@ export default function Hero() {
       {/* Indicateur scroll */}
       <a
         href="#athlete"
-        aria-label="Faire défiler vers les performances"
+        aria-label={t.scrollAria}
         className="absolute left-1/2 bottom-6 hidden -translate-x-1/2 flex-col items-center gap-2 text-mountain-700 sm:flex"
       >
         <span className="text-[10px] font-bold uppercase tracking-[0.25em]">
-          Défiler
+          {t.scrollLabel}
         </span>
         <span className="block h-8 w-px bg-flame-500 animate-bounce-slow" />
       </a>
