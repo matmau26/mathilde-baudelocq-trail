@@ -259,21 +259,24 @@ function MetaStrip({ item, t }) {
   ];
   return (
     <div className="sticky top-16 z-30 border-y border-mountain-200 bg-cream-50/85 backdrop-blur-md">
-      <div className="mx-auto flex max-w-3xl items-stretch justify-center divide-x divide-mountain-200 overflow-x-auto px-6 sm:px-8">
+      <div className="mx-auto flex max-w-3xl items-stretch justify-center divide-x divide-mountain-200 overflow-x-auto px-3 sm:px-8">
         {items.map((m, i) => {
           const Icon = m.icon;
           return (
             <div
               key={i}
-              className="flex shrink-0 items-center gap-3 px-4 py-3 sm:px-6 sm:py-4"
+              className="flex shrink-0 items-center gap-1.5 px-2.5 py-2.5 sm:gap-3 sm:px-6 sm:py-4"
             >
-              <Icon className="h-3.5 w-3.5 shrink-0 text-flame-600" strokeWidth={2.5} />
+              <Icon
+                className="hidden h-3.5 w-3.5 shrink-0 text-flame-600 sm:block"
+                strokeWidth={2.5}
+              />
               <div className="flex flex-col">
-                <span className="text-[9px] font-bold uppercase tracking-[0.25em] text-mountain-500">
+                <span className="text-[9px] font-bold uppercase tracking-[0.16em] text-mountain-500 sm:tracking-[0.25em]">
                   {m.label}
                 </span>
                 <span
-                  className={`whitespace-nowrap text-sm font-semibold text-mountain-950 ${
+                  className={`whitespace-nowrap text-[12px] font-semibold text-mountain-950 sm:text-sm ${
                     m.mono ? 'font-mono' : ''
                   }`}
                 >

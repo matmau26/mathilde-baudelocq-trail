@@ -32,6 +32,7 @@ function shouldPreload() {
 
 function HighlightVideo({ src, alt }) {
   const wrapperRef = useRef(null);
+  const videoRef = useRef(null);
   const [mounted, setMounted] = useState(false);
   const poster = videoPoster(src);
 
@@ -51,17 +52,37 @@ function HighlightVideo({ src, alt }) {
     return () => io.disconnect();
   }, [mounted]);
 
+  // Belt-and-suspenders : certains navigateurs ignorent `loop` sur des flux
+  // Cloudinary issus d'un .mov. On force le redémarrage à la fin.
+  const handleEnded = () => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.currentTime = 0;
+    v.play().catch(() => {});
+  };
+
+  // Si la lecture est interrompue (onglet inactif, etc.), on relance dès que
+  // l'élément redevient visible / chargé.
+  const handleLoadedData = () => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.play().catch(() => {});
+  };
+
   return (
     <div ref={wrapperRef} className="absolute inset-0">
       {mounted ? (
         <video
+          ref={videoRef}
           src={videoStream(src)}
           poster={poster}
           autoPlay
           muted
           loop
           playsInline
-          preload="metadata"
+          preload="auto"
+          onEnded={handleEnded}
+          onLoadedData={handleLoadedData}
           aria-label={alt}
           className="absolute inset-0 h-full w-full object-cover"
         />
