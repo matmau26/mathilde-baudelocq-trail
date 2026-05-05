@@ -500,20 +500,19 @@ function PhotoMosaic({ photos, alts, title, t }) {
 
 /* ----------------------- BLOC VIDÉO ----------------------- */
 
-function VideoSection({ src, localized }) {
-  if (!src) return null;
+function VideoSection({ videos, localized }) {
+  const list = Array.isArray(videos) ? videos.filter(Boolean) : [];
+  if (list.length === 0) return null;
+
   return (
     <motion.section
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.8 }}
-      className="my-16 grid grid-cols-1 gap-10 sm:my-20 lg:grid-cols-12 lg:items-center lg:gap-14"
+      className="my-16 sm:my-20"
     >
-      <div className="lg:col-span-5">
-        <RaceVideoPlayer src={src} />
-      </div>
-      <div className="lg:col-span-7">
+      <div className="max-w-2xl">
         <p className="font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-flame-600 sm:text-[11px]">
           {localized.videoTitle}
         </p>
@@ -527,6 +526,16 @@ function VideoSection({ src, localized }) {
         <p className="mt-5 max-w-xl text-base leading-relaxed text-mountain-700 sm:text-lg">
           {localized.videoTagline}
         </p>
+      </div>
+
+      <div
+        className={`mt-10 grid gap-8 sm:gap-10 ${
+          list.length > 1 ? 'sm:grid-cols-2' : 'sm:grid-cols-1'
+        }`}
+      >
+        {list.map((src, i) => (
+          <RaceVideoPlayer key={src || i} src={src} />
+        ))}
       </div>
     </motion.section>
   );
@@ -617,7 +626,7 @@ export default function CommuniqueDetail() {
 
       {/* VIDÉO */}
       <div className="mx-auto max-w-5xl px-6 sm:px-8">
-        <VideoSection src={item.video} localized={localized} />
+        <VideoSection videos={item.videos} localized={localized} />
       </div>
 
       {/* GALERIE */}

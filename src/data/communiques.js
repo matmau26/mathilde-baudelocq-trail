@@ -17,8 +17,10 @@ export const COMMUNIQUES = [
       { src: '/Ventous2026.jpeg' },
       { src: '/VentouxPodium.jpeg' },
     ],
-    video:
+    videos: [
       'https://res.cloudinary.com/dnh2k1blz/video/upload/q_auto/f_auto/v1777299247/D696A555-9A4B-49A1-9954-3B65EC3ACB5B_xaeuo6.mp4',
+      'https://res.cloudinary.com/dnh2k1blz/video/upload/q_auto/f_auto/v1777988768/2026_GRV_Mathilde_sml50y.mov',
+    ],
     fr: {
       title: 'Grand Raid du Ventoux by UTMB — Malaucène',
       subtitle: 'Trail des Coteaux — 20K',

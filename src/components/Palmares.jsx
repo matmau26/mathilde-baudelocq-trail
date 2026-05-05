@@ -1,5 +1,82 @@
+import { useEffect, useRef, useState } from 'react';
 import { TrendingUp, Trophy } from 'lucide-react';
 import { useT } from '../i18n/useT.js';
+
+const HERO_VIDEO_SRC =
+  'https://res.cloudinary.com/dnh2k1blz/video/upload/q_auto/f_auto/v1777988768/2026_GRV_Mathilde_sml50y.mov';
+
+function withCldTransform(src, transforms) {
+  return src.replace(/\/upload\/(?:[^/]+\/)*(v\d+\/)/, `/upload/${transforms}/$1`);
+}
+
+function videoPoster(src) {
+  return withCldTransform(
+    src.replace(/\.(mp4|mov|webm)(\?.*)?$/, '.jpg$2'),
+    'w_960,q_auto:good,f_jpg'
+  );
+}
+
+function videoStream(src) {
+  return withCldTransform(src, 'w_960,q_auto:eco,vc_h264,f_mp4');
+}
+
+function shouldPreload() {
+  if (typeof navigator === 'undefined') return true;
+  const c =
+    navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+  if (!c) return true;
+  if (c.saveData) return false;
+  if (c.effectiveType === 'slow-2g' || c.effectiveType === '2g') return false;
+  return true;
+}
+
+function HighlightVideo({ src, alt }) {
+  const wrapperRef = useRef(null);
+  const [mounted, setMounted] = useState(false);
+  const poster = videoPoster(src);
+
+  useEffect(() => {
+    if (!wrapperRef.current || mounted) return;
+    if (!shouldPreload()) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) {
+          setMounted(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: '200px 0px' }
+    );
+    io.observe(wrapperRef.current);
+    return () => io.disconnect();
+  }, [mounted]);
+
+  return (
+    <div ref={wrapperRef} className="absolute inset-0">
+      {mounted ? (
+        <video
+          src={videoStream(src)}
+          poster={poster}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          aria-label={alt}
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+      ) : (
+        <img
+          src={poster}
+          alt={alt}
+          loading="lazy"
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+      )}
+    </div>
+  );
+}
 
 // Coordonnées normalisées du tracé (0-100) — 5 points calés sur les valeurs
 // 2022:400, 2023:432, 2024:457, 2025:540, 2026:570 (y inversé : 0 = haut)
@@ -101,15 +178,9 @@ export default function Palmares() {
             </dl>
           </article>
 
-          {/* Photo de course */}
-          <figure className="relative min-h-[280px] bg-mountain-950 lg:col-span-5">
-            <img
-              src="/Ventoux1.jpeg"
-              alt={t.photoAlt}
-              className="absolute inset-0 h-full w-full object-cover"
-              loading="lazy"
-              decoding="async"
-            />
+          {/* Vidéo de course en boucle */}
+          <figure className="relative min-h-[280px] overflow-hidden bg-mountain-950 lg:col-span-5">
+            <HighlightVideo src={HERO_VIDEO_SRC} alt={t.photoAlt} />
             <div
               aria-hidden="true"
               className="absolute inset-0 bg-gradient-to-t from-mountain-950/80 via-mountain-950/10 to-transparent"
