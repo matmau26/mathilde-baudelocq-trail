@@ -333,6 +333,7 @@ export const translations = {
     contact: {
       back: 'Retour au Media Kit',
       eyebrow: 'Contact',
+      logoAlt: 'Logo Mathilde Baudelocq — Trail Athlete',
       title1: 'Construisons',
       title2: 'ensemble.',
       labels: {
@@ -695,6 +696,7 @@ export const translations = {
     contact: {
       back: 'Back to Media Kit',
       eyebrow: 'Contact',
+      logoAlt: 'Mathilde Baudelocq — Trail Athlete logo',
       title1: 'Let’s build',
       title2: 'together.',
       labels: {

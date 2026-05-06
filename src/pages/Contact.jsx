@@ -100,7 +100,23 @@ export default function Contact() {
             transition={{ duration: 0.7, ease: 'easeOut' }}
             className="lg:col-span-7"
           >
-            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-flame-600">
+            {/* Letterhead : logo + filet flame, ancre la page à la marque
+                sans rivaliser avec la grande typographie ci-dessous */}
+            <div className="flex items-center gap-4">
+              <img
+                src="/logo/Logo_Full_Transparent.png"
+                alt={t.logoAlt}
+                loading="eager"
+                decoding="async"
+                className="h-auto w-36 shrink-0 sm:w-40"
+              />
+              <span
+                aria-hidden="true"
+                className="hidden h-px flex-1 bg-gradient-to-r from-flame-500/60 via-mountain-300/60 to-transparent sm:block"
+              />
+            </div>
+
+            <p className="mt-6 text-[11px] font-semibold uppercase tracking-[0.18em] text-flame-600">
               {t.eyebrow}
             </p>
             <h1 className="mt-3 font-display text-5xl font-bold uppercase leading-[0.9] tracking-tight text-mountain-950 sm:text-6xl">
