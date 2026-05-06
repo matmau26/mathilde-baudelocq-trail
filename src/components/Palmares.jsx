@@ -183,12 +183,12 @@ export default function Palmares() {
             {/* Mini-stats */}
             <dl className="mt-10 grid grid-cols-3 gap-px overflow-hidden rounded-xl border border-transparent bg-transparent">
               {t.stats.map((stat, i) => (
-                <div key={i} className="bg-white p-4">
-                  <dt className="text-[10px] font-semibold uppercase tracking-widest text-mountain-500">
+                <div key={i} className="bg-white p-2.5 sm:p-4">
+                  <dt className="whitespace-nowrap text-[9px] font-semibold uppercase tracking-wider text-mountain-500 sm:text-[10px] sm:tracking-widest">
                     {stat.label}
                   </dt>
                   <dd
-                    className={`mt-1 ${i === 1 ? 'font-mono' : 'font-display'} text-2xl font-bold ${
+                    className={`mt-1 whitespace-nowrap ${i === 1 ? 'font-mono' : 'font-display'} text-base font-bold sm:text-2xl ${
                       i === 0 ? 'text-flame-600' : 'text-mountain-950'
                     }`}
                   >
