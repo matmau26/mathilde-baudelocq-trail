@@ -1,75 +1,75 @@
 import { motion } from 'framer-motion';
 import { useT } from '../i18n/useT.js';
 
-const HERO_IMAGE = '/Maxi2025-1.jpg';
+const HERO_LOGO = '/logo/Logo_Full_Transparent.png';
+const HERO_PORTRAIT = '/Mathilde.jpeg';
+const HERO_RACE = '/Maxi2025-1.jpg';
 
 export default function Hero() {
   const t = useT('hero');
   return (
     <section
       id="top"
-      className="relative isolate flex min-h-[100svh] items-center overflow-hidden bg-mesh-warm pt-32 pb-24 sm:pt-40 sm:pb-28"
+      className="relative isolate overflow-hidden bg-mesh-warm pt-28 pb-16 sm:pt-32 sm:pb-20 lg:pt-36 lg:pb-24"
     >
-      {/* Blobs flottants vifs en arrière-plan */}
+      {/* Blobs flottants */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -top-32 -left-32 h-[36rem] w-[36rem] rounded-full bg-flame-300/40 blur-[120px]"
+        className="pointer-events-none absolute -top-32 -left-32 h-[34rem] w-[34rem] rounded-full bg-flame-300/40 blur-[120px]"
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -bottom-40 right-[-10rem] h-[34rem] w-[34rem] rounded-full bg-electric-300/40 blur-[120px]"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute top-1/2 left-1/2 h-[18rem] w-[18rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-solar-300/30 blur-[100px]"
+        className="pointer-events-none absolute -bottom-40 right-[-10rem] h-[32rem] w-[32rem] rounded-full bg-electric-300/30 blur-[120px]"
       />
 
-      <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-14 px-6 lg:grid-cols-12">
-        {/* Bloc texte */}
+      <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-6 lg:grid-cols-12 lg:gap-12">
+        {/* COLONNE GAUCHE — Marque */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
-          className="lg:col-span-7"
+          transition={{ duration: 0.7, ease: 'easeOut' }}
+          className="text-center lg:col-span-6 lg:text-left"
         >
-          <div className="inline-flex items-center gap-2 rounded-full border border-flame-300/50 bg-white/60 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] text-flame-700 backdrop-blur-md">
-            <span className="inline-block h-1.5 w-1.5 animate-pulse rounded-full bg-flame-500" />
+          {/* Pill du media kit */}
+          <span className="inline-flex items-center gap-2 rounded-full bg-white/85 px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.22em] text-mountain-800 shadow-sm ring-1 ring-mountain-100 backdrop-blur-md">
             {t.eyebrow}
-          </div>
+          </span>
 
-          <h1 className="mt-6 font-display text-6xl font-bold uppercase leading-[0.88] tracking-tight text-mountain-950 sm:text-7xl lg:text-[7.5rem]">
-            {t.titleFirst}
-            <br />
-            <span className="bg-gradient-to-r from-flame-600 via-flame-500 to-solar-400 bg-clip-text text-transparent">
-              {t.titleLast}
+          {/* Logo (monogramme + wordmark MATHILDE BAUDELOCQ TRAIL ATHLETE) */}
+          <img
+            src={HERO_LOGO}
+            alt={t.logoAlt}
+            loading="eager"
+            decoding="async"
+            className="mx-auto mt-8 block w-64 sm:w-80 lg:mx-0 lg:mt-10 lg:w-[26rem]"
+          />
+
+          {/* Headline TRAJECTOIRE [ÉLITE] · SAISON 2026 */}
+          <h1 className="mt-8 font-display text-3xl font-bold uppercase tracking-tight text-mountain-950 sm:text-4xl lg:text-[2.6rem] lg:leading-[1.05]">
+            <span>{t.traceLine1}</span>
+            <span className="ml-2 bg-gradient-to-r from-flame-600 via-flame-500 to-solar-400 bg-clip-text text-transparent sm:ml-3">
+              {t.traceLine2}
+            </span>
+            <span className="mt-2 block text-base font-semibold tracking-[0.18em] text-mountain-500 sm:text-lg lg:ml-3 lg:mt-0 lg:inline">
+              <span className="hidden lg:inline">·{' '}</span>
+              {t.season}
             </span>
           </h1>
 
-          <p className="mt-6 max-w-xl text-base sm:text-lg font-light text-mountain-700">
-            {t.subtitleSport}
-            <span className="mx-3 inline-block h-1 w-1 rounded-full bg-flame-500 align-middle" />
-            <span className="font-medium uppercase tracking-[0.12em] text-mountain-950">
-              {t.subtitleProject}
-            </span>
-          </p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: 'easeOut', delay: 0.25 }}
-            className="mt-10 flex flex-wrap items-center gap-4"
-          >
+          {/* CTAs — pleine largeur en mobile, en ligne en desktop */}
+          <div className="mt-8 flex flex-col items-stretch gap-3 sm:mt-9 sm:flex-row sm:items-center sm:justify-center sm:gap-4 lg:justify-start">
             <a
               href="#partenariat"
-              className="group relative inline-flex items-center gap-2.5 overflow-hidden rounded-full bg-flame-500 px-5 py-3 text-[12px] font-semibold uppercase tracking-[0.15em] text-white shadow-md shadow-flame-500/20 transition-all hover:bg-flame-600 hover:shadow-lg hover:shadow-flame-500/30"
+              className="group inline-flex items-center justify-center gap-2.5 rounded-full bg-flame-500 px-6 py-3.5 text-[12px] font-bold uppercase tracking-[0.18em] text-white shadow-lg shadow-flame-500/30 transition-all hover:bg-flame-600 hover:shadow-xl hover:shadow-flame-500/40"
             >
-              <span className="relative z-10">{t.ctaPrimary}</span>
+              {t.ctaPrimary}
               <svg
-                className="relative z-10 h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5"
+                aria-hidden="true"
+                className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                strokeWidth="2"
+                strokeWidth="2.2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
               >
@@ -77,100 +77,73 @@ export default function Hero() {
                 <polyline points="12 5 19 12 12 19" />
               </svg>
             </a>
-
             <a
-              href="#athlete"
-              className="inline-flex items-center gap-2 rounded-full border border-mountain-300 bg-transparent px-4 py-3 text-[12px] font-semibold uppercase tracking-[0.15em] text-mountain-700 transition-colors hover:border-mountain-950 hover:text-mountain-950"
+              href="#palmares"
+              className="group inline-flex items-center justify-center gap-2.5 rounded-full border border-mountain-300 bg-transparent px-6 py-3.5 text-[12px] font-bold uppercase tracking-[0.18em] text-mountain-800 transition-colors hover:border-mountain-950 hover:text-mountain-950"
             >
               {t.ctaSecondary}
-              <span aria-hidden="true">→</span>
+              <svg
+                aria-hidden="true"
+                className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
             </a>
-          </motion.div>
+          </div>
 
-          {/* Tags signalétiques */}
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, ease: 'easeOut', delay: 0.4 }}
-            className="mt-14 flex flex-wrap items-center gap-3"
-          >
-            <span className="inline-flex items-center gap-2 rounded-full border border-mountain-200 bg-white/70 px-3.5 py-1.5 text-[11px] font-medium uppercase tracking-[0.18em] text-mountain-800 backdrop-blur-md">
-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-electric-500" />
-              {t.tagCity}
-            </span>
-            <span className="inline-flex items-center gap-2 rounded-full bg-mountain-950 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-white">
-              <span className="inline-block h-1.5 w-1.5 rounded-full bg-flame-400" />
-              {t.tagProject}
-            </span>
-          </motion.div>
+          {/* Tags inline */}
+          <p className="mt-8 text-sm font-medium text-mountain-700 sm:text-[15px]">
+            {t.tagCity}
+            <span aria-hidden="true" className="mx-2 text-mountain-400">·</span>
+            {t.tagProject}
+            <span aria-hidden="true" className="mx-2 text-mountain-400">·</span>
+            {t.tagStatus}
+          </p>
         </motion.div>
 
-        {/* Panneau photo */}
+        {/* COLONNE DROITE — composition à 2 photos */}
         <motion.div
-          initial={{ opacity: 0, x: 32 }}
+          initial={{ opacity: 0, x: 24 }}
           animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.9, ease: 'easeOut', delay: 0.2 }}
-          className="relative mx-auto w-full max-w-[22rem] lg:col-span-5 lg:max-w-sm"
+          transition={{ duration: 0.8, ease: 'easeOut', delay: 0.15 }}
+          className="relative mx-auto w-full max-w-md lg:col-span-6 lg:mx-0 lg:max-w-none"
         >
-          {/* Cadre orange contenant la photo */}
-          <div className="rounded-3xl border-2 border-flame-500 p-2 shadow-2xl shadow-mountain-900/20">
-            <div className="relative aspect-[2/3] w-full overflow-hidden rounded-2xl bg-mountain-950">
-              {/* Fallback dégradé pendant le chargement */}
-              <div
-                aria-hidden="true"
-                className="absolute inset-0 bg-gradient-to-br from-mountain-700 via-mountain-900 to-flame-900"
-              />
-
-              {/* Photo */}
+          {/* Grande photo de course */}
+          <figure className="relative ml-auto w-[80%] overflow-hidden rounded-3xl bg-mountain-100 shadow-2xl shadow-mountain-900/25 ring-1 ring-mountain-900/5">
+            <div className="aspect-[3/4] w-full">
               <img
-                src={HERO_IMAGE}
+                src={HERO_RACE}
                 alt={t.photoAlt}
-                className="absolute inset-0 h-full w-full object-cover"
                 loading="eager"
                 decoding="async"
+                className="h-full w-full object-cover"
               />
+            </div>
+            {/* Pill SAISON 2026 */}
+            <span className="absolute right-4 top-4 inline-flex items-center rounded-full bg-white/95 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-mountain-900 shadow-sm backdrop-blur sm:right-5 sm:top-5 sm:text-[11px]">
+              {t.season}
+            </span>
+          </figure>
 
-              {/* Calque glassmorphism / vignette */}
-              <div
-                aria-hidden="true"
-                className="absolute inset-0 bg-gradient-to-t from-mountain-950/70 via-mountain-950/10 to-transparent"
+          {/* Petite photo portrait — chevauche la grande en haut à gauche */}
+          <figure className="absolute left-0 top-12 w-[40%] overflow-hidden rounded-2xl border-[6px] border-cream-50 bg-mountain-100 shadow-xl shadow-mountain-900/20 sm:top-14 sm:border-[7px] lg:top-16 lg:w-[42%]">
+            <div className="aspect-[3/4] w-full">
+              <img
+                src={HERO_PORTRAIT}
+                alt={t.portraitAlt}
+                loading="eager"
+                decoding="async"
+                className="h-full w-full object-cover"
               />
-
-              {/* Bandeau bas avec stats */}
-              <div className="absolute inset-x-0 bottom-0 flex flex-col gap-2.5 p-4">
-                <div className="flex items-center justify-between text-[10px] font-medium uppercase tracking-[0.2em] text-white/70">
-                  <span>{t.snapshot}</span>
-                  <span>{t.snapshotPeriod}</span>
-                </div>
-                <div className="grid grid-cols-3 gap-1.5">
-                  <div className="rounded-lg border border-white/10 bg-white/[0.07] px-2.5 py-2 backdrop-blur-md">
-                    <p className="text-[9px] font-medium uppercase tracking-[0.18em] text-flame-300/90">
-                      ITRA
-                    </p>
-                    <p className="mt-0.5 font-display text-lg font-semibold text-white">
-                      565
-                    </p>
-                  </div>
-                  <div className="rounded-lg border border-white/10 bg-white/[0.07] px-2.5 py-2 backdrop-blur-md">
-                    <p className="text-[9px] font-medium uppercase tracking-[0.18em] text-electric-300/90">
-                      UTMB
-                    </p>
-                    <p className="mt-0.5 font-display text-lg font-semibold text-white">
-                      568
-                    </p>
-                  </div>
-                  <div className="rounded-lg border border-flame-400/40 bg-flame-500/15 px-2.5 py-2 backdrop-blur-md">
-                    <p className="text-[9px] font-medium uppercase tracking-[0.18em] text-flame-200">
-                      GRV
-                    </p>
-                    <p className="mt-0.5 font-display text-lg font-semibold text-white">
-                      {t.grvBadge}
-                    </p>
-                  </div>
-                </div>
-              </div>
-          </div>
-          </div>
+            </div>
+          </figure>
         </motion.div>
       </div>
 
