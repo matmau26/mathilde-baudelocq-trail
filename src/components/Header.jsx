@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import LanguageSwitch from './LanguageSwitch.jsx';
 import { useT } from '../i18n/useT.js';
+import Picture from './Picture.jsx';
 
 // Suit la section visible à l'écran et renvoie son id (ou null hors home).
 // On considère qu'une section est active dès que son haut a passé sous le
@@ -98,8 +99,6 @@ export default function Header() {
   const surface = scrolled
     ? 'bg-white border-b border-mountain-100 shadow-sm md:bg-white/90 md:backdrop-blur-md'
     : 'bg-transparent';
-  const logoText = 'text-mountain-950';
-  const logoDot = 'bg-flame-500';
   const linkBase = scrolled
     ? 'text-mountain-800 hover:text-flame-600'
     : 'text-mountain-900 hover:text-flame-600';
@@ -143,15 +142,16 @@ export default function Header() {
         <Link
           to="/"
           onClick={handleLogoClick}
-          aria-label="Retour en haut"
-          className={`flex shrink-0 items-center gap-2 font-medium tracking-tight transition-colors ${logoText}`}
+          aria-label={t.logoSubtitle ? `${t.logoSubtitle} — accueil` : 'Accueil'}
+          className="flex shrink-0 items-center transition-opacity hover:opacity-80"
         >
-          <span
-            className={`inline-block h-2 w-2 rounded-full transition-colors ${logoDot}`}
+          <Picture
+            src="/logo/Logo_Full_Transparent.png"
+            alt={t.logoSubtitle || 'Mathilde Baudelocq — Trail Athlete'}
+            loading="eager"
+            fetchPriority="high"
+            className="h-10 w-auto sm:h-11"
           />
-          <span className="whitespace-nowrap text-[13px] uppercase tracking-[0.18em]">
-            {t.logoSubtitle}
-          </span>
         </Link>
 
         <nav className="hidden md:flex items-center gap-5 lg:gap-6">
