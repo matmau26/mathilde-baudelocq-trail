@@ -10,7 +10,7 @@ export default function Hero() {
   return (
     <section
       id="top"
-      className="relative isolate overflow-hidden bg-mesh-warm pt-28 pb-16 sm:pt-32 sm:pb-20 lg:pt-36 lg:pb-24"
+      className="relative isolate overflow-hidden bg-mesh-warm pt-20 pb-16 sm:pt-20 sm:pb-20 lg:pt-24 lg:pb-24"
     >
       {/* Blobs flottants */}
       <div
@@ -41,26 +41,26 @@ export default function Hero() {
             alt={t.logoAlt}
             loading="eager"
             decoding="async"
-            className="mx-auto mt-8 block w-64 sm:w-80 lg:mx-0 lg:mt-10 lg:w-[26rem]"
+            className="mx-auto mt-6 block w-80 sm:w-[24rem] lg:mx-0 lg:mt-8 lg:w-[34rem]"
           />
 
           {/* Headline TRAJECTOIRE [ÉLITE] · SAISON 2026 */}
-          <h1 className="mt-8 font-display text-3xl font-bold uppercase tracking-tight text-mountain-950 sm:text-4xl lg:text-[2.6rem] lg:leading-[1.05]">
+          <h1 className="mt-6 font-display text-2xl font-bold uppercase tracking-tight text-mountain-950 sm:text-3xl lg:text-[2rem] lg:leading-[1.05]">
             <span>{t.traceLine1}</span>
             <span className="ml-2 bg-gradient-to-r from-flame-600 via-flame-500 to-solar-400 bg-clip-text text-transparent sm:ml-3">
               {t.traceLine2}
             </span>
-            <span className="mt-2 block text-base font-semibold tracking-[0.18em] text-mountain-500 sm:text-lg lg:ml-3 lg:mt-0 lg:inline">
+            <span className="mt-1.5 block text-sm font-semibold tracking-[0.18em] text-mountain-500 sm:text-base lg:ml-3 lg:mt-0 lg:inline">
               <span className="hidden lg:inline">·{' '}</span>
               {t.season}
             </span>
           </h1>
 
           {/* CTAs — pleine largeur en mobile, en ligne en desktop */}
-          <div className="mt-8 flex flex-col items-stretch gap-3 sm:mt-9 sm:flex-row sm:items-center sm:justify-center sm:gap-4 lg:justify-start">
+          <div className="mt-7 flex flex-col items-stretch gap-3 sm:mt-8 sm:flex-row sm:items-center sm:justify-center sm:gap-4 lg:justify-start">
             <a
               href="#partenariat"
-              className="group inline-flex items-center justify-center gap-2.5 rounded-full bg-flame-500 px-6 py-3.5 text-[12px] font-bold uppercase tracking-[0.18em] text-white shadow-lg shadow-flame-500/30 transition-all hover:bg-flame-600 hover:shadow-xl hover:shadow-flame-500/40"
+              className="group inline-flex items-center justify-center gap-2.5 rounded-full bg-flame-500 px-5 py-2.5 text-[12px] font-bold uppercase tracking-[0.18em] text-white shadow-lg shadow-flame-500/30 transition-all hover:bg-flame-600 hover:shadow-xl hover:shadow-flame-500/40"
             >
               {t.ctaPrimary}
               <svg
@@ -79,7 +79,7 @@ export default function Hero() {
             </a>
             <a
               href="#palmares"
-              className="group inline-flex items-center justify-center gap-2.5 rounded-full border border-mountain-300 bg-transparent px-6 py-3.5 text-[12px] font-bold uppercase tracking-[0.18em] text-mountain-800 transition-colors hover:border-mountain-950 hover:text-mountain-950"
+              className="group inline-flex items-center justify-center gap-2.5 rounded-full border border-mountain-300 bg-transparent px-5 py-2.5 text-[12px] font-bold uppercase tracking-[0.18em] text-mountain-800 transition-colors hover:border-mountain-950 hover:text-mountain-950"
             >
               {t.ctaSecondary}
               <svg
@@ -97,15 +97,6 @@ export default function Hero() {
               </svg>
             </a>
           </div>
-
-          {/* Tags inline */}
-          <p className="mt-8 text-sm font-medium text-mountain-700 sm:text-[15px]">
-            {t.tagCity}
-            <span aria-hidden="true" className="mx-2 text-mountain-400">·</span>
-            {t.tagProject}
-            <span aria-hidden="true" className="mx-2 text-mountain-400">·</span>
-            {t.tagStatus}
-          </p>
         </motion.div>
 
         {/* COLONNE DROITE — composition à 2 photos */}
@@ -126,10 +117,6 @@ export default function Hero() {
                 className="h-full w-full object-cover"
               />
             </div>
-            {/* Pill SAISON 2026 */}
-            <span className="absolute right-4 top-4 inline-flex items-center rounded-full bg-white/95 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-[0.22em] text-mountain-900 shadow-sm backdrop-blur sm:right-5 sm:top-5 sm:text-[11px]">
-              {t.season}
-            </span>
           </figure>
 
           {/* Petite photo portrait — chevauche la grande en haut à gauche */}
