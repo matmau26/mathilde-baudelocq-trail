@@ -9,12 +9,16 @@ html {
 body {
   font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
   background-color: #fffaf3;
+  /* Wash chaud + accent froid — gradients radiaux statiques (sans
+     background-attachment: fixed, qui forçait Safari iOS à
+     re-rasteriser à chaque frame de scroll). 2 couches sur mobile,
+     3 couches plus larges et plus saturées à partir de md. */
+  background-image:
+    radial-gradient(28rem 20rem at 0% -5%, rgba(255, 115, 56, 0.22), transparent 65%),
+    radial-gradient(24rem 18rem at 100% 8%, rgba(37, 99, 235, 0.10), transparent 70%);
+  background-repeat: no-repeat;
 }
 
-/* Sur écran ≥ md on s'autorise un fond légèrement « mesh » par radial
-   gradients (cheap GPU paint sur desktop). On NE met PAS
-   `background-attachment: fixed` — sur Safari iOS ça force une
-   ré-rasterisation à chaque scroll et tue les FPS. */
 @media (min-width: 768px) {
   body {
     background-image:
@@ -32,16 +36,25 @@ body {
     content-visibility: auto;
   }
 
-  /* Mesh « chaud » — gradients concentrés sur desktop ; sur mobile on
-     laisse simplement la teinte crème de fond pour économiser le GPU. */
+  /* Mesh « chaud » — version mobile : un seul gradient peach assez doux pour
+     ne pas charger le GPU. À md+ on revient à la version dense d'origine. */
   .bg-mesh-warm {
     background-color: #fffaf3;
+    background-image:
+      radial-gradient(26rem 20rem at 12% 0%, rgba(255, 115, 56, 0.18), transparent 65%);
+    background-repeat: no-repeat;
   }
   .bg-mesh-cool {
     background-color: #fffaf3;
+    background-image:
+      radial-gradient(26rem 20rem at 90% 0%, rgba(37, 99, 235, 0.14), transparent 70%);
+    background-repeat: no-repeat;
   }
   .bg-mesh-soft {
     background-color: #ffffff;
+    background-image:
+      radial-gradient(20rem 16rem at 0% 100%, rgba(255, 153, 104, 0.10), transparent 70%);
+    background-repeat: no-repeat;
   }
   @media (min-width: 768px) {
     .bg-mesh-warm {
