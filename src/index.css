@@ -17,6 +17,13 @@ body {
 }
 
 @layer utilities {
+  /* Permet au navigateur de différer le layout + paint des sections hors
+     viewport. La taille intrinsèque est posée par style={containIntrinsicSize}
+     pour préserver la longueur de la page et empêcher les sauts de scroll. */
+  .content-visibility-auto {
+    content-visibility: auto;
+  }
+
   .bg-mesh-warm {
     background-color: #fffaf3;
     background-image:

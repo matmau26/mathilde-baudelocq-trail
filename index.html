@@ -42,14 +42,36 @@
     />
     <meta name="twitter:image" content="/og-image.jpg" />
 
-    <!-- Préchargement des images critiques (LCP) en AVIF -->
-    <link rel="preload" as="image" href="/Maxi2025-1.avif" type="image/avif" fetchpriority="high" />
-    <link rel="preload" as="image" href="/logo/Logo_Full_Transparent.avif" type="image/avif" />
+    <!-- Préchargement des images critiques (LCP) — variantes mobiles d'abord
+         (mobile-first) : le navigateur choisit la bonne via imagesrcset. -->
+    <link
+      rel="preload"
+      as="image"
+      type="image/avif"
+      href="/Maxi2025-1-640w.avif"
+      imagesrcset="/Maxi2025-1-640w.avif 640w, /Maxi2025-1-1024w.avif 1024w, /Maxi2025-1.avif 1600w"
+      imagesizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 540px"
+      fetchpriority="high"
+    />
+    <link
+      rel="preload"
+      as="image"
+      type="image/avif"
+      href="/logo/Logo_Full_Transparent-480w.avif"
+      imagesrcset="/logo/Logo_Full_Transparent-480w.avif 480w, /logo/Logo_Full_Transparent-720w.avif 720w, /logo/Logo_Full_Transparent.avif 920w"
+      imagesizes="(max-width: 640px) 320px, (max-width: 1024px) 384px, 544px"
+    />
+
+    <!-- Cloudinary : video posters + streams. Économise un round-trip TLS. -->
+    <link rel="preconnect" href="https://res.cloudinary.com" crossorigin />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Trim des weights : on ne charge que ceux réellement utilisés.
+         Inter 400/500/600/700/900, Oswald 600/700 (font-display),
+         Playfair italic 400 (uniquement sur la page /communiques/:slug). -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Oswald:wght@500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Oswald:wght@600;700&family=Playfair+Display:ital,wght@1,400&display=swap"
       rel="stylesheet"
     />
   </head>
