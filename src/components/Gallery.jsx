@@ -4,6 +4,7 @@ import { Play, Loader2 } from 'lucide-react';
 import { useT } from '../i18n/useT.js';
 
 const MEDIA = [
+  { type: 'photo', src: '/logo/Logo_Full_Noir.png', alt: 'Logo Mathilde Baudelocq — Trail Athlete' },
   { type: 'photo', src: '/Ventoux2025.jpeg', alt: 'Mathilde Baudelocq · GRV by UTMB 2025' },
   {
     type: 'video',
