@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { TrendingUp, Trophy } from 'lucide-react';
 import { useT } from '../i18n/useT.js';
+import Picture from './Picture.jsx';
 
 const HERO_VIDEO_SRC =
   'https://res.cloudinary.com/dnh2k1blz/video/upload/q_auto/f_auto/v1777988768/2026_GRV_Mathilde_sml50y.mov';
@@ -329,12 +330,11 @@ export default function Palmares() {
 
           {/* Photo podium */}
           <figure className="relative min-h-[280px] bg-mountain-950 lg:col-span-5">
-            <img
+            <Picture
               src="/VentouxPodium.jpeg"
               alt={t.podiumAlt}
               className="absolute inset-0 h-full w-full object-cover"
               loading="lazy"
-              decoding="async"
             />
             <div
               aria-hidden="true"

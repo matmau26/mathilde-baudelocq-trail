@@ -4,6 +4,7 @@ import { Mail, ArrowLeft, Send, Loader2, CheckCircle2, AlertCircle } from 'lucid
 import { Link } from 'react-router-dom';
 import emailjs from '@emailjs/browser';
 import { useT } from '../i18n/useT.js';
+import Picture from '../components/Picture.jsx';
 
 const RECIPIENT = 'mathilde.baudelocq@gmail.com';
 const CONTACT_VIDEO =
@@ -103,11 +104,10 @@ export default function Contact() {
             {/* Letterhead : logo + filet flame, ancre la page à la marque
                 sans rivaliser avec la grande typographie ci-dessous */}
             <div className="flex items-center gap-4">
-              <img
+              <Picture
                 src="/logo/Logo_Full_Transparent.png"
                 alt={t.logoAlt}
                 loading="eager"
-                decoding="async"
                 className="h-auto w-36 shrink-0 sm:w-40"
               />
               <span

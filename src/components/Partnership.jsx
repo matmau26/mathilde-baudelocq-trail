@@ -8,6 +8,7 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useT } from '../i18n/useT.js';
+import Picture from './Picture.jsx';
 
 const PILLAR_META = [
   { icon: Atom, accent: 'flame' },
@@ -86,12 +87,11 @@ export default function Partnership() {
             <div className="lg:col-span-5">
               <figure className="mx-auto w-full max-w-[20rem] overflow-hidden rounded-2xl border-2 border-mountain-950 bg-mountain-950 shadow-xl shadow-mountain-900/10 sm:max-w-sm lg:ml-auto lg:mr-0 lg:max-w-[18rem]">
                 <div className="relative aspect-[5/7] w-full">
-                  <img
+                  <Picture
                     src="/Ventoux2025-crop.jpg"
                     alt={t.photoAlt}
                     className="absolute inset-0 h-full w-full object-cover"
                     loading="lazy"
-                    decoding="async"
                   />
                   <div
                     aria-hidden="true"

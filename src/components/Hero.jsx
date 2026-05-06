@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { useT } from '../i18n/useT.js';
+import Picture from './Picture.jsx';
 
 const HERO_LOGO = '/logo/Logo_Full_Transparent.png';
 const HERO_PORTRAIT = '/Mathilde.jpeg';
@@ -36,11 +37,11 @@ export default function Hero() {
           </span>
 
           {/* Logo (monogramme + wordmark MATHILDE BAUDELOCQ TRAIL ATHLETE) */}
-          <img
+          <Picture
             src={HERO_LOGO}
             alt={t.logoAlt}
             loading="eager"
-            decoding="async"
+            fetchPriority="high"
             className="mx-auto mt-6 block w-80 sm:w-[24rem] lg:mx-0 lg:mt-8 lg:w-[34rem]"
           />
 
@@ -109,11 +110,11 @@ export default function Hero() {
           {/* Grande photo de course */}
           <figure className="relative ml-auto w-[80%] overflow-hidden rounded-3xl bg-mountain-100 shadow-2xl shadow-mountain-900/25 ring-1 ring-mountain-900/5">
             <div className="aspect-[3/4] w-full">
-              <img
+              <Picture
                 src={HERO_RACE}
                 alt={t.photoAlt}
                 loading="eager"
-                decoding="async"
+                fetchPriority="high"
                 className="h-full w-full object-cover"
               />
             </div>
@@ -122,11 +123,11 @@ export default function Hero() {
           {/* Petite photo portrait — chevauche la grande en haut à gauche */}
           <figure className="absolute left-0 top-12 w-[40%] overflow-hidden rounded-2xl border-[6px] border-cream-50 bg-mountain-100 shadow-xl shadow-mountain-900/20 sm:top-14 sm:border-[7px] lg:top-16 lg:w-[42%]">
             <div className="aspect-[3/4] w-full">
-              <img
+              <Picture
                 src={HERO_PORTRAIT}
                 alt={t.portraitAlt}
                 loading="eager"
-                decoding="async"
+                fetchPriority="high"
                 className="h-full w-full object-cover"
               />
             </div>

@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Play, Loader2 } from 'lucide-react';
 import { useT } from '../i18n/useT.js';
+import Picture from './Picture.jsx';
 
 const MEDIA = [
   { type: 'photo', src: '/logo/Logo_Full_Noir.png', alt: 'Logo Mathilde Baudelocq — Trail Athlete' },
@@ -44,11 +45,10 @@ const itemVariants = {
 
 function MediaPhoto({ src, alt }) {
   return (
-    <img
+    <Picture
       src={src}
       alt={alt}
       loading="lazy"
-      decoding="async"
       className="block h-auto w-full transition-transform duration-500 group-hover:scale-[1.03]"
     />
   );

@@ -16,6 +16,7 @@ import {
 import { useT } from '../i18n/useT.js';
 import { useLanguage } from '../i18n/LanguageContext.jsx';
 import { COMMUNIQUES } from '../data/communiques.js';
+import Picture from '../components/Picture.jsx';
 
 function formatDateLong(iso, lang) {
   try {
@@ -138,11 +139,11 @@ function CinemaHero({ item, localized, lang, t }) {
         style={{ scale: imgScale, y: imgY }}
         className="absolute inset-0 -z-10 will-change-transform"
       >
-        <img
+        <Picture
           src={item.cover}
           alt={item.coverAlt}
           loading="eager"
-          decoding="async"
+          fetchPriority="high"
           className="absolute inset-0 h-full w-full object-cover"
         />
       </motion.div>
@@ -316,10 +317,11 @@ function ResultsShowcase({ localized, item, t }) {
     >
       {/* Halo flame + photo cover en arrière-plan dimmé */}
       <div className="absolute inset-0 -z-10">
-        <img
+        <Picture
           src={item.cover}
           alt=""
           aria-hidden="true"
+          loading="lazy"
           className="absolute inset-0 h-full w-full object-cover opacity-25"
         />
         <div
@@ -454,11 +456,10 @@ function PhotoMosaic({ photos, alts, title, t }) {
         {/* Grande photo */}
         <figure className="relative overflow-hidden rounded-2xl border border-mountain-200 bg-mountain-100 lg:col-span-8">
           <div className="aspect-[4/3] w-full">
-            <img
+            <Picture
               src={big.src}
               alt={bigAlt}
               loading="lazy"
-              decoding="async"
               className="h-full w-full object-cover transition-transform duration-700 hover:scale-[1.03]"
             />
           </div>
@@ -479,11 +480,10 @@ function PhotoMosaic({ photos, alts, title, t }) {
                 className="relative overflow-hidden rounded-2xl border border-mountain-200 bg-mountain-100"
               >
                 <div className="aspect-[4/3] w-full">
-                  <img
+                  <Picture
                     src={p.src}
                     alt={a}
                     loading="lazy"
-                    decoding="async"
                     className="h-full w-full object-cover transition-transform duration-700 hover:scale-[1.03]"
                   />
                 </div>
@@ -593,11 +593,10 @@ export default function CommuniqueDetail() {
             className="my-12 overflow-hidden rounded-2xl border border-mountain-200 bg-mountain-100 sm:my-16"
           >
             <div className="aspect-[16/10] w-full">
-              <img
+              <Picture
                 src={item.photos[0].src}
                 alt={localized.photoAlts?.[0] || item.photos[0].alt || ''}
                 loading="lazy"
-                decoding="async"
                 className="h-full w-full object-cover"
               />
             </div>

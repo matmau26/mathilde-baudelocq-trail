@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { useT } from '../i18n/useT.js';
+import Picture from './Picture.jsx';
 
 const FACT_ICONS = [
   <path d="M12 8v4l3 2M12 22a10 10 0 1 1 0-20 10 10 0 0 1 0 20Z" />,
@@ -123,12 +124,11 @@ export default function Athlete() {
           <div className="order-1 lg:col-span-5">
             <figure className="overflow-hidden rounded-2xl border-2 border-mountain-950 bg-mountain-950 shadow-xl shadow-mountain-900/10">
               <div className="relative aspect-[3/4] w-full">
-                <img
+                <Picture
                   src="/Mathilde.jpeg"
                   alt={t.photoAlt}
                   className="absolute inset-0 h-full w-full object-cover"
                   loading="lazy"
-                  decoding="async"
                 />
                 {/* Voiles de contraste */}
                 <div
