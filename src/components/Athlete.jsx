@@ -100,11 +100,11 @@ export default function Athlete() {
       {/* Blobs d'arrière-plan */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -top-32 -right-24 h-[28rem] w-[28rem] rounded-full bg-flame-300/30 blur-[110px]"
+        className="pointer-events-none hidden md:block absolute -top-32 -right-24 h-[28rem] w-[28rem] rounded-full bg-flame-300/30 blur-[110px]"
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute bottom-0 -left-24 h-[26rem] w-[26rem] rounded-full bg-electric-300/25 blur-[110px]"
+        className="pointer-events-none hidden md:block absolute bottom-0 -left-24 h-[26rem] w-[26rem] rounded-full bg-electric-300/25 blur-[110px]"
       />
 
       <div className="relative mx-auto max-w-6xl px-6">

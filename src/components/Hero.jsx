@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import { useT } from '../i18n/useT.js';
 import Picture from './Picture.jsx';
 
@@ -13,26 +12,21 @@ export default function Hero() {
       id="top"
       className="relative isolate overflow-hidden bg-mesh-warm pt-20 pb-16 sm:pt-20 sm:pb-20 lg:pt-24 lg:pb-24"
     >
-      {/* Blobs flottants */}
+      {/* Blobs flottants — masqués sous md (paint trop coûteux sur Safari iOS) */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -top-32 -left-32 h-[34rem] w-[34rem] rounded-full bg-flame-300/40 blur-[120px]"
+        className="pointer-events-none absolute -top-32 -left-32 hidden h-[34rem] w-[34rem] rounded-full bg-flame-300/40 blur-[100px] md:block"
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -bottom-40 right-[-10rem] h-[32rem] w-[32rem] rounded-full bg-electric-300/30 blur-[120px]"
+        className="pointer-events-none absolute -bottom-40 right-[-10rem] hidden h-[32rem] w-[32rem] rounded-full bg-electric-300/30 blur-[100px] md:block"
       />
 
       <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 px-6 lg:grid-cols-12 lg:gap-12">
         {/* COLONNE GAUCHE — Marque */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: 'easeOut' }}
-          className="text-center lg:col-span-6 lg:text-left"
-        >
-          {/* Pill du media kit */}
-          <span className="inline-flex items-center gap-2 rounded-full bg-white/85 px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.22em] text-mountain-800 shadow-sm ring-1 ring-mountain-100 backdrop-blur-md">
+        <div className="text-center lg:col-span-6 lg:text-left">
+          {/* Pill du media kit — fond opaque (pas de backdrop-blur sur mobile) */}
+          <span className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-1.5 text-[10px] font-bold uppercase tracking-[0.22em] text-mountain-800 shadow-sm ring-1 ring-mountain-100">
             {t.eyebrow}
           </span>
 
@@ -98,15 +92,10 @@ export default function Hero() {
               </svg>
             </a>
           </div>
-        </motion.div>
+        </div>
 
         {/* COLONNE DROITE — composition à 2 photos */}
-        <motion.div
-          initial={{ opacity: 0, x: 24 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, ease: 'easeOut', delay: 0.15 }}
-          className="relative mx-auto w-full max-w-md lg:col-span-6 lg:mx-0 lg:max-w-none"
-        >
+        <div className="relative mx-auto w-full max-w-md lg:col-span-6 lg:mx-0 lg:max-w-none">
           {/* Grande photo de course */}
           <figure className="relative ml-auto w-[80%] overflow-hidden rounded-3xl bg-mountain-100 shadow-2xl shadow-mountain-900/25 ring-1 ring-mountain-900/5">
             <div className="aspect-[3/4] w-full">
@@ -132,7 +121,7 @@ export default function Hero() {
               />
             </div>
           </figure>
-        </motion.div>
+        </div>
       </div>
 
       {/* Indicateur scroll */}

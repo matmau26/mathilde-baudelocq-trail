@@ -92,8 +92,11 @@ export default function Header() {
     return onHome && activeId && link.href === `#${activeId}`;
   };
 
+  // Sur Safari iOS, `backdrop-blur` au-dessus d'une page qui scroll relance le
+  // GPU à chaque frame → on garde un fond opaque sur mobile et on n'utilise
+  // le verre dépoli qu'à partir de md.
   const surface = scrolled
-    ? 'bg-white/90 backdrop-blur-md border-b border-mountain-100 shadow-sm'
+    ? 'bg-white border-b border-mountain-100 shadow-sm md:bg-white/90 md:backdrop-blur-md'
     : 'bg-transparent';
   const logoText = 'text-mountain-950';
   const logoDot = 'bg-flame-500';
@@ -222,7 +225,7 @@ export default function Header() {
       </div>
 
       {open && (
-        <div className="md:hidden border-t border-mountain-100 bg-white/95 backdrop-blur">
+        <div className="md:hidden border-t border-mountain-100 bg-white">
           <nav className="mx-auto flex max-w-6xl flex-col gap-1 px-6 py-4">
             {t.nav.map((link) => {
               const active = isActive(link);

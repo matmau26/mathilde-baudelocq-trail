@@ -125,7 +125,7 @@ export default function Palmares() {
       {/* Blob accent */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -top-20 right-1/4 h-[24rem] w-[24rem] rounded-full bg-flame-200/40 blur-[110px]"
+        className="pointer-events-none hidden md:block absolute -top-20 right-1/4 h-[24rem] w-[24rem] rounded-full bg-flame-200/40 blur-[110px]"
       />
 
       <div className="relative mx-auto max-w-6xl px-6">

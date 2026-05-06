@@ -76,11 +76,11 @@ export default function Contact() {
       {/* Blobs vifs */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -top-32 -left-32 h-[36rem] w-[36rem] rounded-full bg-flame-300/40 blur-[120px]"
+        className="pointer-events-none hidden md:block absolute -top-32 -left-32 h-[36rem] w-[36rem] rounded-full bg-flame-300/40 blur-[120px]"
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -bottom-40 right-[-10rem] h-[34rem] w-[34rem] rounded-full bg-electric-300/40 blur-[120px]"
+        className="pointer-events-none hidden md:block absolute -bottom-40 right-[-10rem] h-[34rem] w-[34rem] rounded-full bg-electric-300/40 blur-[120px]"
       />
 
       <div className="relative mx-auto max-w-6xl px-6">
