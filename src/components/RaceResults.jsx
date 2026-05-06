@@ -344,7 +344,7 @@ export default function RaceResults() {
                   {isHighlight && (
                     <span className="mt-3 inline-flex items-center gap-1.5 bg-flame-500 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-white">
                       <Award className="h-3 w-3" strokeWidth={2.5} />
-                      {race.badge}
+                      {t.highlightBadge}
                     </span>
                   )}
 

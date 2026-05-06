@@ -79,7 +79,7 @@ export default function Hero() {
               </svg>
             </a>
             <a
-              href="#palmares"
+              href="#resultats"
               className="group inline-flex items-center justify-center gap-2.5 rounded-full border border-mountain-300 bg-transparent px-5 py-2.5 text-[12px] font-bold uppercase tracking-[0.18em] text-mountain-800 transition-colors hover:border-mountain-950 hover:text-mountain-950"
             >
               {t.ctaSecondary}
