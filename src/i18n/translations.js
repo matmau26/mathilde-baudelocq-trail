@@ -91,7 +91,7 @@ export const translations = {
         {
           eyebrow: 'Cote ITRA',
           metric: '',
-          value: '565',
+          value: '571',
           suffix: 'pts',
           context: 'International Trail Running Association',
           tag: 'Indice global de performance',
@@ -454,7 +454,7 @@ export const translations = {
         {
           eyebrow: 'ITRA Score',
           metric: '',
-          value: '565',
+          value: '571',
           suffix: 'pts',
           context: 'International Trail Running Association',
           tag: 'Global performance index',
