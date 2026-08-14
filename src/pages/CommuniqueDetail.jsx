@@ -43,8 +43,14 @@ function formatDateShort(iso) {
   }
 }
 
+// Insère les transformations juste après /upload/. Le segment de version
+// (/v1234/) est optionnel côté Cloudinary : on le préserve quand il est là,
+// sans quoi une URL copiée sans version traverserait sans être optimisée.
 function withCldTransform(src, transforms) {
-  return src.replace(/\/upload\/(?:[^/]+\/)*(v\d+\/)/, `/upload/${transforms}/$1`);
+  return src.replace(
+    /\/upload\/(?:[^/]+\/)*?(v\d+\/)?([^/]+)$/,
+    `/upload/${transforms}/$1$2`
+  );
 }
 
 function videoPoster(src) {
@@ -179,7 +185,9 @@ function CinemaHero({ item, localized, lang, t }) {
             transition={{ duration: 0.6 }}
             className="flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[10px] font-medium uppercase tracking-[0.3em] text-flame-300 sm:text-[11px]"
           >
-            <span>{t.pressNumber}</span>
+            <span>
+              {t.pressNumber} {item.number}
+            </span>
             <span aria-hidden="true" className="block h-px w-12 bg-flame-500/70" />
             <span className="text-white/80">{formatDateShort(item.date)}</span>
             <span aria-hidden="true" className="hidden h-px w-12 bg-white/30 sm:block" />
@@ -361,7 +369,11 @@ function ResultsShowcase({ localized, item, t }) {
         </div>
 
         {/* PODIUM CATÉGORIE — mis en évidence */}
-        <div className="relative col-span-1 flex flex-col justify-between gap-6 px-6 py-10 lg:col-span-5 lg:px-10 lg:py-14">
+        <div
+          className={`relative col-span-1 flex flex-col gap-6 px-6 py-10 lg:col-span-5 lg:px-10 lg:py-14 ${
+            category ? 'justify-between' : 'justify-center'
+          }`}
+        >
           {category && (
             <div className="rounded-2xl border border-flame-400/40 bg-flame-500/10 p-6 sm:p-7">
               <div className="flex items-center gap-3">

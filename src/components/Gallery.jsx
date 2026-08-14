@@ -55,8 +55,14 @@ function MediaPhoto({ src, alt }) {
 }
 
 // Insère une chaîne de transformations Cloudinary entre /upload/ et /v…/
+// Insère les transformations juste après /upload/. Le segment de version
+// (/v1234/) est optionnel côté Cloudinary : on le préserve quand il est là,
+// sans quoi une URL copiée sans version traverserait sans être optimisée.
 function withCldTransform(src, transforms) {
-  return src.replace(/\/upload\/(?:[^/]+\/)*(v\d+\/)/, `/upload/${transforms}/$1`);
+  return src.replace(
+    /\/upload\/(?:[^/]+\/)*?(v\d+\/)?([^/]+)$/,
+    `/upload/${transforms}/$1$2`
+  );
 }
 
 // Poster JPEG très léger : 540 px → ~20-60 Ko / image

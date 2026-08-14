@@ -6,8 +6,14 @@ import Picture from './Picture.jsx';
 const HERO_VIDEO_SRC =
   'https://res.cloudinary.com/dnh2k1blz/video/upload/q_auto/f_auto/v1777988768/2026_GRV_Mathilde_sml50y.mov';
 
+// Insère les transformations juste après /upload/. Le segment de version
+// (/v1234/) est optionnel côté Cloudinary : on le préserve quand il est là,
+// sans quoi une URL copiée sans version traverserait sans être optimisée.
 function withCldTransform(src, transforms) {
-  return src.replace(/\/upload\/(?:[^/]+\/)*(v\d+\/)/, `/upload/${transforms}/$1`);
+  return src.replace(
+    /\/upload\/(?:[^/]+\/)*?(v\d+\/)?([^/]+)$/,
+    `/upload/${transforms}/$1$2`
+  );
 }
 
 function videoPoster(src) {
