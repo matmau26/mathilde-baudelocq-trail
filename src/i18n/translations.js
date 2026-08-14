@@ -206,7 +206,7 @@ export const translations = {
         {
           code: 'A.01',
           title: 'Marathon du Mont-Blanc',
-          distance: '42 km',
+          distance: '44 km',
           location: 'Chamonix · Haute-Savoie',
           period: '28 juin 2026',
           note: 'Vitrine internationale · format marathon montagne',
@@ -570,7 +570,7 @@ export const translations = {
         {
           code: 'A.01',
           title: 'Mont-Blanc Marathon',
-          distance: '42 km',
+          distance: '44 km',
           location: 'Chamonix · Haute-Savoie',
           period: 'June 28, 2026',
           note: 'International showcase · mountain marathon format',

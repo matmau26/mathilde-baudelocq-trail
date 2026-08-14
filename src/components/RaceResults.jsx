@@ -44,6 +44,15 @@ function RaceBadges({ badges, labels }) {
 
 const RACES = [
   {
+    date: '28/06/2026',
+    nom: 'Marathon du Mont-Blanc',
+    distance: '44 KM',
+    dplus: '2500 M+',
+    temps: '06:21:09',
+    rangGeneral: '325/2582',
+    rangFemmes: '50/606',
+  },
+  {
     date: '25/04/2026',
     nom: 'Grand Raid Ventoux by UTMB — GRV',
     distance: '26 KM',
