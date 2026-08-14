@@ -1,14 +1,7 @@
-import {
-  Award,
-  Globe,
-  Mountain,
-  Trophy,
-  TrendingUp,
-  FileText,
-  ArrowRight,
-} from 'lucide-react';
+import { Mountain, Trophy, TrendingUp, FileText, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useT } from '../i18n/useT.js';
+import Distinction from './Distinction.jsx';
 
 const BADGE_STYLES = {
   Podium: {
@@ -47,28 +40,6 @@ function RaceBadges({ badges, labels }) {
         );
       })}
     </>
-  );
-}
-
-// Bandeaux de distinction, plus larges que les badges ci-dessus : ils
-// qualifient la course entière. La clé indexe `races.distinctions` dans
-// translations.js et DISTINCTION_STYLES ci-dessous.
-const DISTINCTION_STYLES = {
-  reference: { className: 'bg-flame-500 text-white', icon: Award },
-  international: { className: 'bg-electric-600 text-white', icon: Globe },
-};
-
-function RaceDistinction({ distinction, labels, className = '' }) {
-  const style = DISTINCTION_STYLES[distinction];
-  if (!style) return null;
-  const Icon = style.icon;
-  return (
-    <span
-      className={`inline-flex items-center gap-1.5 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.2em] ${style.className} ${className}`}
-    >
-      <Icon className="h-3 w-3" strokeWidth={2.5} />
-      {labels?.[distinction] || distinction}
-    </span>
   );
 }
 
@@ -310,7 +281,7 @@ export default function RaceResults() {
                         </p>
                         <RaceBadges badges={race.badges} labels={t.badges} />
                       </div>
-                      <RaceDistinction
+                      <Distinction
                         distinction={race.distinction}
                         labels={t.distinctions}
                         className="mt-2"
@@ -380,7 +351,7 @@ export default function RaceResults() {
                     </h3>
                     <RaceBadges badges={race.badges} labels={t.badges} />
                   </div>
-                  <RaceDistinction
+                  <Distinction
                     distinction={race.distinction}
                     labels={t.distinctions}
                     className="mt-3"
