@@ -43,7 +43,25 @@ function RaceBadges({ badges, labels }) {
   );
 }
 
+// Course programmée mais pas encore disputée : les colonnes chronométrées
+// affichent un libellé « à venir » plutôt que des cellules vides.
+function Pending({ label }) {
+  return (
+    <span className="font-mono text-xs font-medium uppercase tracking-[0.15em] text-mountain-400">
+      {label}
+    </span>
+  );
+}
+
 const RACES = [
+  {
+    date: '12/09/2026',
+    nom: 'UltraTrail du Vercors — 84K',
+    distance: '84 KM',
+    dplus: '4300 M+',
+    badges: ['Ultra'],
+    upcoming: true,
+  },
   {
     date: '28/06/2026',
     nom: 'Marathon du Mont-Blanc',
@@ -296,19 +314,31 @@ export default function RaceResults() {
                       </span>
                     </td>
                     <td className="border-r border-mountain-200 px-4 py-4 align-top">
-                      <span className="font-mono text-sm font-semibold text-mountain-900">
-                        {race.temps}
-                      </span>
+                      {race.upcoming ? (
+                        <Pending label={t.upcomingLabel} />
+                      ) : (
+                        <span className="font-mono text-sm font-semibold text-mountain-900">
+                          {race.temps}
+                        </span>
+                      )}
                     </td>
                     <td className="border-r border-mountain-200 bg-flame-50/70 px-4 py-4 align-top">
-                      <span className="font-mono text-base font-bold text-flame-600">
-                        {race.rangFemmes}
-                      </span>
+                      {race.upcoming ? (
+                        <Pending label={t.upcomingLabel} />
+                      ) : (
+                        <span className="font-mono text-base font-bold text-flame-600">
+                          {race.rangFemmes}
+                        </span>
+                      )}
                     </td>
                     <td className="px-4 py-4 align-top">
-                      <span className="font-mono text-sm text-mountain-600">
-                        {race.rangGeneral}
-                      </span>
+                      {race.upcoming ? (
+                        <Pending label={t.upcomingLabel} />
+                      ) : (
+                        <span className="font-mono text-sm text-mountain-600">
+                          {race.rangGeneral}
+                        </span>
+                      )}
                     </td>
                   </tr>
                 );
@@ -362,24 +392,42 @@ export default function RaceResults() {
                       <dt className="text-[10px] font-bold uppercase tracking-widest text-mountain-500">
                         {t.mobileLabels.time}
                       </dt>
-                      <dd className="mt-1 font-mono text-sm font-semibold text-mountain-900">
-                        {race.temps}
+                      <dd className="mt-1">
+                        {race.upcoming ? (
+                          <Pending label={t.upcomingLabel} />
+                        ) : (
+                          <span className="font-mono text-sm font-semibold text-mountain-900">
+                            {race.temps}
+                          </span>
+                        )}
                       </dd>
                     </div>
                     <div className="bg-flame-50 p-3">
                       <dt className="text-[10px] font-bold uppercase tracking-widest text-flame-700">
                         {t.mobileLabels.women}
                       </dt>
-                      <dd className="mt-1 font-mono text-sm font-bold text-flame-600">
-                        {race.rangFemmes}
+                      <dd className="mt-1">
+                        {race.upcoming ? (
+                          <Pending label={t.upcomingLabel} />
+                        ) : (
+                          <span className="font-mono text-sm font-bold text-flame-600">
+                            {race.rangFemmes}
+                          </span>
+                        )}
                       </dd>
                     </div>
                     <div className="bg-white p-3">
                       <dt className="text-[10px] font-bold uppercase tracking-widest text-mountain-500">
                         {t.mobileLabels.general}
                       </dt>
-                      <dd className="mt-1 font-mono text-sm text-mountain-600">
-                        {race.rangGeneral}
+                      <dd className="mt-1">
+                        {race.upcoming ? (
+                          <Pending label={t.upcomingLabel} />
+                        ) : (
+                          <span className="font-mono text-sm text-mountain-600">
+                            {race.rangGeneral}
+                          </span>
+                        )}
                       </dd>
                     </div>
                   </dl>
