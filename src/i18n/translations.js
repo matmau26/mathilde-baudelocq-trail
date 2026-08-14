@@ -200,6 +200,7 @@ export const translations = {
         'Deux courses structurent la saison. Préparation ciblée, pic de forme aligné, validation du passage au statut Élite.',
       objectiveALabel: 'Objectif A',
       objectiveBLabel: 'Objectif B',
+      objectiveDoneLabel: 'Réalisé',
       formatLabel: 'Format court · Vitesse',
       objectives: [
         {
@@ -563,6 +564,7 @@ export const translations = {
         'Two races shape the season. Targeted preparation, peak fitness aligned, validation of the move to Elite status.',
       objectiveALabel: 'Goal A',
       objectiveBLabel: 'Goal B',
+      objectiveDoneLabel: 'Completed',
       formatLabel: 'Short format · Speed',
       objectives: [
         {

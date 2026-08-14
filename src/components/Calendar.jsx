@@ -1,9 +1,18 @@
-import { Target, Zap, Flag } from 'lucide-react';
+import { Check, Target, Zap, Flag } from 'lucide-react';
 import { useT } from '../i18n/useT.js';
+
+// Statut des objectifs — métadonnée non traduisible, alignée par index sur
+// t.objectives. Passer `done` à true quand la course a été disputée : la carte
+// se contente d'afficher un badge « Réalisé », le résultat reste dans le
+// tableau de RaceResults.
+const OBJECTIVE_META = [
+  { done: true }, // A.01 — Marathon du Mont-Blanc, 28 juin 2026
+  { done: false }, // A.02 — UltraTrail du Vercors, 12 septembre 2026
+];
 
 export default function Calendar() {
   const t = useT('calendar');
-  const OBJECTIVES = t.objectives;
+  const OBJECTIVES = t.objectives.map((o, i) => ({ ...o, ...OBJECTIVE_META[i] }));
   const SECONDARY_OBJECTIVE = t.secondary;
   return (
     <section
@@ -38,12 +47,20 @@ export default function Calendar() {
               className="group relative bg-white p-8 transition-colors hover:bg-mountain-50 sm:p-10"
             >
               {/* Code & label */}
-              <div className="flex items-center justify-between">
-                <span className="inline-flex items-center gap-2 rounded-none border border-flame-500 bg-flame-500 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-white">
-                  <Target className="h-3 w-3" strokeWidth={2.5} />
-                  {t.objectiveALabel}
-                </span>
-                <span className="font-display text-sm font-bold uppercase tracking-widest text-mountain-400">
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="inline-flex items-center gap-2 rounded-none border border-flame-500 bg-flame-500 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-white">
+                    <Target className="h-3 w-3" strokeWidth={2.5} />
+                    {t.objectiveALabel}
+                  </span>
+                  {obj.done && (
+                    <span className="inline-flex items-center gap-2 border border-emerald-600 bg-emerald-600 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-white">
+                      <Check className="h-3 w-3" strokeWidth={3} />
+                      {t.objectiveDoneLabel}
+                    </span>
+                  )}
+                </div>
+                <span className="shrink-0 font-display text-sm font-bold uppercase tracking-widest text-mountain-400">
                   {obj.code}
                 </span>
               </div>
