@@ -8,7 +8,6 @@ import {
   Mountain,
   Clock,
   Play,
-  Loader2,
   Trophy,
   Users,
   Hash,
@@ -60,104 +59,75 @@ function videoPoster(src) {
   );
 }
 
-// Détecte les réseaux lents / data-saver pour ne pas saturer la 3G mobile
-function shouldPreload() {
-  if (typeof navigator === 'undefined') return true;
-  const c =
-    navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-  if (!c) return true;
-  if (c.saveData) return false;
-  if (c.effectiveType === 'slow-2g' || c.effectiveType === '2g') return false;
-  return true;
-}
-
-function videoStream(src) {
-  return withCldTransform(src, 'w_720,q_auto:eco,vc_h264,f_mp4');
+// Reconstitue cloud_name et public_id depuis l'URL de diffusion, pour alimenter
+// le lecteur embarqué sans changer le format stocké dans data/communiques.js.
+// Suppose un public_id sans dossier — c'est le cas de tous les uploads du compte.
+function cloudinaryEmbedUrl(src) {
+  const m = src.match(/res\.cloudinary\.com\/([^/]+)\/video\/upload\/(.+)$/);
+  if (!m) return null;
+  const cloudName = m[1];
+  const publicId = m[2].split('/').pop().replace(/\.(mp4|mov|webm)(\?.*)?$/, '');
+  return (
+    'https://player.cloudinary.com/embed/' +
+    `?cloud_name=${encodeURIComponent(cloudName)}` +
+    `&public_id=${encodeURIComponent(publicId)}` +
+    '&player[autoplay]=true'
+  );
 }
 
 /* ----------------------------- VIDÉO ----------------------------- */
 
-function RaceVideoPlayer({ src }) {
-  const [playing, setPlaying] = useState(false);
-  const [loaded, setLoaded] = useState(false);
-  const [mounted, setMounted] = useState(false);
-  const wrapperRef = useRef(null);
-  const videoRef = useRef(null);
+function RaceVideoPlayer({ src, playLabel }) {
+  const [started, setStarted] = useState(false);
+  const [posterFailed, setPosterFailed] = useState(false);
 
   const poster = videoPoster(src);
-
-  useEffect(() => {
-    if (!wrapperRef.current || mounted) return undefined;
-    if (!shouldPreload()) return undefined;
-    const io = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          setMounted(true);
-          io.disconnect();
-        }
-      },
-      { rootMargin: '300px 0px' }
-    );
-    io.observe(wrapperRef.current);
-    return () => io.disconnect();
-  }, [mounted]);
-
-  const handleClick = () => {
-    if (!mounted) setMounted(true); // réseau lent : on force le montage au clic
-    setPlaying(true);
-    const v = videoRef.current;
-    if (v) {
-      v.muted = false;
-      v.play().catch(() => {});
-    }
-  };
+  const embed = cloudinaryEmbedUrl(src);
 
   return (
-    <div ref={wrapperRef} className="mx-auto w-full max-w-[20rem] sm:max-w-xs">
+    <div className="mx-auto w-full max-w-[20rem] sm:max-w-xs">
       <div className="rounded-[2.25rem] border-2 border-flame-500 p-2 shadow-2xl shadow-mountain-900/20">
         <div className="relative aspect-[9/16] w-full overflow-hidden rounded-[1.75rem] bg-mountain-950">
-          {mounted ? (
-            <video
-              ref={videoRef}
-              src={videoStream(src)}
-              poster={poster}
-              preload="auto"
-              muted
-              playsInline
-              controls={playing}
-              onCanPlay={() => setLoaded(true)}
-              onPlaying={() => setLoaded(true)}
-              className="absolute inset-0 h-full w-full object-cover"
+          {/* Le lecteur Cloudinary gère le streaming adaptatif, là où une balise
+              <video> force un transcodage complet à la première requête. On ne
+              charge son iframe qu'au clic : coût nul tant que personne ne
+              regarde la vidéo. */}
+          {started && embed ? (
+            <iframe
+              src={embed}
+              title={src}
+              allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+              allowFullScreen
+              frameBorder="0"
+              className="absolute inset-0 h-full w-full"
             />
           ) : (
-            <img
-              src={poster}
-              alt=""
-              loading="lazy"
-              decoding="async"
-              className="absolute inset-0 h-full w-full object-cover"
-            />
-          )}
-          {!playing && (
-            <button
-              type="button"
-              onClick={handleClick}
-              aria-label="Play"
-              className="absolute inset-0 flex items-center justify-center"
-            >
-              <span
-                aria-hidden="true"
-                className="absolute inset-0 bg-mountain-950/20 transition-colors duration-300 hover:bg-mountain-950/30"
-              />
-              <span className="relative flex h-16 w-16 items-center justify-center rounded-full bg-flame-500 text-white shadow-xl shadow-mountain-900/30 transition-transform duration-300 hover:scale-110">
-                <Play className="h-7 w-7 translate-x-0.5 fill-white" strokeWidth={0} />
-              </span>
-            </button>
-          )}
-          {playing && !loaded && (
-            <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-mountain-950/55 backdrop-blur-sm">
-              <Loader2 className="h-10 w-10 animate-spin text-white" strokeWidth={2.5} />
-            </div>
+            <>
+              {!posterFailed && (
+                <img
+                  src={poster}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  onError={() => setPosterFailed(true)}
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+              )}
+              <button
+                type="button"
+                onClick={() => setStarted(true)}
+                aria-label={playLabel}
+                className="absolute inset-0 flex items-center justify-center"
+              >
+                <span
+                  aria-hidden="true"
+                  className="absolute inset-0 bg-mountain-950/20 transition-colors duration-300 hover:bg-mountain-950/30"
+                />
+                <span className="relative flex h-16 w-16 items-center justify-center rounded-full bg-flame-500 text-white shadow-xl shadow-mountain-900/30 transition-transform duration-300 hover:scale-110">
+                  <Play className="h-7 w-7 translate-x-0.5 fill-white" strokeWidth={0} />
+                </span>
+              </button>
+            </>
           )}
         </div>
       </div>
@@ -511,7 +481,7 @@ function QuoteBlock({ quote }) {
           {quote.paragraphs.map((p, i) => (
             <p
               key={i}
-              className="font-editorial text-lg italic leading-relaxed text-mountain-800 sm:text-xl"
+              className="font-editorial text-base italic leading-relaxed text-mountain-800 sm:text-lg"
             >
               {p}
             </p>
@@ -712,7 +682,7 @@ function PhotoMosaic({ photos, alts, title, t }) {
 
 /* ----------------------- BLOC VIDÉO ----------------------- */
 
-function VideoSection({ videos, localized }) {
+function VideoSection({ videos, localized, t }) {
   const list = Array.isArray(videos) ? videos.filter(Boolean) : [];
   if (list.length === 0) return null;
 
@@ -746,7 +716,7 @@ function VideoSection({ videos, localized }) {
         }`}
       >
         {list.map((src, i) => (
-          <RaceVideoPlayer key={src || i} src={src} />
+          <RaceVideoPlayer key={src || i} src={src} playLabel={t.playLabel} />
         ))}
       </div>
     </motion.section>
@@ -777,16 +747,16 @@ export default function CommuniqueDetail() {
       <MetaStrip item={item} t={t} />
 
       {/* CORPS — long-form éditorial */}
-      <article className="mx-auto max-w-3xl px-6 py-16 sm:px-8 sm:py-20">
+      <article className="mx-auto max-w-2xl px-6 py-14 sm:px-8 sm:py-16">
         {/* Lead paragraph (1er paragraphe en plus gros) */}
         <motion.p
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="text-balance text-xl leading-relaxed text-mountain-800 sm:text-2xl"
+          className="text-balance text-lg leading-relaxed text-mountain-800 sm:text-xl"
         >
-          <span className="float-left mr-3 mt-1 font-display text-7xl font-bold leading-[0.85] tracking-tight text-flame-600 sm:text-8xl">
+          <span className="float-left mr-3 mt-1 font-display text-6xl font-bold leading-[0.85] tracking-tight text-flame-600 sm:text-7xl">
             {localized.paragraphs[0]?.charAt(0)}
           </span>
           {localized.paragraphs[0]?.slice(1)}
@@ -823,7 +793,7 @@ export default function CommuniqueDetail() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.7 }}
-            className="mt-6 text-base leading-relaxed text-mountain-800 sm:mt-7 sm:text-[17px]"
+            className="mt-6 text-[15px] leading-[1.8] text-mountain-800 sm:mt-7 sm:text-base"
           >
             {p}
           </motion.p>
@@ -831,7 +801,7 @@ export default function CommuniqueDetail() {
       </article>
 
       {/* CITATION — largeur du récit, dans la continuité du texte */}
-      <div className="mx-auto max-w-3xl px-6 sm:px-8">
+      <div className="mx-auto max-w-2xl px-6 sm:px-8">
         <QuoteBlock quote={localized.quote} />
       </div>
 
@@ -847,7 +817,7 @@ export default function CommuniqueDetail() {
 
       {/* VIDÉO */}
       <div className="mx-auto max-w-5xl px-6 sm:px-8">
-        <VideoSection videos={item.videos} localized={localized} />
+        <VideoSection videos={item.videos} localized={localized} t={t} />
       </div>
 
       {/* GALERIE */}
