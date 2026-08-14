@@ -1,4 +1,12 @@
-import { Award, Mountain, Trophy, TrendingUp, FileText, ArrowRight } from 'lucide-react';
+import {
+  Award,
+  Globe,
+  Mountain,
+  Trophy,
+  TrendingUp,
+  FileText,
+  ArrowRight,
+} from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useT } from '../i18n/useT.js';
 
@@ -42,6 +50,28 @@ function RaceBadges({ badges, labels }) {
   );
 }
 
+// Bandeaux de distinction, plus larges que les badges ci-dessus : ils
+// qualifient la course entière. La clé indexe `races.distinctions` dans
+// translations.js et DISTINCTION_STYLES ci-dessous.
+const DISTINCTION_STYLES = {
+  reference: { className: 'bg-flame-500 text-white', icon: Award },
+  international: { className: 'bg-electric-600 text-white', icon: Globe },
+};
+
+function RaceDistinction({ distinction, labels, className = '' }) {
+  const style = DISTINCTION_STYLES[distinction];
+  if (!style) return null;
+  const Icon = style.icon;
+  return (
+    <span
+      className={`inline-flex items-center gap-1.5 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.2em] ${style.className} ${className}`}
+    >
+      <Icon className="h-3 w-3" strokeWidth={2.5} />
+      {labels?.[distinction] || distinction}
+    </span>
+  );
+}
+
 const RACES = [
   {
     date: '28/06/2026',
@@ -51,6 +81,7 @@ const RACES = [
     temps: '06:21:09',
     rangGeneral: '325/2582',
     rangFemmes: '50/606',
+    distinction: 'international',
   },
   {
     date: '25/04/2026',
@@ -61,7 +92,7 @@ const RACES = [
     rangGeneral: '124/1178',
     rangFemmes: '9/381',
     highlight: true,
-    badge: 'Performance de Référence · Top 3% Féminin',
+    distinction: 'reference',
   },
   {
     date: '29/11/2025',
@@ -279,12 +310,11 @@ export default function RaceResults() {
                         </p>
                         <RaceBadges badges={race.badges} labels={t.badges} />
                       </div>
-                      {isHighlight && (
-                        <span className="mt-2 inline-flex items-center gap-1.5 bg-flame-500 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-white">
-                          <Award className="h-3 w-3" strokeWidth={2.5} />
-                          {t.highlightBadge}
-                        </span>
-                      )}
+                      <RaceDistinction
+                        distinction={race.distinction}
+                        labels={t.distinctions}
+                        className="mt-2"
+                      />
                     </td>
                     <td className="border-r border-mountain-200 px-4 py-4 align-top">
                       <span className="font-mono text-sm font-semibold text-mountain-900">
@@ -350,12 +380,11 @@ export default function RaceResults() {
                     </h3>
                     <RaceBadges badges={race.badges} labels={t.badges} />
                   </div>
-                  {isHighlight && (
-                    <span className="mt-3 inline-flex items-center gap-1.5 bg-flame-500 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-white">
-                      <Award className="h-3 w-3" strokeWidth={2.5} />
-                      {t.highlightBadge}
-                    </span>
-                  )}
+                  <RaceDistinction
+                    distinction={race.distinction}
+                    labels={t.distinctions}
+                    className="mt-3"
+                  />
 
                   <dl className="mt-4 grid grid-cols-3 gap-px overflow-hidden border border-mountain-200 bg-mountain-200">
                     <div className="bg-white p-3">

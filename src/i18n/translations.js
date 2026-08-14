@@ -189,7 +189,10 @@ export const translations = {
         'Top perf': 'Top perf',
         Ultra: 'Ultra',
       },
-      highlightBadge: 'Performance de Référence · Top 3% Féminin',
+      distinctions: {
+        reference: 'Performance de Référence · Top 3% Féminin',
+        international: 'Course internationale · Top 8% Féminin',
+      },
     },
 
     calendar: {
@@ -555,7 +558,10 @@ export const translations = {
         'Top perf': 'Top perf',
         Ultra: 'Ultra',
       },
-      highlightBadge: 'Reference Performance · Top 3% Female',
+      distinctions: {
+        reference: 'Reference Performance · Top 3% Female',
+        international: 'International race · Top 8% Female',
+      },
     },
 
     calendar: {
