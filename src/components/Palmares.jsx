@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
-import { TrendingUp, Trophy } from 'lucide-react';
 import { useT } from '../i18n/useT.js';
-import Picture from './Picture.jsx';
 
-const HERO_VIDEO_SRC =
+const GRV_VIDEO_SRC =
   'https://res.cloudinary.com/dnh2k1blz/video/upload/q_auto/f_auto/v1777988768/2026_GRV_Mathilde_sml50y.mov';
+const MMB_VIDEO_SRC =
+  'https://res.cloudinary.com/dnh2k1blz/video/upload/copy_5E427A80-ECCC-4DF5-9DD7-C0366539F52E_vm74tz.mov';
 
 // Insère les transformations juste après /upload/. Le segment de version
 // (/v1234/) est optionnel côté Cloudinary : on le préserve quand il est là,
@@ -106,20 +106,83 @@ function HighlightVideo({ src, alt }) {
   );
 }
 
-// Coordonnées normalisées du tracé (0-100) — 5 points calés sur les valeurs
-// 2022:400, 2023:432, 2024:457, 2025:540, 2026:570 (y inversé : 0 = haut)
-const POINTS = [
-  { x: 0, y: 85 },   // 2022 — 400
-  { x: 25, y: 71 },  // 2023 — 432
-  { x: 50, y: 60 },  // 2024 — 457
-  { x: 75, y: 23 },  // 2025 — 540
-  { x: 100, y: 10 }, // 2026 — 570
-];
+// Une course de référence : le bloc texte à gauche, la vidéo en boucle à
+// droite. `race` est la sous-section de traduction correspondante, ce qui
+// permet d'aligner deux courses sur exactement la même mise en page.
+function RaceHighlight({ race, videoSrc, index }) {
+  return (
+    <div className="grid grid-cols-1 gap-px overflow-hidden rounded-2xl border-2 border-mountain-950 bg-mountain-950 lg:grid-cols-12">
+      <article className="relative bg-white p-8 sm:p-10 lg:col-span-7">
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="inline-flex items-center gap-2 rounded-full bg-flame-500 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-white">
+            <span className="inline-block h-1.5 w-1.5 rounded-full bg-white" />
+            {race.highlightPill}
+          </span>
+          <span className="inline-flex items-center gap-2 rounded-full border border-mountain-300 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-mountain-700">
+            {race.seasonPill}
+          </span>
+          <span className="inline-flex items-center gap-2 rounded-full bg-mountain-950 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-white">
+            {race.datePill}
+          </span>
+        </div>
 
-const linePath = POINTS.map(
-  (p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`
-).join(' ');
-const areaPath = `${linePath} L 100 100 L 0 100 Z`;
+        <h3 className="mt-6 font-display text-4xl font-bold uppercase leading-[0.95] tracking-tight text-mountain-950 sm:text-5xl">
+          {race.raceTitle1}
+          <br />
+          {race.raceTitle2}
+        </h3>
+        <p className="mt-3 text-sm font-semibold uppercase tracking-widest text-mountain-600">
+          {race.raceSub}
+        </p>
+
+        <p className="mt-6 max-w-lg text-base leading-relaxed text-mountain-800">
+          <span className="bg-gradient-to-r from-flame-600 to-flame-500 bg-clip-text font-display text-3xl font-bold text-transparent">
+            {race.bigStat}
+          </span>
+          {race.bigStatExplain}
+        </p>
+
+        <dl className="mt-10 grid grid-cols-3 gap-px overflow-hidden rounded-xl border border-transparent bg-transparent">
+          {race.stats.map((stat, i) => (
+            <div key={i} className="bg-white p-2.5 sm:p-4">
+              <dt className="whitespace-nowrap text-[9px] font-semibold uppercase tracking-wider text-mountain-500 sm:text-[10px] sm:tracking-widest">
+                {stat.label}
+              </dt>
+              <dd
+                className={`mt-1 whitespace-nowrap ${i === 1 ? 'font-mono' : 'font-display'} text-base font-bold sm:text-2xl ${
+                  i === 0 ? 'text-flame-600' : 'text-mountain-950'
+                }`}
+              >
+                {stat.value}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </article>
+
+      <figure className="relative min-h-[280px] overflow-hidden bg-mountain-950 lg:col-span-5">
+        <HighlightVideo src={videoSrc} alt={race.photoAlt} />
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 bg-gradient-to-t from-mountain-950/80 via-mountain-950/10 to-transparent"
+        />
+        <figcaption className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-5">
+          <div>
+            <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-flame-300">
+              {race.photoEyebrow}
+            </p>
+            <p className="mt-1 font-display text-lg font-bold uppercase tracking-wide text-white">
+              {race.photoCaption}
+            </p>
+          </div>
+          <span className="rounded-full border border-white/30 bg-white/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-white backdrop-blur">
+            {index}
+          </span>
+        </figcaption>
+      </figure>
+    </div>
+  );
+}
 
 export default function Palmares() {
   const t = useT('palmares');
@@ -154,216 +217,12 @@ export default function Palmares() {
           </p>
         </div>
 
-        {/* Row 1 : highlight + photo course */}
-        <div className="mt-12 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border-2 border-mountain-950 bg-mountain-950 lg:grid-cols-12">
-          {/* Highlight GRV by UTMB 2026 */}
-          <article className="relative bg-white p-8 sm:p-10 lg:col-span-7">
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="inline-flex items-center gap-2 rounded-full bg-flame-500 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-white">
-                <span className="inline-block h-1.5 w-1.5 rounded-full bg-white" />
-                {t.highlightPill}
-              </span>
-              <span className="inline-flex items-center gap-2 rounded-full border border-mountain-300 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-mountain-700">
-                {t.seasonPill}
-              </span>
-              <span className="inline-flex items-center gap-2 rounded-full bg-mountain-950 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-white">
-                {t.datePill}
-              </span>
-            </div>
-
-            <h3 className="mt-6 font-display text-4xl font-bold uppercase leading-[0.95] tracking-tight text-mountain-950 sm:text-5xl">
-              {t.raceTitle1}
-              <br />
-              {t.raceTitle2}
-            </h3>
-            <p className="mt-3 text-sm font-semibold uppercase tracking-widest text-mountain-600">
-              {t.raceSub}
-            </p>
-
-            <p className="mt-6 max-w-lg text-base leading-relaxed text-mountain-800">
-              <span className="bg-gradient-to-r from-flame-600 to-flame-500 bg-clip-text font-display text-3xl font-bold text-transparent">
-                {t.bigStat}
-              </span>
-              {t.bigStatExplain}
-            </p>
-
-            {/* Mini-stats */}
-            <dl className="mt-10 grid grid-cols-3 gap-px overflow-hidden rounded-xl border border-transparent bg-transparent">
-              {t.stats.map((stat, i) => (
-                <div key={i} className="bg-white p-2.5 sm:p-4">
-                  <dt className="whitespace-nowrap text-[9px] font-semibold uppercase tracking-wider text-mountain-500 sm:text-[10px] sm:tracking-widest">
-                    {stat.label}
-                  </dt>
-                  <dd
-                    className={`mt-1 whitespace-nowrap ${i === 1 ? 'font-mono' : 'font-display'} text-base font-bold sm:text-2xl ${
-                      i === 0 ? 'text-flame-600' : 'text-mountain-950'
-                    }`}
-                  >
-                    {stat.value}
-                  </dd>
-                </div>
-              ))}
-            </dl>
-          </article>
-
-          {/* Vidéo de course en boucle */}
-          <figure className="relative min-h-[280px] overflow-hidden bg-mountain-950 lg:col-span-5">
-            <HighlightVideo src={HERO_VIDEO_SRC} alt={t.photoAlt} />
-            <div
-              aria-hidden="true"
-              className="absolute inset-0 bg-gradient-to-t from-mountain-950/80 via-mountain-950/10 to-transparent"
-            />
-            <figcaption className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-5">
-              <div>
-                <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-flame-300">
-                  {t.photoEyebrow}
-                </p>
-                <p className="mt-1 font-display text-lg font-bold uppercase tracking-wide text-white">
-                  {t.photoCaption}
-                </p>
-              </div>
-              <span className="rounded-full border border-white/30 bg-white/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-white backdrop-blur">
-                01
-              </span>
-            </figcaption>
-          </figure>
+        {/* Les deux courses de référence de la saison */}
+        <div className="mt-12">
+          <RaceHighlight race={t} videoSrc={GRV_VIDEO_SRC} index="01" />
         </div>
-
-        {/* Row 2 : progression + photo podium */}
-        <div className="mt-6 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border-2 border-mountain-950 bg-mountain-950 lg:grid-cols-12">
-          {/* Bloc progression */}
-          <aside className="relative flex flex-col justify-between bg-mountain-950 p-8 text-white sm:p-10 lg:col-span-7">
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="inline-flex h-9 w-9 items-center justify-center rounded-lg bg-white/10 text-flame-300">
-                  <TrendingUp className="h-5 w-5" strokeWidth={2} />
-                </span>
-                <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-mountain-300">
-                  {t.progressionLabel}
-                </p>
-              </div>
-              <p className="mt-5 font-display text-2xl font-semibold uppercase leading-tight tracking-tight text-white sm:text-3xl">
-                {t.progressionTitle1}
-                <br />
-                <span className="bg-gradient-to-r from-flame-400 to-solar-400 bg-clip-text text-transparent">
-                  {t.progressionTitle2}
-                </span>
-              </p>
-            </div>
-
-            {/* Courbe SVG */}
-            <div className="mt-8 rounded-xl border border-white/10 bg-black/20 p-5">
-              <svg
-                role="img"
-                aria-label={t.progressionAriaLabel}
-                viewBox="0 0 100 100"
-                preserveAspectRatio="none"
-                className="h-32 w-full"
-              >
-                <defs>
-                  <linearGradient id="prog-area" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#ff7338" stopOpacity="0.45" />
-                    <stop offset="100%" stopColor="#ff7338" stopOpacity="0" />
-                  </linearGradient>
-                  <linearGradient id="prog-line" x1="0" y1="0" x2="1" y2="0">
-                    <stop offset="0%" stopColor="#9cbcd2" />
-                    <stop offset="60%" stopColor="#ff7338" />
-                    <stop offset="100%" stopColor="#ffc83d" />
-                  </linearGradient>
-                </defs>
-
-                {/* Grille horizontale */}
-                {[20, 40, 60, 80].map((y) => (
-                  <line
-                    key={y}
-                    x1="0"
-                    y1={y}
-                    x2="100"
-                    y2={y}
-                    stroke="#ffffff"
-                    strokeOpacity="0.06"
-                    strokeWidth="0.4"
-                  />
-                ))}
-
-                {/* Zone */}
-                <path d={areaPath} fill="url(#prog-area)" />
-
-                {/* Ligne */}
-                <path
-                  d={linePath}
-                  fill="none"
-                  stroke="url(#prog-line)"
-                  strokeWidth="1.6"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  vectorEffect="non-scaling-stroke"
-                />
-
-                {/* Points */}
-                {POINTS.map((p, i) => (
-                  <circle
-                    key={i}
-                    cx={p.x}
-                    cy={p.y}
-                    r={i === POINTS.length - 1 ? 2.2 : 1.6}
-                    fill={i === POINTS.length - 1 ? '#ffae00' : '#9cbcd2'}
-                    vectorEffect="non-scaling-stroke"
-                  />
-                ))}
-              </svg>
-
-              {/* Étiquettes années */}
-              <div className="mt-3 flex justify-between text-[10px] font-semibold uppercase tracking-widest text-mountain-300">
-                {t.progressionYears.map((year, i) => (
-                  <span
-                    key={year}
-                    className={
-                      i === t.progressionYears.length - 1 ? 'text-solar-300' : ''
-                    }
-                  >
-                    {year}
-                  </span>
-                ))}
-              </div>
-            </div>
-
-            <div className="mt-6 flex items-center justify-between border-t border-white/10 pt-4 text-[10px] font-semibold uppercase tracking-widest">
-              <span className="text-mountain-300">{t.progressionStart}</span>
-              <span className="text-solar-300">{t.progressionEnd}</span>
-            </div>
-          </aside>
-
-          {/* Photo podium */}
-          <figure className="relative min-h-[280px] bg-mountain-950 lg:col-span-5">
-            <Picture
-              src="/VentouxPodium.jpeg"
-              alt={t.podiumAlt}
-              className="absolute inset-0 h-full w-full object-cover"
-              loading="lazy"
-            />
-            <div
-              aria-hidden="true"
-              className="absolute inset-0 bg-gradient-to-t from-mountain-950/80 via-mountain-950/10 to-transparent"
-            />
-            <span className="absolute right-4 top-4 inline-flex items-center gap-1.5 rounded-full bg-flame-500 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-white">
-              <Trophy className="h-3 w-3" strokeWidth={2.5} />
-              {t.podiumPill}
-            </span>
-            <figcaption className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-3 p-5">
-              <div>
-                <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-solar-300">
-                  {t.podiumEyebrow}
-                </p>
-                <p className="mt-1 font-display text-lg font-bold uppercase tracking-wide text-white">
-                  {t.podiumCaption}
-                </p>
-              </div>
-              <span className="rounded-full border border-white/30 bg-white/10 px-2.5 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-white backdrop-blur">
-                02
-              </span>
-            </figcaption>
-          </figure>
+        <div className="mt-6">
+          <RaceHighlight race={t.second} videoSrc={MMB_VIDEO_SRC} index="02" />
         </div>
       </div>
     </section>
