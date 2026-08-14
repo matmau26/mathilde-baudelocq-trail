@@ -206,7 +206,9 @@ export const translations = {
         {
           code: 'A.01',
           title: 'Marathon du Mont-Blanc',
-          distance: '44 km',
+          // Distance officielle de l'épreuve phare — volontairement différente
+          // des 44 km réellement parcourus, affichés dans RaceResults.
+          distance: '42 km',
           location: 'Chamonix · Haute-Savoie',
           period: '28 juin 2026',
           note: 'Vitrine internationale · format marathon montagne',
@@ -570,7 +572,9 @@ export const translations = {
         {
           code: 'A.01',
           title: 'Mont-Blanc Marathon',
-          distance: '44 km',
+          // Distance officielle de l'épreuve phare — volontairement différente
+          // des 44 km réellement parcourus, affichés dans RaceResults.
+          distance: '42 km',
           location: 'Chamonix · Haute-Savoie',
           period: 'June 28, 2026',
           note: 'International showcase · mountain marathon format',
