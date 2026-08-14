@@ -91,7 +91,7 @@ export const translations = {
         {
           eyebrow: 'Cote ITRA',
           metric: '',
-          value: '565',
+          value: '571',
           suffix: 'pts',
           context: 'International Trail Running Association',
           tag: 'Indice global de performance',
@@ -118,7 +118,7 @@ export const translations = {
       title1: 'Référence',
       title2: 'Saison 2026.',
       kicker:
-        "Une performance phare cristallise la trajectoire : une percée au contact du peloton Élite sur l’un des trails les plus relevés du Sud-Est.",
+        "Deux performances de référence structurent la saison : une percée au contact du peloton Élite sur les contreforts du Ventoux, puis une confirmation sur le circuit international à Chamonix.",
       highlightPill: 'Highlight',
       seasonPill: 'Saison 2026',
       datePill: '25 / 04 / 2026',
@@ -136,17 +136,27 @@ export const translations = {
       photoAlt: 'Mathilde Baudelocq en course au Grand Raid du Ventoux 2026',
       photoEyebrow: 'En course · GRV 2026',
       photoCaption: 'Massif du Ventoux',
-      progressionLabel: 'Progression · 5 ans',
-      progressionTitle1: 'Progression constante',
-      progressionTitle2: 'vers le statut Élite.',
-      progressionAriaLabel: 'Courbe de progression sur 5 ans, ascendante',
-      progressionStart: 'Départ : Régional',
-      progressionEnd: 'Aujourd’hui : Top Féminine',
-      progressionYears: ['2022', '2023', '2024', '2025', '2026'],
-      podiumAlt: 'Mathilde Baudelocq sur le podium du Grand Raid du Ventoux 2026',
-      podiumPill: 'Podium catégorie',
-      podiumEyebrow: 'Cérémonie · GRV 2026',
-      podiumCaption: 'Top 3 % Féminin',
+      // Seconde course de référence — même structure de clés que ci-dessus,
+      // consommée par le même composant RaceHighlight.
+      second: {
+        highlightPill: 'Highlight',
+        seasonPill: 'Saison 2026',
+        datePill: '28 / 06 / 2026',
+        raceTitle1: 'Marathon',
+        raceTitle2: 'du Mont-Blanc',
+        raceSub: '44 km · 2 500 m D+ · Chamonix',
+        bigStat: '49ᵉ femme / 606',
+        bigStatExplain:
+          ' — soit le Top 8 % féminin sur l’un des plateaux les plus denses du trail international, un jour à plus de 30 °C. 147 places reprises sur la seconde moitié de course.',
+        stats: [
+          { label: 'Rang Femmes', value: '49 / 606' },
+          { label: 'Temps', value: '06:21:09' },
+          { label: 'Scratch', value: '325 / 2582' },
+        ],
+        photoAlt: 'Mathilde Baudelocq en course au Marathon du Mont-Blanc 2026',
+        photoEyebrow: 'En course · Mont-Blanc 2026',
+        photoCaption: 'Vallée de Chamonix',
+      },
     },
 
     gallery: {
@@ -184,12 +194,16 @@ export const translations = {
       },
       footnote:
         'Source : résultats officiels des organisateurs · Mise à jour saison 2025–26',
+      upcomingLabel: 'À venir',
       badges: {
         Podium: 'Podium',
         'Top perf': 'Top perf',
         Ultra: 'Ultra',
       },
-      highlightBadge: 'Performance de Référence · Top 3% Féminin',
+      distinctions: {
+        reference: 'Performance de Référence · Top 3% Féminin',
+        international: 'Course internationale · Top 8% Féminin',
+      },
     },
 
     calendar: {
@@ -200,11 +214,14 @@ export const translations = {
         'Deux courses structurent la saison. Préparation ciblée, pic de forme aligné, validation du passage au statut Élite.',
       objectiveALabel: 'Objectif A',
       objectiveBLabel: 'Objectif B',
+      objectiveDoneLabel: 'Réalisé',
       formatLabel: 'Format court · Vitesse',
       objectives: [
         {
           code: 'A.01',
           title: 'Marathon du Mont-Blanc',
+          // Distance officielle de l'épreuve phare — volontairement différente
+          // des 44 km réellement parcourus, affichés dans RaceResults.
           distance: '42 km',
           location: 'Chamonix · Haute-Savoie',
           period: '28 juin 2026',
@@ -312,8 +329,9 @@ export const translations = {
       backToList: 'Retour aux communiqués',
       readMore: 'Lire le communiqué',
       published: 'Publié',
-      pressNumber: 'Communiqué N°01',
+      pressNumber: 'Communiqué N°',
       scrollHint: 'Lire le récit',
+      playLabel: 'Lire la vidéo',
       resultsSource: 'Officiel · Organisateur',
       categoryNote: 'Une référence solide pour valider le passage au niveau Élite.',
       clichesLabel: 'clichés',
@@ -454,7 +472,7 @@ export const translations = {
         {
           eyebrow: 'ITRA Score',
           metric: '',
-          value: '565',
+          value: '571',
           suffix: 'pts',
           context: 'International Trail Running Association',
           tag: 'Global performance index',
@@ -481,7 +499,7 @@ export const translations = {
       title1: 'Reference',
       title2: '2026 Season.',
       kicker:
-        'One landmark performance crystallises the trajectory: a breakthrough alongside the Elite pack on one of the toughest trails in the South-East of France.',
+        'Two reference performances shape the season: a breakthrough alongside the Elite pack on the Ventoux foothills, then a confirmation on the international circuit in Chamonix.',
       highlightPill: 'Highlight',
       seasonPill: '2026 Season',
       datePill: '04 / 25 / 2026',
@@ -499,17 +517,27 @@ export const translations = {
       photoAlt: 'Mathilde Baudelocq racing at Grand Raid du Ventoux 2026',
       photoEyebrow: 'Racing · GRV 2026',
       photoCaption: 'Mont Ventoux',
-      progressionLabel: 'Progression · 5 years',
-      progressionTitle1: 'Steady progression',
-      progressionTitle2: 'toward Elite status.',
-      progressionAriaLabel: 'Five-year ascending progression curve',
-      progressionStart: 'Start: Regional',
-      progressionEnd: 'Today: Top Female',
-      progressionYears: ['2022', '2023', '2024', '2025', '2026'],
-      podiumAlt: 'Mathilde Baudelocq on the podium of Grand Raid du Ventoux 2026',
-      podiumPill: 'Category podium',
-      podiumEyebrow: 'Ceremony · GRV 2026',
-      podiumCaption: 'Top 3% Female',
+      // Second reference race — same key shape as above, consumed by the same
+      // RaceHighlight component.
+      second: {
+        highlightPill: 'Highlight',
+        seasonPill: '2026 Season',
+        datePill: '06 / 28 / 2026',
+        raceTitle1: 'Mont-Blanc',
+        raceTitle2: 'Marathon',
+        raceSub: '44 km · 2,500 m D+ · Chamonix',
+        bigStat: '49th woman / 606',
+        bigStatExplain:
+          ' — i.e. Top 8% female on one of the deepest fields in international trail running, on a day above 30 °C. 147 places regained over the second half of the race.',
+        stats: [
+          { label: 'Female rank', value: '49 / 606' },
+          { label: 'Time', value: '06:21:09' },
+          { label: 'Overall', value: '325 / 2582' },
+        ],
+        photoAlt: 'Mathilde Baudelocq racing at the Mont-Blanc Marathon 2026',
+        photoEyebrow: 'Racing · Mont-Blanc 2026',
+        photoCaption: 'Chamonix valley',
+      },
     },
 
     gallery: {
@@ -547,12 +575,16 @@ export const translations = {
       },
       footnote:
         'Source: official organiser results · Updated 2025–26 season',
+      upcomingLabel: 'Upcoming',
       badges: {
         Podium: 'Podium',
         'Top perf': 'Top perf',
         Ultra: 'Ultra',
       },
-      highlightBadge: 'Reference Performance · Top 3% Female',
+      distinctions: {
+        reference: 'Reference Performance · Top 3% Female',
+        international: 'International race · Top 8% Female',
+      },
     },
 
     calendar: {
@@ -563,11 +595,14 @@ export const translations = {
         'Two races shape the season. Targeted preparation, peak fitness aligned, validation of the move to Elite status.',
       objectiveALabel: 'Goal A',
       objectiveBLabel: 'Goal B',
+      objectiveDoneLabel: 'Completed',
       formatLabel: 'Short format · Speed',
       objectives: [
         {
           code: 'A.01',
           title: 'Mont-Blanc Marathon',
+          // Distance officielle de l'épreuve phare — volontairement différente
+          // des 44 km réellement parcourus, affichés dans RaceResults.
           distance: '42 km',
           location: 'Chamonix · Haute-Savoie',
           period: 'June 28, 2026',
@@ -675,8 +710,9 @@ export const translations = {
       backToList: 'Back to press releases',
       readMore: 'Read the release',
       published: 'Published',
-      pressNumber: 'Press release No. 01',
+      pressNumber: 'Press release No.',
       scrollHint: 'Read the story',
+      playLabel: 'Play video',
       resultsSource: 'Official · Organiser',
       categoryNote: 'A solid benchmark validating the move to Elite status.',
       clichesLabel: 'photos',

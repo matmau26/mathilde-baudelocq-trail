@@ -1,6 +1,7 @@
-import { Award, Mountain, Trophy, TrendingUp, FileText, ArrowRight } from 'lucide-react';
+import { Mountain, Trophy, TrendingUp, FileText, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useT } from '../i18n/useT.js';
+import Distinction from './Distinction.jsx';
 
 const BADGE_STYLES = {
   Podium: {
@@ -42,7 +43,35 @@ function RaceBadges({ badges, labels }) {
   );
 }
 
+// Course programmée mais pas encore disputée : les colonnes chronométrées
+// affichent un libellé « à venir » plutôt que des cellules vides.
+function Pending({ label }) {
+  return (
+    <span className="font-mono text-xs font-medium uppercase tracking-[0.15em] text-mountain-400">
+      {label}
+    </span>
+  );
+}
+
 const RACES = [
+  {
+    date: '12/09/2026',
+    nom: 'UltraTrail du Vercors — 84K',
+    distance: '84 KM',
+    dplus: '4300 M+',
+    badges: ['Ultra'],
+    upcoming: true,
+  },
+  {
+    date: '28/06/2026',
+    nom: 'Marathon du Mont-Blanc',
+    distance: '44 KM',
+    dplus: '2500 M+',
+    temps: '06:21:09',
+    rangGeneral: '325/2582',
+    rangFemmes: '49/606',
+    distinction: 'international',
+  },
   {
     date: '25/04/2026',
     nom: 'Grand Raid Ventoux by UTMB — GRV',
@@ -52,7 +81,7 @@ const RACES = [
     rangGeneral: '124/1178',
     rangFemmes: '9/381',
     highlight: true,
-    badge: 'Performance de Référence · Top 3% Féminin',
+    distinction: 'reference',
   },
   {
     date: '29/11/2025',
@@ -270,12 +299,11 @@ export default function RaceResults() {
                         </p>
                         <RaceBadges badges={race.badges} labels={t.badges} />
                       </div>
-                      {isHighlight && (
-                        <span className="mt-2 inline-flex items-center gap-1.5 bg-flame-500 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-white">
-                          <Award className="h-3 w-3" strokeWidth={2.5} />
-                          {t.highlightBadge}
-                        </span>
-                      )}
+                      <Distinction
+                        distinction={race.distinction}
+                        labels={t.distinctions}
+                        className="mt-2"
+                      />
                     </td>
                     <td className="border-r border-mountain-200 px-4 py-4 align-top">
                       <span className="font-mono text-sm font-semibold text-mountain-900">
@@ -286,19 +314,31 @@ export default function RaceResults() {
                       </span>
                     </td>
                     <td className="border-r border-mountain-200 px-4 py-4 align-top">
-                      <span className="font-mono text-sm font-semibold text-mountain-900">
-                        {race.temps}
-                      </span>
+                      {race.upcoming ? (
+                        <Pending label={t.upcomingLabel} />
+                      ) : (
+                        <span className="font-mono text-sm font-semibold text-mountain-900">
+                          {race.temps}
+                        </span>
+                      )}
                     </td>
                     <td className="border-r border-mountain-200 bg-flame-50/70 px-4 py-4 align-top">
-                      <span className="font-mono text-base font-bold text-flame-600">
-                        {race.rangFemmes}
-                      </span>
+                      {race.upcoming ? (
+                        <Pending label={t.upcomingLabel} />
+                      ) : (
+                        <span className="font-mono text-base font-bold text-flame-600">
+                          {race.rangFemmes}
+                        </span>
+                      )}
                     </td>
                     <td className="px-4 py-4 align-top">
-                      <span className="font-mono text-sm text-mountain-600">
-                        {race.rangGeneral}
-                      </span>
+                      {race.upcoming ? (
+                        <Pending label={t.upcomingLabel} />
+                      ) : (
+                        <span className="font-mono text-sm text-mountain-600">
+                          {race.rangGeneral}
+                        </span>
+                      )}
                     </td>
                   </tr>
                 );
@@ -341,36 +381,53 @@ export default function RaceResults() {
                     </h3>
                     <RaceBadges badges={race.badges} labels={t.badges} />
                   </div>
-                  {isHighlight && (
-                    <span className="mt-3 inline-flex items-center gap-1.5 bg-flame-500 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-white">
-                      <Award className="h-3 w-3" strokeWidth={2.5} />
-                      {t.highlightBadge}
-                    </span>
-                  )}
+                  <Distinction
+                    distinction={race.distinction}
+                    labels={t.distinctions}
+                    className="mt-3"
+                  />
 
                   <dl className="mt-4 grid grid-cols-3 gap-px overflow-hidden border border-mountain-200 bg-mountain-200">
                     <div className="bg-white p-3">
                       <dt className="text-[10px] font-bold uppercase tracking-widest text-mountain-500">
                         {t.mobileLabels.time}
                       </dt>
-                      <dd className="mt-1 font-mono text-sm font-semibold text-mountain-900">
-                        {race.temps}
+                      <dd className="mt-1">
+                        {race.upcoming ? (
+                          <Pending label={t.upcomingLabel} />
+                        ) : (
+                          <span className="font-mono text-sm font-semibold text-mountain-900">
+                            {race.temps}
+                          </span>
+                        )}
                       </dd>
                     </div>
                     <div className="bg-flame-50 p-3">
                       <dt className="text-[10px] font-bold uppercase tracking-widest text-flame-700">
                         {t.mobileLabels.women}
                       </dt>
-                      <dd className="mt-1 font-mono text-sm font-bold text-flame-600">
-                        {race.rangFemmes}
+                      <dd className="mt-1">
+                        {race.upcoming ? (
+                          <Pending label={t.upcomingLabel} />
+                        ) : (
+                          <span className="font-mono text-sm font-bold text-flame-600">
+                            {race.rangFemmes}
+                          </span>
+                        )}
                       </dd>
                     </div>
                     <div className="bg-white p-3">
                       <dt className="text-[10px] font-bold uppercase tracking-widest text-mountain-500">
                         {t.mobileLabels.general}
                       </dt>
-                      <dd className="mt-1 font-mono text-sm text-mountain-600">
-                        {race.rangGeneral}
+                      <dd className="mt-1">
+                        {race.upcoming ? (
+                          <Pending label={t.upcomingLabel} />
+                        ) : (
+                          <span className="font-mono text-sm text-mountain-600">
+                            {race.rangGeneral}
+                          </span>
+                        )}
                       </dd>
                     </div>
                   </dl>

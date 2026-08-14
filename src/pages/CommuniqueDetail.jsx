@@ -8,7 +8,6 @@ import {
   Mountain,
   Clock,
   Play,
-  Loader2,
   Trophy,
   Users,
   Hash,
@@ -43,73 +42,92 @@ function formatDateShort(iso) {
   }
 }
 
+// Insère les transformations juste après /upload/. Le segment de version
+// (/v1234/) est optionnel côté Cloudinary : on le préserve quand il est là,
+// sans quoi une URL copiée sans version traverserait sans être optimisée.
 function withCldTransform(src, transforms) {
-  return src.replace(/\/upload\/(?:[^/]+\/)*(v\d+\/)/, `/upload/${transforms}/$1`);
+  return src.replace(
+    /\/upload\/(?:[^/]+\/)*?(v\d+\/)?([^/]+)$/,
+    `/upload/${transforms}/$1$2`
+  );
 }
 
 function videoPoster(src) {
   return withCldTransform(
     src.replace(/\.(mp4|mov|webm)(\?.*)?$/, '.jpg$2'),
-    'w_960,q_auto:good,f_jpg'
+    'w_540,q_auto:good,f_jpg'
   );
 }
 
-function videoStream(src) {
-  return withCldTransform(src, 'w_960,q_auto:eco,vc_h264,f_mp4');
+// Reconstitue cloud_name et public_id depuis l'URL de diffusion, pour alimenter
+// le lecteur embarqué sans changer le format stocké dans data/communiques.js.
+// Suppose un public_id sans dossier — c'est le cas de tous les uploads du compte.
+function cloudinaryEmbedUrl(src) {
+  const m = src.match(/res\.cloudinary\.com\/([^/]+)\/video\/upload\/(.+)$/);
+  if (!m) return null;
+  const cloudName = m[1];
+  const publicId = m[2].split('/').pop().replace(/\.(mp4|mov|webm)(\?.*)?$/, '');
+  return (
+    'https://player.cloudinary.com/embed/' +
+    `?cloud_name=${encodeURIComponent(cloudName)}` +
+    `&public_id=${encodeURIComponent(publicId)}` +
+    '&player[autoplay]=true'
+  );
 }
 
 /* ----------------------------- VIDÉO ----------------------------- */
 
-function RaceVideoPlayer({ src }) {
-  const [playing, setPlaying] = useState(false);
-  const [loaded, setLoaded] = useState(false);
-  const videoRef = useRef(null);
+function RaceVideoPlayer({ src, playLabel }) {
+  const [started, setStarted] = useState(false);
+  const [posterFailed, setPosterFailed] = useState(false);
 
-  const handleClick = () => {
-    setPlaying(true);
-    const v = videoRef.current;
-    if (v) {
-      v.muted = false;
-      v.play().catch(() => {});
-    }
-  };
+  const poster = videoPoster(src);
+  const embed = cloudinaryEmbedUrl(src);
 
   return (
     <div className="mx-auto w-full max-w-[20rem] sm:max-w-xs">
       <div className="rounded-[2.25rem] border-2 border-flame-500 p-2 shadow-2xl shadow-mountain-900/20">
         <div className="relative aspect-[9/16] w-full overflow-hidden rounded-[1.75rem] bg-mountain-950">
-          <video
-            ref={videoRef}
-            src={videoStream(src)}
-            poster={videoPoster(src)}
-            preload="auto"
-            muted
-            playsInline
-            controls={playing}
-            onCanPlay={() => setLoaded(true)}
-            onPlaying={() => setLoaded(true)}
-            className="absolute inset-0 h-full w-full object-cover"
-          />
-          {!playing && (
-            <button
-              type="button"
-              onClick={handleClick}
-              aria-label="Play"
-              className="absolute inset-0 flex items-center justify-center"
-            >
-              <span
-                aria-hidden="true"
-                className="absolute inset-0 bg-mountain-950/20 transition-colors duration-300 hover:bg-mountain-950/30"
-              />
-              <span className="relative flex h-16 w-16 items-center justify-center rounded-full bg-flame-500 text-white shadow-xl shadow-mountain-900/30 transition-transform duration-300 hover:scale-110">
-                <Play className="h-7 w-7 translate-x-0.5 fill-white" strokeWidth={0} />
-              </span>
-            </button>
-          )}
-          {playing && !loaded && (
-            <div className="pointer-events-none absolute inset-0 flex items-center justify-center bg-mountain-950/55 backdrop-blur-sm">
-              <Loader2 className="h-10 w-10 animate-spin text-white" strokeWidth={2.5} />
-            </div>
+          {/* Le lecteur Cloudinary gère le streaming adaptatif, là où une balise
+              <video> force un transcodage complet à la première requête. On ne
+              charge son iframe qu'au clic : coût nul tant que personne ne
+              regarde la vidéo. */}
+          {started && embed ? (
+            <iframe
+              src={embed}
+              title={src}
+              allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+              allowFullScreen
+              frameBorder="0"
+              className="absolute inset-0 h-full w-full"
+            />
+          ) : (
+            <>
+              {!posterFailed && (
+                <img
+                  src={poster}
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                  onError={() => setPosterFailed(true)}
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+              )}
+              <button
+                type="button"
+                onClick={() => setStarted(true)}
+                aria-label={playLabel}
+                className="absolute inset-0 flex items-center justify-center"
+              >
+                <span
+                  aria-hidden="true"
+                  className="absolute inset-0 bg-mountain-950/20 transition-colors duration-300 hover:bg-mountain-950/30"
+                />
+                <span className="relative flex h-16 w-16 items-center justify-center rounded-full bg-flame-500 text-white shadow-xl shadow-mountain-900/30 transition-transform duration-300 hover:scale-110">
+                  <Play className="h-7 w-7 translate-x-0.5 fill-white" strokeWidth={0} />
+                </span>
+              </button>
+            </>
           )}
         </div>
       </div>
@@ -179,7 +197,9 @@ function CinemaHero({ item, localized, lang, t }) {
             transition={{ duration: 0.6 }}
             className="flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[10px] font-medium uppercase tracking-[0.3em] text-flame-300 sm:text-[11px]"
           >
-            <span>{t.pressNumber}</span>
+            <span>
+              {t.pressNumber} {item.number}
+            </span>
             <span aria-hidden="true" className="block h-px w-12 bg-flame-500/70" />
             <span className="text-white/80">{formatDateShort(item.date)}</span>
             <span aria-hidden="true" className="hidden h-px w-12 bg-white/30 sm:block" />
@@ -335,7 +355,7 @@ function ResultsShowcase({ localized, item, t }) {
       </div>
 
       {/* En-tête */}
-      <div className="border-b border-white/10 px-6 py-5 sm:px-10">
+      <div className="border-b border-white/10 px-6 py-4 sm:px-10">
         <div className="flex items-center justify-between gap-4">
           <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-flame-300 sm:text-[11px]">
             {localized.resultsTitle}
@@ -349,11 +369,11 @@ function ResultsShowcase({ localized, item, t }) {
       {/* Layout asymétrique : Temps géant à gauche / podium à droite / chiffres en pied */}
       <div className="grid grid-cols-1 lg:grid-cols-12">
         {/* TEMPS — chiffre cyclopéen */}
-        <div className="relative col-span-1 border-b border-white/10 px-6 py-10 lg:col-span-7 lg:border-b-0 lg:border-r lg:px-10 lg:py-14">
+        <div className="relative col-span-1 border-b border-white/10 px-6 py-8 lg:col-span-7 lg:border-b-0 lg:border-r lg:px-10 lg:py-10">
           <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/50">
             {time?.label || 'Temps'}
           </p>
-          <p className="mt-3 font-display text-7xl font-bold leading-[0.85] tracking-[-0.04em] text-white sm:text-8xl lg:text-[10rem]">
+          <p className="mt-2 font-display text-5xl font-bold leading-[0.9] tracking-[-0.03em] text-white sm:text-6xl lg:text-7xl">
             <span className="bg-gradient-to-b from-white via-white to-flame-200 bg-clip-text text-transparent">
               {time?.value || '—'}
             </span>
@@ -361,9 +381,13 @@ function ResultsShowcase({ localized, item, t }) {
         </div>
 
         {/* PODIUM CATÉGORIE — mis en évidence */}
-        <div className="relative col-span-1 flex flex-col justify-between gap-6 px-6 py-10 lg:col-span-5 lg:px-10 lg:py-14">
+        <div
+          className={`relative col-span-1 flex flex-col gap-5 px-6 py-8 lg:col-span-5 lg:px-10 lg:py-10 ${
+            category ? 'justify-between' : 'justify-center'
+          }`}
+        >
           {category && (
-            <div className="rounded-2xl border border-flame-400/40 bg-flame-500/10 p-6 sm:p-7">
+            <div className="rounded-2xl border border-flame-400/40 bg-flame-500/10 p-5 sm:p-6">
               <div className="flex items-center gap-3">
                 <span className="flex h-10 w-10 items-center justify-center rounded-full bg-flame-500 text-white shadow-lg shadow-flame-500/30">
                   <Trophy className="h-5 w-5" strokeWidth={2.5} />
@@ -372,7 +396,7 @@ function ResultsShowcase({ localized, item, t }) {
                   {category.label}
                 </span>
               </div>
-              <p className="mt-5 font-display text-4xl font-bold uppercase leading-none tracking-tight text-white sm:text-5xl">
+              <p className="mt-4 font-display text-3xl font-bold uppercase leading-none tracking-tight text-white sm:text-4xl">
                 {category.value}
               </p>
               <p className="mt-3 text-sm text-white/70">
@@ -390,7 +414,7 @@ function ResultsShowcase({ localized, item, t }) {
                 />
                 {women.label}
               </p>
-              <p className="mt-2 bg-gradient-to-r from-flame-400 via-flame-300 to-solar-300 bg-clip-text font-display text-5xl font-bold leading-none tracking-tight text-transparent sm:text-6xl">
+              <p className="mt-2 bg-gradient-to-r from-flame-400 via-flame-300 to-solar-300 bg-clip-text font-display text-4xl font-bold leading-none tracking-tight text-transparent sm:text-5xl">
                 {women.value}
               </p>
             </div>
@@ -401,27 +425,182 @@ function ResultsShowcase({ localized, item, t }) {
       {/* Stats secondaires en pied */}
       <div className="grid grid-cols-1 divide-x divide-y divide-white/10 border-t border-white/10 sm:grid-cols-2">
         {scratch && (
-          <div className="flex items-center justify-between px-6 py-5 sm:px-10">
+          <div className="flex items-center justify-between px-6 py-4 sm:px-10">
             <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/50">
               {scratch.label}
             </span>
-            <span className="font-mono text-2xl font-bold tabular-nums text-white sm:text-3xl">
+            <span className="font-mono text-xl font-bold tabular-nums text-white sm:text-2xl">
               {scratch.value}
             </span>
           </div>
         )}
         {utmbIdx && (
-          <div className="flex items-center justify-between px-6 py-5 sm:px-10">
+          <div className="flex items-center justify-between px-6 py-4 sm:px-10">
             <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/50">
               {utmbIdx.label}
             </span>
-            <span className="font-display text-2xl font-bold text-white sm:text-3xl">
+            <span className="font-display text-xl font-bold text-white sm:text-2xl">
               {utmbIdx.value}
               <span className="ml-1 font-mono text-sm font-normal text-white/50">pts</span>
             </span>
           </div>
         )}
       </div>
+    </motion.section>
+  );
+}
+
+/* -------------------------- CITATION -------------------------- */
+
+// Optionnel : rendu uniquement si le communiqué porte un bloc `quote`.
+function QuoteBlock({ quote }) {
+  if (!quote || !quote.paragraphs?.length) return null;
+
+  return (
+    <motion.section
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+      className="my-16 sm:my-20"
+    >
+      <figure className="relative overflow-hidden rounded-3xl border-2 border-mountain-950 bg-white p-8 shadow-xl shadow-mountain-900/5 sm:p-12">
+        {/* Guillemet en filigrane, même logique que les codes de Partnership */}
+        <span
+          aria-hidden="true"
+          className="pointer-events-none absolute -top-16 right-4 select-none font-editorial text-[14rem] italic leading-none text-flame-500/10 sm:right-10"
+        >
+          ”
+        </span>
+
+        <p className="font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-flame-600 sm:text-[11px]">
+          {quote.label}
+        </p>
+
+        <blockquote className="relative mt-6 space-y-5 border-l-2 border-flame-500 pl-6 sm:pl-8">
+          {quote.paragraphs.map((p, i) => (
+            <p
+              key={i}
+              className="font-editorial text-base italic leading-relaxed text-mountain-800 sm:text-lg"
+            >
+              {p}
+            </p>
+          ))}
+        </blockquote>
+
+        <figcaption className="mt-8 font-mono text-[10px] uppercase tracking-[0.3em] text-mountain-500">
+          — {quote.attribution}
+        </figcaption>
+      </figure>
+    </motion.section>
+  );
+}
+
+/* --------------------- TABLEAU DES POINTS DE PASSAGE --------------------- */
+
+// Optionnel, comme la citation. Le signe du `delta` suffit à colorer la
+// variation : pas de drapeau supplémentaire à tenir à jour dans les données.
+function SplitsTable({ localized }) {
+  const rows = localized.splits;
+  if (!rows || rows.length === 0) return null;
+  const h = localized.splitsHeaders;
+  const th =
+    'whitespace-nowrap px-3 py-3 text-[10px] font-bold uppercase tracking-[0.2em] sm:px-4';
+
+  return (
+    <motion.section
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.8 }}
+      className="my-16 sm:my-20"
+    >
+      <div className="mb-6 max-w-2xl">
+        <p className="font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-flame-600 sm:text-[11px]">
+          {localized.splitsTitle}
+        </p>
+        <h3 className="mt-3 font-display text-3xl font-bold uppercase leading-[1.05] tracking-tight text-mountain-950 sm:text-4xl">
+          {localized.splitsHeading1}
+          <br />
+          <span className="bg-gradient-to-r from-flame-600 via-flame-500 to-solar-400 bg-clip-text text-transparent">
+            {localized.splitsHeading2}
+          </span>
+        </h3>
+      </div>
+
+      {/* Table large : défilement horizontal contenu, jamais la page entière */}
+      <div className="overflow-x-auto overscroll-x-contain rounded-2xl border-2 border-mountain-950 bg-white">
+        <table className="w-full border-collapse text-left text-sm">
+          <thead>
+            <tr className="bg-mountain-950 text-white">
+              <th className={th}>{h.point}</th>
+              <th className={`${th} hidden sm:table-cell`}>{h.km}</th>
+              <th className={th}>{h.time}</th>
+              <th className={`${th} bg-flame-500`}>{h.scratch}</th>
+              <th className={th}>{h.women}</th>
+              <th className={`${th} hidden lg:table-cell`}>{h.elevation}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((s, i) => {
+              const isFinish = i === rows.length - 1;
+              const gained = s.delta?.startsWith('+');
+              return (
+                <tr
+                  key={i}
+                  className={`border-t border-mountain-200 transition-colors ${
+                    isFinish ? 'bg-flame-50' : 'hover:bg-mountain-50'
+                  }`}
+                >
+                  <td className="px-3 py-3 align-top sm:px-4">
+                    <span
+                      className={`text-[13px] leading-snug ${
+                        isFinish
+                          ? 'font-bold text-mountain-950'
+                          : 'font-semibold text-mountain-900'
+                      }`}
+                    >
+                      {s.point}
+                    </span>
+                  </td>
+                  <td className="hidden whitespace-nowrap px-3 py-3 align-top font-mono text-xs text-mountain-500 sm:table-cell sm:px-4">
+                    {s.km}
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-3 align-top font-mono text-[13px] font-semibold text-mountain-900 sm:px-4">
+                    {s.time}
+                  </td>
+                  <td className="whitespace-nowrap bg-flame-50/60 px-3 py-3 align-top sm:px-4">
+                    <span className="font-mono text-[13px] font-bold text-mountain-950">
+                      {s.scratch}
+                    </span>
+                    {s.delta && (
+                      <span
+                        className={`ml-1.5 font-mono text-[11px] font-bold ${
+                          gained ? 'text-flame-600' : 'text-mountain-400'
+                        }`}
+                      >
+                        {s.delta}
+                      </span>
+                    )}
+                  </td>
+                  <td className="whitespace-nowrap px-3 py-3 align-top font-mono text-[13px] text-mountain-700 sm:px-4">
+                    {s.women}
+                  </td>
+                  <td className="hidden whitespace-nowrap px-3 py-3 align-top font-mono text-xs text-mountain-500 lg:table-cell sm:px-4">
+                    {s.elevation}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+
+      {localized.splitsFootnote && (
+        <p className="mt-4 text-[10px] uppercase tracking-widest text-mountain-500">
+          {localized.splitsFootnote}
+        </p>
+      )}
     </motion.section>
   );
 }
@@ -503,7 +682,7 @@ function PhotoMosaic({ photos, alts, title, t }) {
 
 /* ----------------------- BLOC VIDÉO ----------------------- */
 
-function VideoSection({ videos, localized }) {
+function VideoSection({ videos, localized, t }) {
   const list = Array.isArray(videos) ? videos.filter(Boolean) : [];
   if (list.length === 0) return null;
 
@@ -537,7 +716,7 @@ function VideoSection({ videos, localized }) {
         }`}
       >
         {list.map((src, i) => (
-          <RaceVideoPlayer key={src || i} src={src} />
+          <RaceVideoPlayer key={src || i} src={src} playLabel={t.playLabel} />
         ))}
       </div>
     </motion.section>
@@ -568,16 +747,16 @@ export default function CommuniqueDetail() {
       <MetaStrip item={item} t={t} />
 
       {/* CORPS — long-form éditorial */}
-      <article className="mx-auto max-w-3xl px-6 py-16 sm:px-8 sm:py-20">
+      <article className="mx-auto max-w-2xl px-6 py-14 sm:px-8 sm:py-16">
         {/* Lead paragraph (1er paragraphe en plus gros) */}
         <motion.p
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="text-balance text-xl leading-relaxed text-mountain-800 sm:text-2xl"
+          className="text-balance text-lg leading-relaxed text-mountain-800 sm:text-xl"
         >
-          <span className="float-left mr-3 mt-1 font-display text-7xl font-bold leading-[0.85] tracking-tight text-flame-600 sm:text-8xl">
+          <span className="float-left mr-3 mt-1 font-display text-6xl font-bold leading-[0.85] tracking-tight text-flame-600 sm:text-7xl">
             {localized.paragraphs[0]?.charAt(0)}
           </span>
           {localized.paragraphs[0]?.slice(1)}
@@ -614,21 +793,31 @@ export default function CommuniqueDetail() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.7 }}
-            className="mt-6 text-base leading-relaxed text-mountain-800 sm:mt-7 sm:text-[17px]"
+            className="mt-6 text-[15px] leading-[1.8] text-mountain-800 sm:mt-7 sm:text-base"
           >
             {p}
           </motion.p>
         ))}
       </article>
 
+      {/* CITATION — largeur du récit, dans la continuité du texte */}
+      <div className="mx-auto max-w-2xl px-6 sm:px-8">
+        <QuoteBlock quote={localized.quote} />
+      </div>
+
       {/* RÉSULTATS — bloc design asymétrique */}
       <div className="mx-auto max-w-5xl px-6 sm:px-8">
         <ResultsShowcase localized={localized} item={item} t={t} />
       </div>
 
+      {/* POINTS DE PASSAGE */}
+      <div className="mx-auto max-w-5xl px-6 sm:px-8">
+        <SplitsTable localized={localized} />
+      </div>
+
       {/* VIDÉO */}
       <div className="mx-auto max-w-5xl px-6 sm:px-8">
-        <VideoSection videos={item.videos} localized={localized} />
+        <VideoSection videos={item.videos} localized={localized} t={t} />
       </div>
 
       {/* GALERIE */}
