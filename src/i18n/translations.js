@@ -145,11 +145,11 @@ export const translations = {
         raceTitle1: 'Marathon',
         raceTitle2: 'du Mont-Blanc',
         raceSub: '44 km · 2 500 m D+ · Chamonix',
-        bigStat: '50ᵉ femme / 606',
+        bigStat: '49ᵉ femme / 606',
         bigStatExplain:
           ' — soit le Top 8 % féminin sur l’un des plateaux les plus denses du trail international, un jour à plus de 30 °C. 147 places reprises sur la seconde moitié de course.',
         stats: [
-          { label: 'Rang Femmes', value: '50 / 606' },
+          { label: 'Rang Femmes', value: '49 / 606' },
           { label: 'Temps', value: '06:21:09' },
           { label: 'Scratch', value: '325 / 2582' },
         ],
@@ -526,11 +526,11 @@ export const translations = {
         raceTitle1: 'Mont-Blanc',
         raceTitle2: 'Marathon',
         raceSub: '44 km · 2,500 m D+ · Chamonix',
-        bigStat: '50th woman / 606',
+        bigStat: '49th woman / 606',
         bigStatExplain:
           ' — i.e. Top 8% female on one of the deepest fields in international trail running, on a day above 30 °C. 147 places regained over the second half of the race.',
         stats: [
-          { label: 'Female rank', value: '50 / 606' },
+          { label: 'Female rank', value: '49 / 606' },
           { label: 'Time', value: '06:21:09' },
           { label: 'Overall', value: '325 / 2582' },
         ],

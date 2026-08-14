@@ -69,7 +69,7 @@ const RACES = [
     dplus: '2500 M+',
     temps: '06:21:09',
     rangGeneral: '325/2582',
-    rangFemmes: '50/606',
+    rangFemmes: '49/606',
     distinction: 'international',
   },
   {
