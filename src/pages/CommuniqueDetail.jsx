@@ -119,7 +119,7 @@ function RaceVideoPlayer({ src }) {
 
 /* ------------------------ HERO PLEIN ÉCRAN ------------------------ */
 
-function CinemaHero({ item, localized, lang, t }) {
+function CinemaHero({ item, localized, lang, t, pressNumber }) {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -179,7 +179,7 @@ function CinemaHero({ item, localized, lang, t }) {
             transition={{ duration: 0.6 }}
             className="flex flex-wrap items-center gap-x-4 gap-y-2 font-mono text-[10px] font-medium uppercase tracking-[0.3em] text-flame-300 sm:text-[11px]"
           >
-            <span>{t.pressNumber}</span>
+            <span>{pressNumber}</span>
             <span aria-hidden="true" className="block h-px w-12 bg-flame-500/70" />
             <span className="text-white/80">{formatDateShort(item.date)}</span>
             <span aria-hidden="true" className="hidden h-px w-12 bg-white/30 sm:block" />
@@ -559,10 +559,23 @@ export default function CommuniqueDetail() {
   if (!item) return <Navigate to="/communiques" replace />;
   const localized = item[lang] || item.fr;
 
+  // Numéro de communiqué déduit de l'ordre chronologique : le plus ancien
+  // est le N°01, le plus récent porte le numéro le plus haut.
+  const chronoIndex = [...COMMUNIQUES]
+    .sort((a, b) => a.date.localeCompare(b.date))
+    .findIndex((c) => c.slug === item.slug);
+  const pressNumber = `${t.pressNumberPrefix}${String(chronoIndex + 1).padStart(2, '0')}`;
+
   return (
     <main className="bg-cream-50 text-mountain-950">
       {/* HERO PLEIN ÉCRAN */}
-      <CinemaHero item={item} localized={localized} lang={lang} t={t} />
+      <CinemaHero
+        item={item}
+        localized={localized}
+        lang={lang}
+        t={t}
+        pressNumber={pressNumber}
+      />
 
       {/* MÉTA STICKY */}
       <MetaStrip item={item} t={t} />

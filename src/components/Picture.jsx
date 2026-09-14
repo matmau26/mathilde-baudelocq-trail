@@ -26,11 +26,15 @@ const HOT_LOGOS = new Set([
   '/logo/Logo_Full_Noir',
 ]);
 
+// Dossiers dont TOUTES les images ont des variantes 640w / 1024w générées
+// à la build. Évite d'énumérer chaque fichier un par un.
+const HOT_DIRS = ['/2026UTV/'];
+
 function buildAvifSrcset(src) {
   if (!SUPPORTED_EXT.test(src)) return null;
   const base = src.replace(SUPPORTED_EXT, '');
   const fullAvif = `${base}.avif`;
-  if (HOT_FILES.has(base)) {
+  if (HOT_FILES.has(base) || HOT_DIRS.some((d) => base.startsWith(d))) {
     return `${base}-640w.avif 640w, ${base}-1024w.avif 1024w, ${fullAvif} 1600w`;
   }
   if (HOT_LOGOS.has(base)) {
