@@ -413,6 +413,11 @@ function ResultsShowcase({ localized, item, t }) {
               <p className="mt-2 bg-gradient-to-r from-flame-400 via-flame-300 to-solar-300 bg-clip-text font-display text-4xl font-bold leading-none tracking-tight text-transparent sm:text-5xl">
                 {women.value}
               </p>
+              {women.sub && (
+                <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.28em] text-white/50">
+                  {women.sub}
+                </p>
+              )}
             </div>
           )}
         </div>
@@ -421,12 +426,19 @@ function ResultsShowcase({ localized, item, t }) {
       {/* Stats secondaires en pied */}
       <div className="grid grid-cols-1 divide-x divide-y divide-white/10 border-t border-white/10 sm:grid-cols-2">
         {scratch && (
-          <div className="flex items-center justify-between px-6 py-4 sm:px-10">
+          <div className="flex items-center justify-between gap-4 px-6 py-4 sm:px-10">
             <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/50">
               {scratch.label}
             </span>
-            <span className="font-mono text-xl font-bold tabular-nums text-white sm:text-2xl">
-              {scratch.value}
+            <span className="flex flex-col items-end">
+              <span className="font-mono text-xl font-bold tabular-nums text-white sm:text-2xl">
+                {scratch.value}
+              </span>
+              {scratch.sub && (
+                <span className="mt-0.5 font-mono text-[10px] uppercase tracking-[0.28em] text-white/50">
+                  {scratch.sub}
+                </span>
+              )}
             </span>
           </div>
         )}

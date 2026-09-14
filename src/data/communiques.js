@@ -64,8 +64,8 @@ export const COMMUNIQUES = [
       resultsTitle: 'Résultats — Mathilde Baudelocq',
       results: [
         { label: 'Temps', value: "14 h 30'03\"" },
-        { label: 'Classement scratch', value: '125ᵉ / 247' },
-        { label: 'Classement femmes', value: '25ᵉ / 55' },
+        { label: 'Classement scratch', value: '125ᵉ / 247', sub: '340 partants' },
+        { label: 'Classement femmes', value: '25ᵉ / 55', sub: '73 partantes' },
         { label: 'Catégorie', value: '6ᵉ M0 F / 15' },
         { label: 'Dossard', value: '13' },
       ],
@@ -125,8 +125,8 @@ export const COMMUNIQUES = [
       resultsTitle: 'Results — Mathilde Baudelocq',
       results: [
         { label: 'Time', value: '14:30:03' },
-        { label: 'Overall rank', value: '125th / 247' },
-        { label: 'Female rank', value: '25th / 55' },
+        { label: 'Overall rank', value: '125th / 247', sub: '340 starters' },
+        { label: 'Female rank', value: '25th / 55', sub: '73 female starters' },
         { label: 'Category', value: '6th M0 F / 15' },
         { label: 'Bib', value: '13' },
       ],
