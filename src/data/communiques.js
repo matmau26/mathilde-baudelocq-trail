@@ -55,7 +55,7 @@ export const COMMUNIQUES = [
           heading: 'Ce que dit le chrono',
           body: "Et c'est là que les chiffres redeviennent intéressants. Entre le Pas de Pertuson et l'arrivée — les vingt-sept derniers kilomètres, ceux de la souffrance — elle ne perd plus une seule place au féminin et en reprend quatorze au scratch, de la 139ᵉ à la 125ᵉ. Il lui restait 1 450 mètres de dénivelé positif à monter après Rencurel, dont un mur de 460 mètres à 15 %. Elle les a montés en marchant, en mangeant, sans s'arrêter.",
         },
-        "Elle franchit la ligne à Villard-de-Lans en 14 h 30'03\", après 84,9 kilomètres et près de 4 900 mètres de dénivelé positif réellement mesurés sur la trace — au-delà des 4 300 annoncés. 25ᵉ femme sur 55 arrivées, 125ᵉ sur 247 classés. La médiane du plateau féminin, ce jour-là, était à 15 h 06 : malade, elle la bat de trente-six minutes.",
+        "Elle franchit la ligne à Villard-de-Lans en 14 h 30'03\", après 84,9 kilomètres et près de 4 900 mètres de dénivelé positif. 25ᵉ femme sur 55 arrivées, 125ᵉ sur 247 classés. La médiane du plateau féminin, ce jour-là, était à 15 h 06 : malade, elle la bat de trente-six minutes.",
         "Ce devait être une finalité. C'est devenu une course de préparation — celle qui muscle le mental et apprend l'acceptation. Et un deuxième ultra bouclé, sur un format que très peu de coureurs mènent au bout, un jour où rien n'était réuni pour y arriver.",
       ],
       quote: {
@@ -124,7 +124,7 @@ export const COMMUNIQUES = [
           heading: 'What the clock says',
           body: "And that's where the numbers become interesting again. Between Pas de Pertuson and the finish — the last twenty-seven kilometres, the ones of suffering — she doesn't lose a single place to the women and takes fourteen back overall, from 139th to 125th. She had 1,450 metres of positive climbing left after Rencurel, including a 460-metre wall at 15%. She hiked them up, eating, without stopping.",
         },
-        "She crosses the line in Villard-de-Lans in 14:30:03, after 84.9 kilometres and nearly 4,900 metres of positive elevation actually measured on the trace — beyond the 4,300 announced. 25th woman out of 55 finishers, 125th out of 247 ranked. The women's field median that day was 15:06: sick, she beats it by thirty-six minutes.",
+        "She crosses the line in Villard-de-Lans in 14:30:03, after 84.9 kilometres and nearly 4,900 metres of positive elevation. 25th woman out of 55 finishers, 125th out of 247 ranked. The women's field median that day was 15:06: sick, she beats it by thirty-six minutes.",
         "It was meant to be a finale. It became a training race — the one that builds the mind and teaches acceptance. And a second ultra brought to the finish line, on a format very few runners see through, on a day when nothing was there to make it happen.",
       ],
       quote: {
