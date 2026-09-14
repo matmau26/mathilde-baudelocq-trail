@@ -28,13 +28,39 @@ export const COMMUNIQUES = [
         "Malade 48 h avant le départ, Mathilde arrache un deuxième ultra bouclé et reprend quatorze places au scratch dans les vingt-sept derniers kilomètres. La preuve mentale du chantier.",
       paragraphs: [
         "Onze semaines de préparation déroulées sans accroc — pas une séance manquée, pas une blessure, pas un pépin. L'objectif était précis : mesurer son plafond sur un deuxième ultra. Puis jeudi, à quarante-huit heures du départ, le nez qui coule. Vendredi matin, la fièvre et des jambes qui refusent de sortir du lit. Elle arrive dans le Vercors le vendredi soir, déjà malade. Samedi 5 heures, dossard 13 sur la poitrine, elle est sur la ligne.",
-        "Le départ de l'Ultra Trail du Vercors est de ceux qu'on n'oublie pas. Nuit noire, frontales, un thermomètre proche de zéro. La montée se fait au flambeau, une file de lumières qui s'étire sur la colline. Puis le jour se lève sur les sommets, et les couleurs prennent les crêtes une à une.",
-        "Sur le papier, la première partie est parfaite. Elle bascule au Pic Saint-Michel, 1 916 mètres, au bout de 12 kilomètres : 15ᵉ féminine. Elle pointe à Autrans à la mi-course, 20ᵉ féminine, dans les temps prévus. De l'intérieur, c'est autre chose : la trachée chauffe, chaque respiration se fait plus courte.",
-        "C'est après Autrans que la course bascule. Le pacing tient, la nutrition tient — pas un seul trouble digestif sur quatorze heures et demie. Mais l'énergie s'en va, et respirer devient douloureux. Le tout tombe pile sur la portion la plus technique du parcours, les crêtes, où quatre kilomètres prennent une heure et demie. Un décor magnifique qu'elle ne regarde pas.",
-        "Au Pas de Pertuson, kilomètre 58, elle cède cinq places au féminin. La vraie question se pose : continuer ou pas. Elle choisit de continuer, en acceptant que ce ne sera pas la course qu'elle est venue chercher. Rallier Rencurel. Puis finir, coûte que coûte.",
-        "Entre le Pas de Pertuson et l'arrivée, elle ne perd plus une seule place au féminin et en reprend quatorze au scratch. Il lui reste 1 450 mètres de dénivelé positif après Rencurel, dont un mur de 460 mètres à 15 %. Elle les monte en marchant, en mangeant, sans s'arrêter.",
-        "Elle franchit la ligne à Villard-de-Lans en 14 h 30'03\", après 84,9 kilomètres et près de 4 900 mètres de dénivelé positif réellement mesurés sur la trace — au-delà des 4 300 annoncés. 25ᵉ femme sur 55 arrivées, 125ᵉ sur 247 classés. La médiane du plateau féminin, ce jour-là, était à 15 h 06. Malade, elle la bat de trente-six minutes. Ce devait être une finalité ; c'est devenu une course de préparation.",
+        {
+          heading: 'Zéro degré et une montée au flambeau',
+          body: "Le départ de l'Ultra Trail du Vercors est de ceux qu'on n'oublie pas. Nuit noire, frontales, un thermomètre proche de zéro. La montée se fait au flambeau, une file de lumières qui s'étire sur la colline. Puis le jour se lève sur les sommets, et les couleurs prennent les crêtes une à une.",
+        },
+        {
+          heading: "Les premières heures : tout est en ordre, sauf à l'intérieur",
+          body: "Sur le papier, la première partie est parfaite. Elle bascule au Pic Saint-Michel, 1 916 mètres, au bout de 12 kilomètres : 15ᵉ féminine. Elle pointe à Autrans à la mi-course, 20ᵉ féminine, dans les temps prévus. De l'intérieur, c'est autre chose : la trachée chauffe, chaque respiration se fait plus courte.",
+        },
+        {
+          heading: 'Autrans : le moment où tout déraille',
+          body: "C'est après Autrans que la course bascule. Le pacing tient, la nutrition tient — pas un seul trouble digestif sur quatorze heures et demie. Mais l'énergie s'en va, et respirer devient douloureux. Le tout tombe pile sur la portion la plus technique du parcours, les crêtes, où quatre kilomètres prennent une heure et demie. Un décor magnifique qu'elle ne regarde pas.",
+        },
+        {
+          heading: 'La question du 58ᵉ kilomètre',
+          body: "Au Pas de Pertuson, kilomètre 58, elle cède cinq places au féminin. La vraie question se pose : continuer ou pas. Elle choisit de continuer, en acceptant que ce ne sera pas la course qu'elle est venue chercher. Rallier Rencurel. Puis finir, coûte que coûte.",
+        },
+        {
+          heading: 'Ce que dit le chrono',
+          body: "Entre le Pas de Pertuson et l'arrivée, elle ne perd plus une seule place au féminin et en reprend quatorze au scratch. Il lui reste 1 450 mètres de dénivelé positif après Rencurel, dont un mur de 460 mètres à 15 %. Elle les monte en marchant, en mangeant, sans s'arrêter.",
+        },
+        "Elle franchit la ligne à Villard-de-Lans en 14 h 30'03\", après 84,9 kilomètres et près de 4 900 mètres de dénivelé positif réellement mesurés sur la trace — au-delà des 4 300 annoncés. 25ᵉ femme sur 55 arrivées, 125ᵉ sur 247 classés. La médiane du plateau féminin, ce jour-là, était à 15 h 06. Malade, elle la bat de trente-six minutes.",
+        "Ce devait être une finalité. C'est devenu une course de préparation — celle qui muscle le mental et apprend l'acceptation. Et un deuxième ultra bouclé, sur un format que très peu de coureurs mènent au bout, un jour où rien n'était réuni pour y arriver.",
       ],
+      quote: {
+        label: 'Le mot de Mathilde',
+        paragraphs: [
+          "J'avais fait la meilleure préparation de ma vie, et je tombe malade quarante-huit heures avant le départ. Je suis arrivée dans le Vercors le vendredi soir déjà malade, avec de la fièvre le matin même. Sur la ligne à 5 heures, je n'avais aucune idée de ce qui allait se passer, ni même si j'irais au bout.",
+          "Le départ au flambeau et le lever de soleil sur les crêtes, ça je le garde. Mais après Autrans, respirer est devenu une douleur, et j'ai eu envie d'arrêter. J'ai fini par accepter que ce ne serait pas la course que j'étais venue chercher — et que ça ne l'annulait pas pour autant.",
+          "« Il n'y a pas de D+ sans D− », dit Clem qui court. Cette fois, tout n'était pas réuni — et avec le dossard 13, disons qu'il ne m'aura pas beaucoup aidée. Alors j'ai pris ce que la journée avait à donner : de l'expérience, et la preuve que je peux aller au bout de 84 kilomètres même quand tout est contre moi.",
+          "Merci à l'Ultra Trail du Vercors et aux bénévoles pour cette belle organisation, et à ceux qui étaient sur le bord.",
+        ],
+        attribution: 'Mathilde Baudelocq',
+      },
       resultsTitle: 'Résultats — Mathilde Baudelocq',
       results: [
         { label: 'Temps', value: "14 h 30'03\"" },
@@ -63,13 +89,39 @@ export const COMMUNIQUES = [
         "Struck by a virus 48 hours before the gun, Mathilde grinds out her second ultra and takes back fourteen places overall in the final twenty-seven kilometres. The mental proof of the buildup.",
       paragraphs: [
         "Eleven weeks of preparation without a hitch — no missed session, no injury, no trouble. The goal was clear: measure her ceiling on a second ultra. Then Thursday, forty-eight hours before the start, a runny nose. Friday morning, fever and legs that refuse to leave the bed. She arrives in the Vercors on Friday evening, already sick. Saturday 5 AM, bib 13 pinned on, she is on the line.",
-        "The Ultra Trail du Vercors start is one you don't forget. Pitch dark, headlamps, a thermometer near zero. The climb is done by torchlight — a line of lights stretching up the hill. Then the sun rises on the peaks, and colour takes the ridges one by one.",
-        "On paper, the first half is perfect. She tops Pic Saint-Michel, 1,916 metres, after 12 kilometres: 15th woman. She checks in at Autrans at halfway, 20th woman, on schedule. Inside, it's another story: the trachea burns, each breath a little shorter.",
-        "It's after Autrans that the race shifts. Pacing holds, nutrition holds — not a single digestive issue in fourteen and a half hours. But the energy drains, and breathing becomes painful. All of it lands exactly on the most technical part of the course, the ridges, where four kilometres take an hour and a half. A stunning setting she doesn't look at.",
-        "At Pas de Pertuson, kilometre 58, she cedes five places to the women. The real question surfaces: continue or not. She chooses to continue, accepting that this would not be the race she came for. Reach Rencurel. Then finish, whatever it takes.",
-        "Between Pas de Pertuson and the finish, she doesn't lose a single place to the women and takes fourteen back overall. She has 1,450 metres of positive climbing left after Rencurel, including a 460-metre wall at 15%. She hikes them up, eating, without stopping.",
-        "She crosses the line in Villard-de-Lans in 14:30:03, after 84.9 kilometres and nearly 4,900 metres of positive elevation actually measured on the GPS trace — beyond the 4,300 announced. 25th woman out of 55 finishers, 125th out of 247 ranked. The women's field median that day was 15:06. Sick, she beats it by thirty-six minutes. It was meant to be a finale; it became a training race.",
+        {
+          heading: 'Freezing dark and a torchlit climb',
+          body: "The Ultra Trail du Vercors start is one you don't forget. Pitch dark, headlamps, a thermometer near zero. The climb is done by torchlight — a line of lights stretching up the hill. Then the sun rises on the peaks, and colour takes the ridges one by one.",
+        },
+        {
+          heading: 'The first hours: order outside, chaos inside',
+          body: "On paper, the first half is perfect. She tops Pic Saint-Michel, 1,916 metres, after 12 kilometres: 15th woman. She checks in at Autrans at halfway, 20th woman, on schedule. Inside, it's another story: the trachea burns, each breath a little shorter.",
+        },
+        {
+          heading: 'Autrans: the moment it all shifts',
+          body: "It's after Autrans that the race shifts. Pacing holds, nutrition holds — not a single digestive issue in fourteen and a half hours. But the energy drains, and breathing becomes painful. All of it lands exactly on the most technical part of the course, the ridges, where four kilometres take an hour and a half. A stunning setting she doesn't look at.",
+        },
+        {
+          heading: 'The question at kilometre 58',
+          body: "At Pas de Pertuson, kilometre 58, she cedes five places to the women. The real question surfaces: continue or not. She chooses to continue, accepting that this would not be the race she came for. Reach Rencurel. Then finish, whatever it takes.",
+        },
+        {
+          heading: 'What the clock says',
+          body: "Between Pas de Pertuson and the finish, she doesn't lose a single place to the women and takes fourteen back overall. She has 1,450 metres of positive climbing left after Rencurel, including a 460-metre wall at 15%. She hikes them up, eating, without stopping.",
+        },
+        "She crosses the line in Villard-de-Lans in 14:30:03, after 84.9 kilometres and nearly 4,900 metres of positive elevation actually measured on the GPS trace — beyond the 4,300 announced. 25th woman out of 55 finishers, 125th out of 247 ranked. The women's field median that day was 15:06. Sick, she beats it by thirty-six minutes.",
+        "It was meant to be a finale. It became a training race — the kind that builds mental strength and teaches acceptance. And a second ultra brought to the finish line, on a format very few runners see through, on a day when nothing was there to help.",
       ],
+      quote: {
+        label: 'A word from Mathilde',
+        paragraphs: [
+          "I had done the best preparation of my life, and I fell sick forty-eight hours before the start. I arrived in the Vercors on Friday evening already sick, with fever that same morning. On the line at 5 AM, I had no idea what was going to happen, not even whether I'd make it to the finish.",
+          "The torchlit start and sunrise on the ridges — that I get to keep. But after Autrans, breathing became painful, and I wanted to stop. I ended up accepting that this wouldn't be the race I had come for — and that it didn't cancel it out either.",
+          "\"There's no ascent without descent,\" says Clem qui court. This time, not everything was there — and with bib 13, let's say it didn't help me much. So I took what the day had to give: experience, and the proof that I can go 84 kilometres to the finish even when everything is against me.",
+          "Thank you to the Ultra Trail du Vercors and the volunteers for a beautiful event, and to those on the sides.",
+        ],
+        attribution: 'Mathilde Baudelocq',
+      },
       resultsTitle: 'Results — Mathilde Baudelocq',
       results: [
         { label: 'Time', value: '14:30:03' },

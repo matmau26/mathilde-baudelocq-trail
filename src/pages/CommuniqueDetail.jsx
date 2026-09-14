@@ -460,31 +460,31 @@ function QuoteBlock({ quote }) {
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       className="my-16 sm:my-20"
     >
-      <figure className="relative overflow-hidden rounded-3xl border-2 border-mountain-950 bg-white p-8 shadow-xl shadow-mountain-900/5 sm:p-12">
-        {/* Guillemet en filigrane, même logique que les codes de Partnership */}
+      <figure className="relative overflow-hidden rounded-3xl border border-mountain-200 bg-white p-7 shadow-sm sm:p-10">
+        {/* Guillemet en filigrane */}
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute -top-16 right-4 select-none font-editorial text-[14rem] italic leading-none text-flame-500/10 sm:right-10"
+          className="pointer-events-none absolute -top-14 right-4 select-none font-editorial text-[11rem] italic leading-none text-flame-500/10 sm:right-10 sm:-top-16 sm:text-[13rem]"
         >
           ”
         </span>
 
-        <p className="font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-flame-600 sm:text-[11px]">
+        <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.28em] text-flame-600 sm:text-[11px]">
           {quote.label}
         </p>
 
-        <blockquote className="relative mt-6 space-y-5 border-l-2 border-flame-500 pl-6 sm:pl-8">
+        <blockquote className="relative mt-5 space-y-4 border-l border-flame-500/70 pl-5 sm:mt-6 sm:pl-6">
           {quote.paragraphs.map((p, i) => (
             <p
               key={i}
-              className="font-editorial text-base italic leading-relaxed text-mountain-800 sm:text-lg"
+              className="font-editorial text-[15px] italic leading-[1.75] text-mountain-800 sm:text-base"
             >
               {p}
             </p>
           ))}
         </blockquote>
 
-        <figcaption className="mt-8 font-mono text-[10px] uppercase tracking-[0.3em] text-mountain-500">
+        <figcaption className="mt-7 font-mono text-[10px] uppercase tracking-[0.28em] text-mountain-500">
           — {quote.attribution}
         </figcaption>
       </figure>
@@ -742,20 +742,25 @@ export default function CommuniqueDetail() {
       {/* MÉTA STICKY */}
       <MetaStrip item={item} t={t} />
 
-      {/* CORPS — long-form éditorial */}
-      <article className="mx-auto max-w-2xl px-6 py-14 sm:px-8 sm:py-16">
-        {/* Lead paragraph (1er paragraphe en plus gros) */}
+      {/* CORPS — long-form éditorial : sobre, aéré, sous-titres pour
+          rythmer la lecture, capitale ornée en Playfair. */}
+      <article className="mx-auto max-w-[36rem] px-6 py-14 sm:px-8 sm:py-16">
+        {/* Lead paragraph (1er paragraphe avec capitale) */}
         <motion.p
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="text-balance text-lg leading-relaxed text-mountain-800 sm:text-xl"
+          className="text-balance text-[16px] leading-[1.7] text-mountain-800 sm:text-[17px]"
         >
-          <span className="float-left mr-3 mt-1 font-display text-6xl font-bold leading-[0.85] tracking-tight text-flame-600 sm:text-7xl">
-            {localized.paragraphs[0]?.charAt(0)}
+          <span className="float-left mr-3 mt-1 font-editorial text-[3.75rem] font-medium leading-[0.85] tracking-tight text-flame-600 sm:text-[4.5rem]">
+            {typeof localized.paragraphs[0] === 'string'
+              ? localized.paragraphs[0].charAt(0)
+              : localized.paragraphs[0]?.body?.charAt(0)}
           </span>
-          {localized.paragraphs[0]?.slice(1)}
+          {typeof localized.paragraphs[0] === 'string'
+            ? localized.paragraphs[0].slice(1)
+            : localized.paragraphs[0]?.body?.slice(1)}
         </motion.p>
 
         {/* Photo inline pour rompre le rythme */}
@@ -765,7 +770,7 @@ export default function CommuniqueDetail() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, margin: '-50px' }}
             transition={{ duration: 0.8 }}
-            className="my-12 overflow-hidden rounded-2xl border border-mountain-200 bg-mountain-100 sm:my-16"
+            className="my-14 overflow-hidden rounded-2xl border border-mountain-200 bg-mountain-100 sm:my-16"
           >
             <div className="aspect-[16/10] w-full">
               <Picture
@@ -781,23 +786,36 @@ export default function CommuniqueDetail() {
           </motion.figure>
         )}
 
-        {/* Paragraphes 2 et suivants */}
-        {localized.paragraphs.slice(1).map((p, i) => (
-          <motion.p
-            key={i}
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.7 }}
-            className="mt-6 text-[15px] leading-[1.8] text-mountain-800 sm:mt-7 sm:text-base"
-          >
-            {p}
-          </motion.p>
-        ))}
+        {/* Paragraphes 2 et suivants — support à la fois du format string et
+            du format { heading, body } qui affiche un sous-titre éditorial. */}
+        {localized.paragraphs.slice(1).map((p, i) => {
+          const isHeaded = typeof p === 'object' && p !== null && p.body;
+          const heading = isHeaded ? p.heading : null;
+          const body = isHeaded ? p.body : p;
+          return (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 12 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-50px' }}
+              transition={{ duration: 0.7 }}
+              className={heading ? 'mt-12 sm:mt-14' : 'mt-7 sm:mt-8'}
+            >
+              {heading && (
+                <h3 className="mb-3 font-mono text-[10px] font-semibold uppercase tracking-[0.28em] text-flame-600 sm:mb-4 sm:text-[11px]">
+                  {heading}
+                </h3>
+              )}
+              <p className="text-[15px] leading-[1.8] text-mountain-800 sm:text-[15.5px]">
+                {body}
+              </p>
+            </motion.div>
+          );
+        })}
       </article>
 
       {/* CITATION — largeur du récit, dans la continuité du texte */}
-      <div className="mx-auto max-w-2xl px-6 sm:px-8">
+      <div className="mx-auto max-w-[36rem] px-6 sm:px-8">
         <QuoteBlock quote={localized.quote} />
       </div>
 
