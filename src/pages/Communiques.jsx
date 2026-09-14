@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { useT } from '../i18n/useT.js';
 import { useLanguage } from '../i18n/LanguageContext.jsx';
 import { COMMUNIQUES } from '../data/communiques.js';
+import Picture from '../components/Picture.jsx';
 
 function formatDate(iso, lang) {
   try {
@@ -88,11 +89,13 @@ export default function Communiques() {
                     className="block overflow-hidden rounded-2xl border border-mountain-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-mountain-300 hover:shadow-xl hover:shadow-mountain-900/10"
                   >
                     <figure className="relative aspect-[16/10] w-full overflow-hidden bg-mountain-100">
-                      <img
-                        src={c.cover}
-                        alt={c.coverAlt}
+                      {/* `thumb` permet une vignette différente de la bannière
+                          de la page détaillée ; sinon on retombe sur `cover`. */}
+                      <Picture
+                        src={c.thumb || c.cover}
+                        alt={c.thumbAlt || c.coverAlt}
                         loading="lazy"
-                        decoding="async"
+                        sizes="(max-width: 768px) 100vw, 560px"
                         className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
                       />
                       <span className="absolute left-3 top-3 rounded-full bg-white/90 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-mountain-800 backdrop-blur">

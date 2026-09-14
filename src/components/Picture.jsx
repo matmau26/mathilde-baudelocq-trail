@@ -20,6 +20,10 @@ const HOT_FILES = new Set([
   '/VentouxPodium',
   '/VentouxOrigine2025',
   '/VentouxOrigine2025-2',
+  '/MarathonMB-arche',
+  '/MarathonMB-course',
+  '/MMB-montagne',
+  '/MMB-finish',
 ]);
 const HOT_LOGOS = new Set([
   '/logo/Logo_Full_Transparent',

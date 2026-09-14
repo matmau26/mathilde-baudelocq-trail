@@ -1,9 +1,23 @@
-import { Target, Zap, Flag } from 'lucide-react';
+import { Check, Target, Zap, Flag } from 'lucide-react';
 import { useT } from '../i18n/useT.js';
+import Distinction from './Distinction.jsx';
+
+// Statut et distinction des objectifs — métadonnée non traduisible, alignée par
+// index sur t.objectives. `done` déclenche le sceau « Réalisé » une fois la
+// course disputée ; `distinction` indexe races.distinctions et affiche le
+// bandeau correspondant. Le détail chiffré du résultat, lui, reste dans le
+// tableau de RaceResults.
+const OBJECTIVE_META = [
+  // A.01 — Marathon du Mont-Blanc, 28 juin 2026
+  { done: true, distinction: 'international' },
+  // A.02 — UltraTrail du Vercors, 12 septembre 2026
+  { done: false },
+];
 
 export default function Calendar() {
   const t = useT('calendar');
-  const OBJECTIVES = t.objectives;
+  const tr = useT('races');
+  const OBJECTIVES = t.objectives.map((o, i) => ({ ...o, ...OBJECTIVE_META[i] }));
   const SECONDARY_OBJECTIVE = t.secondary;
   return (
     <section
@@ -38,12 +52,24 @@ export default function Calendar() {
               className="group relative bg-white p-8 transition-colors hover:bg-mountain-50 sm:p-10"
             >
               {/* Code & label */}
-              <div className="flex items-center justify-between">
-                <span className="inline-flex items-center gap-2 rounded-none border border-flame-500 bg-flame-500 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-white">
-                  <Target className="h-3 w-3" strokeWidth={2.5} />
-                  {t.objectiveALabel}
-                </span>
-                <span className="font-display text-sm font-bold uppercase tracking-widest text-mountain-400">
+              <div className="flex items-center justify-between gap-3">
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="inline-flex items-center gap-2 rounded-none border border-flame-500 bg-flame-500 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.25em] text-white">
+                    <Target className="h-3 w-3" strokeWidth={2.5} />
+                    {t.objectiveALabel}
+                  </span>
+                  {obj.done && (
+                    <span className="inline-flex items-center gap-2">
+                      <span className="flex h-5 w-5 items-center justify-center rounded-full bg-flame-500 text-white shadow-sm shadow-flame-500/40">
+                        <Check className="h-3 w-3" strokeWidth={3.5} />
+                      </span>
+                      <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-mountain-950">
+                        {t.objectiveDoneLabel}
+                      </span>
+                    </span>
+                  )}
+                </div>
+                <span className="shrink-0 font-display text-sm font-bold uppercase tracking-widest text-mountain-400">
                   {obj.code}
                 </span>
               </div>
@@ -82,6 +108,14 @@ export default function Calendar() {
                   </dd>
                 </div>
               </dl>
+
+              {obj.distinction && (
+                <Distinction
+                  distinction={obj.distinction}
+                  labels={tr.distinctions}
+                  className="mt-6"
+                />
+              )}
 
               <p className="mt-6 text-sm text-mountain-700">{obj.note}</p>
 
