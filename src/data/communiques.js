@@ -78,7 +78,7 @@ export const COMMUNIQUES = [
       photoAlts: [
         'Sur les crêtes du Vercors · UTV 2026',
         'En course · Ultra Trail du Vercors',
-        'Arrivée à Villard-de-Lans',
+        'En plein effort · UTV 2026',
       ],
     },
     en: {
@@ -139,7 +139,7 @@ export const COMMUNIQUES = [
       photoAlts: [
         'On the Vercors ridges · UTV 2026',
         'Racing · Ultra Trail du Vercors',
-        'Finish at Villard-de-Lans',
+        'Mid-effort · UTV 2026',
       ],
     },
   },
