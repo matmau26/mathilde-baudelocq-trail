@@ -25,7 +25,7 @@ export const COMMUNIQUES = [
       subtitle: "L'Ultra Solo — 85 km",
       meta: '85 km · 4 300 m D+ · Samedi 5 h',
       excerpt:
-        "Malade 48 h avant le départ, Mathilde arrache un deuxième ultra bouclé et reprend quatorze places au scratch dans les vingt-sept derniers kilomètres. La preuve mentale du chantier.",
+        "Malade dès le jeudi, fiévreuse le vendredi matin, arrivée dans le Vercors déjà touchée : Mathilde Baudelocq prend malgré tout le départ de son deuxième ultra, samedi à 5 h. 25ᵉ féminine sur 55 arrivées — pour 73 partantes — et 125ᵉ au scratch sur 247 classés, 340 au départ. Entre les deux, une course qui a cessé très tôt d'être une question de chrono.",
       paragraphs: [
         "Onze semaines de préparation déroulées sans accroc — pas une séance manquée, pas une blessure, pas un pépin. L'objectif était précis : mesurer son plafond sur un deuxième ultra. Puis jeudi, à quarante-huit heures du départ, le nez qui coule. Vendredi matin, la fièvre et des jambes qui refusent de sortir du lit. Elle arrive dans le Vercors le vendredi soir, déjà malade. Samedi 5 heures, dossard 13 sur la poitrine, elle est sur la ligne.",
         {
@@ -86,7 +86,7 @@ export const COMMUNIQUES = [
       subtitle: 'The Ultra Solo — 85 km',
       meta: '85 km · 4,300 m D+ · Saturday 5:00 AM',
       excerpt:
-        "Struck by a virus 48 hours before the gun, Mathilde grinds out her second ultra and takes back fourteen places overall in the final twenty-seven kilometres. The mental proof of the buildup.",
+        "Sick from Thursday on, feverish Friday morning, arriving in the Vercors already hit: Mathilde Baudelocq still takes the start of her second ultra on Saturday at 5 AM. 25th woman out of 55 finishers — from 73 female starters — and 125th overall out of 247 ranked, 340 at the start. In between, a race that very quickly stopped being about the clock.",
       paragraphs: [
         "Eleven weeks of preparation without a hitch — no missed session, no injury, no trouble. The goal was clear: measure her ceiling on a second ultra. Then Thursday, forty-eight hours before the start, a runny nose. Friday morning, fever and legs that refuse to leave the bed. She arrives in the Vercors on Friday evening, already sick. Saturday 5 AM, bib 13 pinned on, she is on the line.",
         {
