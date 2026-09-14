@@ -59,8 +59,12 @@ const RACES = [
     nom: 'UltraTrail du Vercors — 84K',
     distance: '84 KM',
     dplus: '4300 M+',
+    temps: '14:30:03',
+    rangGeneral: '125/247',
+    rangFemmes: '25/55',
+    partants: 340,
+    partantesF: 73,
     badges: ['Ultra'],
-    upcoming: true,
   },
   {
     date: '28/06/2026',
@@ -326,18 +330,32 @@ export default function RaceResults() {
                       {race.upcoming ? (
                         <Pending label={t.upcomingLabel} />
                       ) : (
-                        <span className="font-mono text-base font-bold text-flame-600">
-                          {race.rangFemmes}
-                        </span>
+                        <div>
+                          <span className="font-mono text-base font-bold text-flame-600">
+                            {race.rangFemmes}
+                          </span>
+                          {race.partantesF && (
+                            <span className="mt-0.5 block font-mono text-[10px] uppercase tracking-widest text-mountain-500">
+                              / {race.partantesF} {t.startersF}
+                            </span>
+                          )}
+                        </div>
                       )}
                     </td>
                     <td className="px-4 py-4 align-top">
                       {race.upcoming ? (
                         <Pending label={t.upcomingLabel} />
                       ) : (
-                        <span className="font-mono text-sm text-mountain-600">
-                          {race.rangGeneral}
-                        </span>
+                        <div>
+                          <span className="font-mono text-sm text-mountain-600">
+                            {race.rangGeneral}
+                          </span>
+                          {race.partants && (
+                            <span className="mt-0.5 block font-mono text-[10px] uppercase tracking-widest text-mountain-500">
+                              / {race.partants} {t.startersScratch}
+                            </span>
+                          )}
+                        </div>
                       )}
                     </td>
                   </tr>
@@ -410,9 +428,16 @@ export default function RaceResults() {
                         {race.upcoming ? (
                           <Pending label={t.upcomingLabel} />
                         ) : (
-                          <span className="font-mono text-sm font-bold text-flame-600">
-                            {race.rangFemmes}
-                          </span>
+                          <>
+                            <span className="font-mono text-sm font-bold text-flame-600">
+                              {race.rangFemmes}
+                            </span>
+                            {race.partantesF && (
+                              <span className="mt-0.5 block font-mono text-[9px] uppercase tracking-widest text-mountain-500">
+                                / {race.partantesF} {t.startersF}
+                              </span>
+                            )}
+                          </>
                         )}
                       </dd>
                     </div>
@@ -424,9 +449,16 @@ export default function RaceResults() {
                         {race.upcoming ? (
                           <Pending label={t.upcomingLabel} />
                         ) : (
-                          <span className="font-mono text-sm text-mountain-600">
-                            {race.rangGeneral}
-                          </span>
+                          <>
+                            <span className="font-mono text-sm text-mountain-600">
+                              {race.rangGeneral}
+                            </span>
+                            {race.partants && (
+                              <span className="mt-0.5 block font-mono text-[9px] uppercase tracking-widest text-mountain-500">
+                                / {race.partants} {t.startersScratch}
+                              </span>
+                            )}
+                          </>
                         )}
                       </dd>
                     </div>

@@ -195,6 +195,8 @@ export const translations = {
       footnote:
         'Source : résultats officiels des organisateurs · Mise à jour saison 2025–26',
       upcomingLabel: 'À venir',
+      startersF: 'partantes',
+      startersScratch: 'partants',
       badges: {
         Podium: 'Podium',
         'Top perf': 'Top perf',
@@ -575,6 +577,8 @@ export const translations = {
       footnote:
         'Source: official organiser results · Updated 2025–26 season',
       upcomingLabel: 'Upcoming',
+      startersF: 'F starters',
+      startersScratch: 'starters',
       badges: {
         Podium: 'Podium',
         'Top perf': 'Top perf',

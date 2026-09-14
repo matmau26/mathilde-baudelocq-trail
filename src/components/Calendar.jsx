@@ -11,7 +11,7 @@ const OBJECTIVE_META = [
   // A.01 — Marathon du Mont-Blanc, 28 juin 2026
   { done: true, distinction: 'international' },
   // A.02 — UltraTrail du Vercors, 12 septembre 2026
-  { done: false },
+  { done: true },
 ];
 
 export default function Calendar() {
