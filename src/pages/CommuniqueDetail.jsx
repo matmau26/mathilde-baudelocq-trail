@@ -405,14 +405,15 @@ function InlinePhoto({ src, alt }) {
       transition={{ duration: 0.8 }}
       className="-mx-6 my-14 overflow-hidden bg-mountain-100 sm:mx-0 sm:my-16 sm:rounded-2xl sm:border sm:border-mountain-200"
     >
-      <div className="aspect-[4/3] w-full sm:aspect-[16/10]">
-        <Picture
-          src={src}
-          alt={alt}
-          loading="lazy"
-          className="h-full w-full object-cover"
-        />
-      </div>
+      {/* Ratio libre : on laisse l'image respirer dans son cadre naturel.
+          Forcer un aspect landscape (16:10) rognait au centre les portraits
+          verticaux (iPhone) — inacceptable pour un shot d'effort. */}
+      <Picture
+        src={src}
+        alt={alt}
+        loading="lazy"
+        className="mx-auto block h-auto max-h-[80vh] w-full object-contain"
+      />
       {alt && (
         <figcaption className="px-6 py-3 font-mono text-[10px] uppercase tracking-[0.24em] text-mountain-500 sm:px-4 sm:tracking-[0.25em]">
           {alt}
