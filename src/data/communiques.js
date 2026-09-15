@@ -209,16 +209,42 @@ export const COMMUNIQUES = [
         'Top 8 % féminin sur 606 engagées et 325ᵉ sur 2 582 partants, un jour à plus de 30 °C sur la vallée. Pointée 472ᵉ à Vallorcine, Mathilde Baudelocq franchit la ligne 325ᵉ : 147 places reprises sur la seconde moitié de course, sur l’un des tracés les plus réputés du circuit international.',
       paragraphs: [
         "Mathilde BAUDELOCQ avait ce dossard en tête depuis longtemps. Le 42 km du Mont-Blanc, ce n’est pas une course de plus sur un calendrier : c’est le format historique, celui qu’on regarde de loin en se disant qu’un jour, peut-être. Dimanche 28 juin, à 7 h 15, elle était sur la ligne, dossard 442, au cœur de la ferveur de Chamonix, face à 2 582 partants dont 606 femmes.",
-        "Et une donnée qui allait tout dicter : la chaleur. Plus de 30 °C annoncés sur la vallée dans la journée. Le départ à 7 h 15 plaçait les premières heures dans le frais et, mécaniquement, la seconde moitié de course dans la montée du thermomètre.",
+        {
+          heading: "L’adversaire du jour : la chaleur",
+          body: "Et une donnée qui allait tout dicter : la chaleur. Plus de 30 °C annoncés sur la vallée dans la journée. Le départ à 7 h 15 plaçait les premières heures dans le frais et, mécaniquement, la seconde moitié de course dans la montée du thermomètre.",
+        },
         "Or le tracé concentre ses passages les plus exposés exactement là : l’Aiguillette des Posettes en plein soleil vers le 18ᵉ kilomètre, puis les singles cassants du col des Montets et la piste de ski de la Flégère en toute fin de parcours.",
-        "Le plan était clair, presque contre-intuitif : brider la première partie. Rouler juste, sans jamais forcer, jusqu’à Vallorcine — puis ne pas subir la seconde moitié. Mieux : y accélérer.",
+        {
+          heading: "Le plan : brider la première moitié",
+          body: "Le plan était clair, presque contre-intuitif : brider la première partie. Rouler juste, sans jamais forcer, jusqu’à Vallorcine — puis ne pas subir la seconde moitié. Mieux : y accélérer.",
+        },
         "Sur le faux plat montant qui remonte la vallée vers Argentière, elle tient sa ligne, 9,6 km en 55’40”, aucun signal d’alerte. Puis vient l’Aiguillette des Posettes, 721 mètres de dénivelé en 5,2 km sans un mètre d’ombre. Elle la monte à sa main, en laissant filer ceux qui s’y brûlent.",
-        "À Vallorcine, au 23,6ᵉ kilomètre, elle pointe 472ᵉ au scratch et 57ᵉ féminine. C’est son point le plus bas au classement. C’est aussi exactement là que la course commence.",
-        "À partir de Vallorcine, la chaleur n’est plus une toile de fond, c’est un adversaire. Mathilde bascule sur son plan nutrition dédié aux fortes températures : gels et solides réduits au minimum, tout passe par le liquide et les minéraux. Un choix travaillé à l’entraînement, appliqué sans hésiter le jour J, alors que les troubles gastriques restent la première cause d’abandon en trail.",
+        { type: 'photo', index: 0 },
+        {
+          heading: "Vallorcine, le point le plus bas",
+          body: "À Vallorcine, au 23,6ᵉ kilomètre, elle pointe 472ᵉ au scratch et 57ᵉ féminine.",
+        },
+        {
+          type: 'pullquote',
+          text: "C’est son point le plus bas au classement. C’est aussi exactement là que la course commence.",
+        },
+        {
+          heading: "La chaleur devient un adversaire",
+          body: "À partir de Vallorcine, la chaleur n’est plus une toile de fond, c’est un adversaire. Mathilde bascule sur son plan nutrition dédié aux fortes températures : gels et solides réduits au minimum, tout passe par le liquide et les minéraux. Un choix travaillé à l’entraînement, appliqué sans hésiter le jour J, alors que les troubles gastriques restent la première cause d’abandon en trail.",
+        },
         "Le résultat est immédiat. Sur les singles qui mènent au col des Montets, puis dans la longue remontée du balcon, elle ne perd plus une seconde : elle en gagne. 397ᵉ au Bois Plagnolet, 374ᵉ à la Flégère, 350ᵉ à Charlanon.",
         "La montée de la Flégère est pourtant la signature cruelle de cette course — une piste de ski entièrement à découvert, 496 mètres de dénivelé en 3,8 km, quand les jambes ont déjà quatre heures et demie de montagne dans les fibres. Elle la déroule sans céder de terrain.",
-        "Reste la descente finale sur Chamonix, 6,1 km sur ce qu’il reste de quadriceps. Elle passe la ligne place du Triangle de l’Amitié en 6 h 21’09” : 49ᵉ femme sur 606 engagées, 325ᵉ au scratch sur 2 582 partants. Soit le top 8 % féminin sur l’un des plateaux les plus denses du trail international, un jour de canicule.",
-        "Mais le vrai marqueur est ailleurs, dans la courbe : 147 places reprises au scratch entre Vallorcine et l’arrivée, huit au féminin. Aucun coup de chaud, aucune improvisation, aucun mètre concédé sur la seconde moitié. Le plan de course a été exécuté à la lettre, du premier kilomètre au dernier. Ce n’est pas un jour de grâce : c’est une progression qui se construit séance après séance, et qui se lit désormais dans les classements.",
+        { type: 'photo', index: 1 },
+        {
+          heading: "Ce que dit la courbe",
+          body: "Reste la descente finale sur Chamonix, 6,1 km sur ce qu’il reste de quadriceps. Elle passe la ligne place du Triangle de l’Amitié en 6 h 21’09” : 49ᵉ femme sur 606 engagées, 325ᵉ au scratch sur 2 582 partants. Soit le top 8 % féminin sur l’un des plateaux les plus denses du trail international, un jour de canicule.",
+        },
+        { type: 'photo', index: 2 },
+        "Mais le vrai marqueur est ailleurs, dans la courbe : 147 places reprises au scratch entre Vallorcine et l’arrivée, huit au féminin. Aucun coup de chaud, aucune improvisation, aucun mètre concédé sur la seconde moitié. Le plan de course a été exécuté à la lettre, du premier kilomètre au dernier.",
+        {
+          type: 'pullquote',
+          text: "Ce n’est pas un jour de grâce : c’est une progression qui se construit séance après séance, et qui se lit désormais dans les classements.",
+        },
       ],
       resultsTitle: 'Résultats — Mathilde Baudelocq',
       results: [
@@ -279,16 +305,42 @@ export const COMMUNIQUES = [
         'Top 8% female out of 606 entrants and 325th of 2,582 starters, on a day above 30 °C in the valley. Lying 472nd at Vallorcine, Mathilde Baudelocq crossed the line 325th: 147 places regained over the second half of the race, on one of the most storied courses of the international circuit.',
       paragraphs: [
         'Mathilde BAUDELOCQ had had this bib in mind for a long time. The 42 km du Mont-Blanc is not just another race on a calendar: it is the historic format, the one you look at from afar thinking that one day, maybe. On Sunday 28 June, at 7:15 AM, she was on the line, bib 442, in the thick of Chamonix’s fervour, among 2,582 starters including 606 women.',
-        'And one factor was going to dictate everything: the heat. Over 30 °C forecast in the valley during the day. A 7:15 AM start placed the early hours in the cool and, mechanically, the second half of the race in the rising temperature.',
+        {
+          heading: 'The opponent of the day: the heat',
+          body: 'And one factor was going to dictate everything: the heat. Over 30 °C forecast in the valley during the day. A 7:15 AM start placed the early hours in the cool and, mechanically, the second half of the race in the rising temperature.',
+        },
         'Yet the course concentrates its most exposed sections exactly there: the Aiguillette des Posettes in full sun around kilometre 18, then the broken singletrack of the Col des Montets and the Flégère ski slope in the closing stages.',
-        'The plan was clear, almost counter-intuitive: rein in the first half. Run within herself, never forcing, all the way to Vallorcine — then refuse to fade in the second half. Better still: accelerate.',
+        {
+          heading: 'The plan: rein in the first half',
+          body: 'The plan was clear, almost counter-intuitive: rein in the first half. Run within herself, never forcing, all the way to Vallorcine — then refuse to fade in the second half. Better still: accelerate.',
+        },
         'On the false flat climbing the valley toward Argentière she held her line, 9.6 km in 55’40”, no warning signs. Then came the Aiguillette des Posettes, 721 metres of climbing in 5.2 km without a metre of shade. She took it at her own pace, letting those who burned themselves on it go.',
-        'At Vallorcine, kilometre 23.6, she sat 472nd overall and 57th woman. That was her lowest point in the standings. It was also exactly where her race began.',
-        'From Vallorcine on, the heat was no longer a backdrop but an opponent. Mathilde switched to her hot-weather nutrition plan: gels and solids cut to a minimum, everything through fluids and minerals. A choice rehearsed in training and applied without hesitation on the day, at a time when stomach trouble remains the leading cause of withdrawal in trail running.',
+        { type: 'photo', index: 0 },
+        {
+          heading: 'Vallorcine, the lowest point',
+          body: 'At Vallorcine, kilometre 23.6, she sat 472nd overall and 57th woman.',
+        },
+        {
+          type: 'pullquote',
+          text: 'That was her lowest point in the standings. It was also exactly where her race began.',
+        },
+        {
+          heading: 'The heat becomes an opponent',
+          body: 'From Vallorcine on, the heat was no longer a backdrop but an opponent. Mathilde switched to her hot-weather nutrition plan: gels and solids cut to a minimum, everything through fluids and minerals. A choice rehearsed in training and applied without hesitation on the day, at a time when stomach trouble remains the leading cause of withdrawal in trail running.',
+        },
         'The effect was immediate. On the singletrack leading to the Col des Montets, then on the long climb back onto the balcony trail, she stopped losing seconds and started taking them. 397th at Bois Plagnolet, 374th at La Flégère, 350th at Charlanon.',
         'Yet the Flégère climb is this race’s cruel signature — a fully exposed ski slope, 496 metres of climbing in 3.8 km, with four and a half hours of mountain already in the legs. She held it without conceding ground.',
-        'That left the final descent into Chamonix, 6.1 km on whatever the quadriceps had left. She crossed the line on Place du Triangle de l’Amitié in 6:21’09”: 49th woman of 606 entrants, 325th overall of 2,582 starters. Top 8% female on one of the deepest fields in international trail running, on a scorching day.',
-        'But the real marker lies elsewhere, in the curve: 147 places regained overall between Vallorcine and the finish, eight among the women. No blow-up, no improvisation, not a metre conceded over the second half. The race plan was executed to the letter, from the first kilometre to the last. This is not a day of grace: it is a progression built session after session, and it now reads in the standings.',
+        { type: 'photo', index: 1 },
+        {
+          heading: 'What the curve says',
+          body: 'That left the final descent into Chamonix, 6.1 km on whatever the quadriceps had left. She crossed the line on Place du Triangle de l’Amitié in 6:21’09”: 49th woman of 606 entrants, 325th overall of 2,582 starters. Top 8% female on one of the deepest fields in international trail running, on a scorching day.',
+        },
+        { type: 'photo', index: 2 },
+        'But the real marker lies elsewhere, in the curve: 147 places regained overall between Vallorcine and the finish, eight among the women. No blow-up, no improvisation, not a metre conceded over the second half. The race plan was executed to the letter, from the first kilometre to the last.',
+        {
+          type: 'pullquote',
+          text: 'This is not a day of grace: it is a progression built session after session, and it now reads in the standings.',
+        },
       ],
       resultsTitle: 'Results — Mathilde Baudelocq',
       results: [
@@ -368,9 +420,26 @@ export const COMMUNIQUES = [
         'Top 3 % féminin et 1ʳᵉ de catégorie sur le tracé technique des contreforts du Ventoux : une percée nette qui valide la trajectoire vers le statut Élite.',
       paragraphs: [
         "Mathilde BAUDELOCQ s'est élancée samedi matin sous un soleil déjà haut, dans la tension électrique du sas de départ. Face à elle : un plateau féminin dense, un tracé exigeant entre vignes, sentiers caillouteux et passages techniques sur les contreforts du Ventoux.",
-        "Dès les premiers kilomètres, Mathilde affiche la couleur. Pas de fébrilité, pas de gestion frileuse : elle prend sa place au contact du groupe de tête féminin et n'en bougera plus.",
-        "À mi-course, au point culminant, elle est déjà dans le top 10 féminin. Et au lieu de subir la fin de course — comme c'est si souvent le cas sur ce format court et nerveux — elle accélère. Les derniers kilomètres sont avalés avec la même intensité que les premiers, dans un effort maîtrisé de bout en bout.",
-        "Franchir la ligne en 2 h 37, c'est plus qu'un chrono : c'est la confirmation d'un niveau qui ne cesse de monter. Mathilde s'offre une 1ʳᵉ place de catégorie, signe une 9ᵉ place sur 381 femmes et termine 124ᵉ au scratch sur 1 178 coureurs. Une performance qui force le respect, portée par une lucidité tactique remarquable et un mental d'acier.",
+        {
+          heading: "Prendre la tête, dès les premiers kilomètres",
+          body: "Dès les premiers kilomètres, Mathilde affiche la couleur. Pas de fébrilité, pas de gestion frileuse : elle prend sa place au contact du groupe de tête féminin et n'en bougera plus.",
+        },
+        { type: 'photo', index: 0 },
+        {
+          heading: "Accélérer sur la fin, contre le format",
+          body: "À mi-course, au point culminant, elle est déjà dans le top 10 féminin. Et au lieu de subir la fin de course — comme c'est si souvent le cas sur ce format court et nerveux — elle accélère.",
+        },
+        {
+          type: 'pullquote',
+          text: "Les derniers kilomètres sont avalés avec la même intensité que les premiers.",
+        },
+        { type: 'photo', index: 1 },
+        {
+          heading: "Une percée qui valide la trajectoire",
+          body: "Franchir la ligne en 2 h 37, c'est plus qu'un chrono : c'est la confirmation d'un niveau qui ne cesse de monter. Mathilde s'offre une 1ʳᵉ place de catégorie, signe une 9ᵉ place sur 381 femmes et termine 124ᵉ au scratch sur 1 178 coureurs.",
+        },
+        "Une performance portée par une lucidité tactique remarquable et un mental d'acier.",
+        { type: 'photo', index: 2 },
       ],
       resultsTitle: 'Résultats — Mathilde Baudelocq',
       results: [
@@ -400,9 +469,26 @@ export const COMMUNIQUES = [
         'Top 3% female and 1st in category on the technical Ventoux foothills course: a clear breakthrough validating the path toward Elite status.',
       paragraphs: [
         'Mathilde BAUDELOCQ took off on Saturday morning under an already high sun, in the electric tension of the start corral. Ahead of her: a dense female field and a demanding course winding through vineyards, rocky trails and technical passages on the Ventoux foothills.',
-        "From the very first kilometers, Mathilde set the tone. No nerves, no cautious pacing: she took her place with the leading women's group and never let go.",
-        'By the halfway point, at the highest peak of the course, she was already in the female top 10. And instead of fading at the back end — as often happens on this short, intense format — she accelerated. The last kilometers were dispatched with the same intensity as the first, in a controlled effort from start to finish.',
-        'Crossing the line in 2:37 is more than just a time: it is the confirmation of a level that keeps rising. Mathilde claims 1st place in her category, posts a 9th place out of 381 women and finishes 124th overall out of 1,178 runners. A performance that commands respect, carried by remarkable tactical clarity and a steel mindset.',
+        {
+          heading: 'Taking the lead from the first kilometres',
+          body: "From the very first kilometres, Mathilde set the tone. No nerves, no cautious pacing: she took her place with the leading women's group and never let go.",
+        },
+        { type: 'photo', index: 0 },
+        {
+          heading: 'Accelerating at the end, against the format',
+          body: 'By the halfway point, at the highest peak of the course, she was already in the female top 10. And instead of fading at the back end — as often happens on this short, intense format — she accelerated.',
+        },
+        {
+          type: 'pullquote',
+          text: 'The last kilometres were dispatched with the same intensity as the first.',
+        },
+        { type: 'photo', index: 1 },
+        {
+          heading: 'A breakthrough that validates the trajectory',
+          body: 'Crossing the line in 2:37 is more than just a time: it is the confirmation of a level that keeps rising. Mathilde claims 1st place in her category, posts a 9th place out of 381 women and finishes 124th overall out of 1,178 runners.',
+        },
+        'A performance carried by remarkable tactical clarity and a steel mindset.',
+        { type: 'photo', index: 2 },
       ],
       resultsTitle: 'Results — Mathilde Baudelocq',
       results: [
