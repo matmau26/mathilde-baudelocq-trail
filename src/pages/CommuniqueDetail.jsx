@@ -9,7 +9,6 @@ import {
   Clock,
   Play,
   Trophy,
-  Users,
   Hash,
 } from 'lucide-react';
 import { useT } from '../i18n/useT.js';
@@ -308,20 +307,234 @@ function MetaStrip({ item, t }) {
   );
 }
 
+/* ------------------------- CORPS RÉCIT ------------------------- */
+
+// Renderer du corps de récit. Chaque `paragraph` peut être :
+//  - une string  → paragraphe normal (le premier reçoit la capitale ornée)
+//  - { heading, body } → titre de chapitre + corps
+//  - { type: 'pullquote', text } → citation éditoriale sur toute la largeur
+//  - { type: 'stat', value, kicker?, label? } → chiffre-clé en pull-out
+//  - { type: 'photo', index } → photo pleine largeur, tirée de `item.photos[index]`
+// La photo inline "par défaut" (celle sous la capitale) et la mosaïque finale
+// sont désactivées automatiquement quand le récit contient déjà des marqueurs
+// `{type:'photo'}` — c'est le cas d'UTV, où les photos ponctuent l'histoire.
+
+function ChapterHeading({ index, label, title }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 12 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.7 }}
+      className="mt-16 sm:mt-20"
+    >
+      <div className="mb-4 flex items-center gap-3 sm:mb-5">
+        <span className="font-mono text-[11px] font-bold uppercase tracking-[0.3em] text-flame-600">
+          {label} {String(index).padStart(2, '0')}
+        </span>
+        <span aria-hidden="true" className="h-px flex-1 bg-flame-500/30" />
+      </div>
+      <h3 className="font-display text-[26px] font-semibold uppercase leading-[1.05] tracking-tight text-mountain-950 sm:text-[32px]">
+        {title}
+      </h3>
+    </motion.div>
+  );
+}
+
+function PullQuote({ text }) {
+  return (
+    <motion.blockquote
+      initial={{ opacity: 0, y: 12 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.7 }}
+      className="relative my-12 border-l-2 border-flame-500 pl-6 sm:my-14 sm:pl-8"
+    >
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute -left-1 -top-6 select-none font-editorial text-[5rem] italic leading-none text-flame-500/25 sm:-top-8 sm:text-[6rem]"
+      >
+        “
+      </span>
+      <p className="relative font-editorial text-[20px] italic leading-[1.5] text-mountain-900 sm:text-[24px]">
+        {text}
+      </p>
+    </motion.blockquote>
+  );
+}
+
+function PullStat({ value, kicker, label }) {
+  return (
+    <motion.figure
+      initial={{ opacity: 0, scale: 0.96 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+      className="my-14 border-y border-mountain-200 py-8 text-center sm:my-16 sm:py-10"
+    >
+      {kicker && (
+        <figcaption className="font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-flame-600 sm:text-[11px]">
+          {kicker}
+        </figcaption>
+      )}
+      <p
+        className={`font-display text-[76px] font-bold leading-none tracking-[-0.04em] sm:text-[112px] ${
+          kicker ? 'mt-3' : ''
+        }`}
+      >
+        <span className="bg-gradient-to-r from-flame-600 via-flame-500 to-solar-400 bg-clip-text text-transparent">
+          {value}
+        </span>
+      </p>
+      {label && (
+        <p className="mx-auto mt-4 max-w-md font-mono text-[10px] uppercase tracking-[0.24em] text-mountain-500 sm:text-[11px]">
+          {label}
+        </p>
+      )}
+    </motion.figure>
+  );
+}
+
+function InlinePhoto({ src, alt }) {
+  if (!src) return null;
+  return (
+    <motion.figure
+      initial={{ opacity: 0, scale: 0.98 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.8 }}
+      className="-mx-6 my-14 overflow-hidden bg-mountain-100 sm:mx-0 sm:my-16 sm:rounded-2xl sm:border sm:border-mountain-200"
+    >
+      <div className="aspect-[4/3] w-full sm:aspect-[16/10]">
+        <Picture
+          src={src}
+          alt={alt}
+          loading="lazy"
+          className="h-full w-full object-cover"
+        />
+      </div>
+      {alt && (
+        <figcaption className="px-6 py-3 font-mono text-[10px] uppercase tracking-[0.24em] text-mountain-500 sm:px-4 sm:tracking-[0.25em]">
+          {alt}
+        </figcaption>
+      )}
+    </motion.figure>
+  );
+}
+
+function BodyParagraph({ children, className = '' }) {
+  return (
+    <motion.p
+      initial={{ opacity: 0, y: 10 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: '-50px' }}
+      transition={{ duration: 0.6 }}
+      className={`mt-6 text-[15px] leading-[1.8] text-mountain-800 sm:mt-7 sm:text-[15.5px] ${className}`}
+    >
+      {children}
+    </motion.p>
+  );
+}
+
+function ArticleBody({ item, localized, t }) {
+  const paragraphs = localized.paragraphs || [];
+  const first = paragraphs[0];
+  const leadText = typeof first === 'string' ? first : first?.body || '';
+
+  // Compte des chapitres — attribué à la volée pour ne pas hardcoder
+  let chapterIndex = 0;
+  // Détecte si l'article contient déjà des photos inline
+  const hasInlinePhoto = paragraphs.some(
+    (p) => p && typeof p === 'object' && p.type === 'photo'
+  );
+
+  return (
+    <article className="mx-auto max-w-[36rem] px-6 py-14 sm:px-8 sm:py-16">
+      {/* LEAD — capitale ornée */}
+      <motion.p
+        initial={{ opacity: 0, y: 12 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.7 }}
+        className="text-balance text-[16px] leading-[1.7] text-mountain-800 sm:text-[17px]"
+      >
+        <span className="float-left mr-3 mt-1 font-editorial text-[3.75rem] font-medium leading-[0.85] tracking-tight text-flame-600 sm:text-[4.5rem]">
+          {leadText.charAt(0)}
+        </span>
+        {leadText.slice(1)}
+      </motion.p>
+
+      {/* Photo inline "par défaut" — désactivée quand l'article place ses
+          propres photos via {type:'photo'} */}
+      {!hasInlinePhoto && item.photos?.[0] && (
+        <InlinePhoto
+          src={item.photos[0].src}
+          alt={localized.photoAlts?.[0] || item.photos[0].alt || ''}
+        />
+      )}
+
+      {/* Rendu du reste du récit */}
+      {paragraphs.slice(1).map((p, i) => {
+        // Marqueur explicite
+        if (p && typeof p === 'object' && p.type) {
+          if (p.type === 'pullquote') {
+            return <PullQuote key={`pq-${i}`} text={p.text} />;
+          }
+          if (p.type === 'stat') {
+            return (
+              <PullStat
+                key={`st-${i}`}
+                value={p.value}
+                kicker={p.kicker}
+                label={p.label}
+              />
+            );
+          }
+          if (p.type === 'photo') {
+            const idx = p.index ?? 0;
+            const src = item.photos?.[idx]?.src;
+            const alt =
+              localized.photoAlts?.[idx] || item.photos?.[idx]?.alt || '';
+            return <InlinePhoto key={`ph-${i}`} src={src} alt={alt} />;
+          }
+        }
+        // Chapitre { heading, body }
+        if (p && typeof p === 'object' && p.body) {
+          chapterIndex += 1;
+          return (
+            <div key={`ch-${i}`}>
+              <ChapterHeading
+                index={chapterIndex}
+                label={t.chapterLabel || 'Chapitre'}
+                title={p.heading}
+              />
+              <BodyParagraph className="!mt-5 sm:!mt-6">{p.body}</BodyParagraph>
+            </div>
+          );
+        }
+        // Paragraphe simple
+        return <BodyParagraph key={`p-${i}`}>{p}</BodyParagraph>;
+      })}
+    </article>
+  );
+}
+
 /* --------------------- BLOC RÉSULTATS DESIGN --------------------- */
 
 function ResultsShowcase({ localized, item, t }) {
-  // Identifie les 3 stats clés pour les mettre en valeur visuellement
   const findResult = (...keywords) =>
     localized.results.find((r) =>
       keywords.some((k) => r.label.toLowerCase().includes(k.toLowerCase()))
     );
 
   const time = findResult('temps', 'time');
-  const women = findResult('femme', 'female');
-  const scratch = findResult('scratch', 'overall');
   const category = findResult('catégorie', 'category');
-  const utmbIdx = findResult('utmb');
+  // Tout ce qui n'est pas Temps + Catégorie devient une "stat secondaire",
+  // rangée dans une grille — support automatique de nouveaux champs par
+  // ordre de saisie.
+  const secondary = (localized.results || []).filter(
+    (r) => r !== time && r !== category
+  );
 
   return (
     <motion.section
@@ -329,131 +542,85 @@ function ResultsShowcase({ localized, item, t }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-      className="relative my-16 overflow-hidden rounded-3xl border-2 border-mountain-950 bg-mountain-950 text-white shadow-2xl shadow-mountain-900/30 sm:my-20"
+      className="relative my-16 overflow-hidden rounded-3xl border border-mountain-200 bg-gradient-to-b from-white via-cream-50 to-white shadow-xl shadow-mountain-900/5 sm:my-20"
     >
-      {/* Halo flame + photo cover en arrière-plan dimmé */}
-      <div className="absolute inset-0 -z-10">
-        <Picture
-          src={item.cover}
-          alt=""
-          aria-hidden="true"
-          loading="lazy"
-          className="absolute inset-0 h-full w-full object-cover opacity-25"
-        />
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 bg-gradient-to-br from-mountain-950/95 via-mountain-950/85 to-flame-900/60"
-        />
-        <div
-          aria-hidden="true"
-          className="absolute -bottom-32 right-1/3 h-[24rem] w-[24rem] rounded-full bg-flame-500/30 blur-[110px]"
-        />
+      {/* Halo flame subtil — accent visuel sans envahir */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-x-0 top-0 h-72 hidden md:block"
+      >
+        <div className="absolute -top-40 right-1/4 h-[24rem] w-[24rem] rounded-full bg-flame-300/25 blur-[110px]" />
+        <div className="absolute -top-24 left-1/4 h-[18rem] w-[18rem] rounded-full bg-solar-300/20 blur-[100px]" />
       </div>
 
       {/* En-tête */}
-      <div className="border-b border-white/10 px-6 py-4 sm:px-10">
+      <div className="relative border-b border-mountain-200/70 px-6 py-5 sm:px-10">
         <div className="flex items-center justify-between gap-4">
-          <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-flame-300 sm:text-[11px]">
+          <p className="font-mono text-[10px] font-bold uppercase tracking-[0.28em] text-flame-600 sm:text-[11px]">
             {localized.resultsTitle}
           </p>
-          <p className="hidden font-mono text-[10px] uppercase tracking-[0.3em] text-white/50 sm:block">
+          <p className="hidden font-mono text-[10px] uppercase tracking-[0.28em] text-mountain-400 sm:block">
             {t.resultsSource}
           </p>
         </div>
       </div>
 
-      {/* Layout asymétrique : Temps géant à gauche / podium à droite / chiffres en pied */}
-      <div className="grid grid-cols-1 lg:grid-cols-12">
-        {/* TEMPS — chiffre cyclopéen */}
-        <div className="relative col-span-1 border-b border-white/10 px-6 py-8 lg:col-span-7 lg:border-b-0 lg:border-r lg:px-10 lg:py-10">
-          <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/50">
-            {time?.label || 'Temps'}
+      {/* CHRONO — chiffre-héros */}
+      <div className="relative border-b border-mountain-200/70 px-6 py-12 text-center sm:px-10 sm:py-16">
+        {time?.label && (
+          <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.3em] text-mountain-500 sm:text-[11px]">
+            {time.label}
           </p>
-          <p className="mt-2 font-display text-5xl font-bold leading-[0.9] tracking-[-0.03em] text-white sm:text-6xl lg:text-7xl">
-            <span className="bg-gradient-to-b from-white via-white to-flame-200 bg-clip-text text-transparent">
-              {time?.value || '—'}
+        )}
+        <p className="mt-4 font-display font-bold leading-[0.9] tracking-[-0.04em] sm:mt-5">
+          <span className="bg-gradient-to-r from-mountain-950 via-flame-600 to-solar-500 bg-clip-text text-[64px] text-transparent sm:text-[104px] lg:text-[128px]">
+            {time?.value || '—'}
+          </span>
+        </p>
+        {category && (
+          <div className="mt-8 inline-flex items-center gap-2.5 rounded-full bg-flame-500 px-4 py-2 text-white shadow-lg shadow-flame-500/30 sm:mt-10 sm:px-5 sm:py-2.5">
+            <Trophy className="h-4 w-4" strokeWidth={2.5} />
+            <span className="font-mono text-[10px] font-bold uppercase tracking-[0.28em] sm:text-[11px]">
+              {category.label} · {category.value}
             </span>
+          </div>
+        )}
+        {category && t.categoryNote && (
+          <p className="mx-auto mt-4 max-w-md text-[13px] leading-relaxed text-mountain-600 sm:text-sm">
+            {t.categoryNote}
           </p>
-        </div>
-
-        {/* PODIUM CATÉGORIE — mis en évidence */}
-        <div
-          className={`relative col-span-1 flex flex-col gap-5 px-6 py-8 lg:col-span-5 lg:px-10 lg:py-10 ${
-            category ? 'justify-between' : 'justify-center'
-          }`}
-        >
-          {category && (
-            <div className="rounded-2xl border border-flame-400/40 bg-flame-500/10 p-5 sm:p-6">
-              <div className="flex items-center gap-3">
-                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-flame-500 text-white shadow-lg shadow-flame-500/30">
-                  <Trophy className="h-5 w-5" strokeWidth={2.5} />
-                </span>
-                <span className="font-mono text-[10px] font-bold uppercase tracking-[0.3em] text-flame-300">
-                  {category.label}
-                </span>
-              </div>
-              <p className="mt-4 font-display text-3xl font-bold uppercase leading-none tracking-tight text-white sm:text-4xl">
-                {category.value}
-              </p>
-              <p className="mt-3 text-sm text-white/70">
-                {t.categoryNote}
-              </p>
-            </div>
-          )}
-
-          {women && (
-            <div>
-              <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/50">
-                <Users
-                  className="mr-1.5 inline-block h-3 w-3 align-middle text-flame-300"
-                  strokeWidth={2.5}
-                />
-                {women.label}
-              </p>
-              <p className="mt-2 bg-gradient-to-r from-flame-400 via-flame-300 to-solar-300 bg-clip-text font-display text-4xl font-bold leading-none tracking-tight text-transparent sm:text-5xl">
-                {women.value}
-              </p>
-              {women.sub && (
-                <p className="mt-2 font-mono text-[10px] uppercase tracking-[0.28em] text-white/50">
-                  {women.sub}
-                </p>
-              )}
-            </div>
-          )}
-        </div>
+        )}
       </div>
 
-      {/* Stats secondaires en pied */}
-      <div className="grid grid-cols-1 divide-x divide-y divide-white/10 border-t border-white/10 sm:grid-cols-2">
-        {scratch && (
-          <div className="flex items-center justify-between gap-4 px-6 py-4 sm:px-10">
-            <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/50">
-              {scratch.label}
-            </span>
-            <span className="flex flex-col items-end">
-              <span className="font-mono text-xl font-bold tabular-nums text-white sm:text-2xl">
-                {scratch.value}
+      {/* GRILLE — stats secondaires */}
+      {secondary.length > 0 && (
+        <div className="relative grid grid-cols-2 divide-x divide-y divide-mountain-200/70 sm:grid-cols-3">
+          {secondary.map((s, i) => (
+            <div
+              key={s.label + i}
+              className="flex flex-col gap-1.5 px-5 py-6 sm:px-8 sm:py-7"
+            >
+              <span className="font-mono text-[9px] font-semibold uppercase tracking-[0.24em] text-mountain-500 sm:text-[10px] sm:tracking-[0.28em]">
+                {s.label}
               </span>
-              {scratch.sub && (
-                <span className="mt-0.5 font-mono text-[10px] uppercase tracking-[0.28em] text-white/50">
-                  {scratch.sub}
+              <span
+                className={`font-display font-bold leading-none tracking-tight text-mountain-950 ${
+                  String(s.value || '').length > 6
+                    ? 'text-[20px] sm:text-[24px]'
+                    : 'text-[26px] sm:text-[32px]'
+                }`}
+              >
+                {s.value}
+              </span>
+              {s.sub && (
+                <span className="font-mono text-[9px] uppercase tracking-[0.24em] text-mountain-400 sm:text-[10px]">
+                  {s.sub}
                 </span>
               )}
-            </span>
-          </div>
-        )}
-        {utmbIdx && (
-          <div className="flex items-center justify-between px-6 py-4 sm:px-10">
-            <span className="font-mono text-[10px] uppercase tracking-[0.3em] text-white/50">
-              {utmbIdx.label}
-            </span>
-            <span className="font-display text-xl font-bold text-white sm:text-2xl">
-              {utmbIdx.value}
-              <span className="ml-1 font-mono text-sm font-normal text-white/50">pts</span>
-            </span>
-          </div>
-        )}
-      </div>
+            </div>
+          ))}
+        </div>
+      )}
     </motion.section>
   );
 }
@@ -461,6 +628,8 @@ function ResultsShowcase({ localized, item, t }) {
 /* -------------------------- CITATION -------------------------- */
 
 // Optionnel : rendu uniquement si le communiqué porte un bloc `quote`.
+// Style « magazine » — pas d'encart, guillemet ornemental, Playfair italique
+// généreux, filet flame avant la signature en Oswald.
 function QuoteBlock({ quote }) {
   if (!quote || !quote.paragraphs?.length) return null;
 
@@ -470,36 +639,43 @@ function QuoteBlock({ quote }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-      className="my-16 sm:my-20"
+      className="my-20 sm:my-24"
     >
-      <figure className="relative overflow-hidden rounded-3xl border border-mountain-200 bg-white p-7 shadow-sm sm:p-10">
-        {/* Guillemet en filigrane */}
+      <div className="relative">
+        {/* Guillemet ornemental */}
         <span
           aria-hidden="true"
-          className="pointer-events-none absolute -top-14 right-4 select-none font-editorial text-[11rem] italic leading-none text-flame-500/10 sm:right-10 sm:-top-16 sm:text-[13rem]"
+          className="pointer-events-none absolute -left-1 -top-14 select-none font-editorial text-[9rem] italic leading-none text-flame-500/20 sm:-left-2 sm:-top-20 sm:text-[13rem]"
         >
-          ”
+          “
         </span>
 
-        <p className="font-mono text-[10px] font-semibold uppercase tracking-[0.28em] text-flame-600 sm:text-[11px]">
+        <p className="relative font-mono text-[10px] font-bold uppercase tracking-[0.32em] text-flame-600 sm:text-[11px]">
           {quote.label}
         </p>
 
-        <blockquote className="relative mt-5 space-y-4 border-l border-flame-500/70 pl-5 sm:mt-6 sm:pl-6">
+        <blockquote className="relative mt-6 space-y-5 sm:mt-8 sm:space-y-6">
           {quote.paragraphs.map((p, i) => (
             <p
               key={i}
-              className="font-editorial text-[15px] italic leading-[1.75] text-mountain-800 sm:text-base"
+              className={`font-editorial italic leading-[1.5] text-mountain-900 ${
+                i === 0
+                  ? 'text-[22px] sm:text-[28px]'
+                  : 'text-[18px] sm:text-[21px]'
+              }`}
             >
               {p}
             </p>
           ))}
         </blockquote>
 
-        <figcaption className="mt-7 font-mono text-[10px] uppercase tracking-[0.28em] text-mountain-500">
-          — {quote.attribution}
-        </figcaption>
-      </figure>
+        <div className="relative mt-10 flex items-center gap-4 sm:mt-12">
+          <span aria-hidden="true" className="h-px w-12 bg-flame-500 sm:w-16" />
+          <figcaption className="font-display text-[13px] font-bold uppercase tracking-[0.22em] text-mountain-950 sm:text-sm">
+            {quote.attribution}
+          </figcaption>
+        </div>
+      </div>
     </motion.section>
   );
 }
@@ -746,6 +922,12 @@ export default function CommuniqueDetail() {
   if (!item) return <Navigate to="/communiques" replace />;
   const localized = item[lang] || item.fr;
 
+  // Si le récit tisse déjà ses propres photos via {type:'photo'}, on masque la
+  // mosaïque finale — elles seraient dupliquées.
+  const hasInlinePhoto = (localized.paragraphs || []).some(
+    (p) => p && typeof p === 'object' && p.type === 'photo'
+  );
+
   return (
     <main className="bg-cream-50 text-mountain-950">
       {/* HERO PLEIN ÉCRAN */}
@@ -754,77 +936,9 @@ export default function CommuniqueDetail() {
       {/* MÉTA STICKY */}
       <MetaStrip item={item} t={t} />
 
-      {/* CORPS — long-form éditorial : sobre, aéré, sous-titres pour
-          rythmer la lecture, capitale ornée en Playfair. */}
-      <article className="mx-auto max-w-[36rem] px-6 py-14 sm:px-8 sm:py-16">
-        {/* Lead paragraph (1er paragraphe avec capitale) */}
-        <motion.p
-          initial={{ opacity: 0, y: 12 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.7 }}
-          className="text-balance text-[16px] leading-[1.7] text-mountain-800 sm:text-[17px]"
-        >
-          <span className="float-left mr-3 mt-1 font-editorial text-[3.75rem] font-medium leading-[0.85] tracking-tight text-flame-600 sm:text-[4.5rem]">
-            {typeof localized.paragraphs[0] === 'string'
-              ? localized.paragraphs[0].charAt(0)
-              : localized.paragraphs[0]?.body?.charAt(0)}
-          </span>
-          {typeof localized.paragraphs[0] === 'string'
-            ? localized.paragraphs[0].slice(1)
-            : localized.paragraphs[0]?.body?.slice(1)}
-        </motion.p>
-
-        {/* Photo inline pour rompre le rythme */}
-        {item.photos?.[0] && (
-          <motion.figure
-            initial={{ opacity: 0, scale: 0.98 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.8 }}
-            className="my-14 overflow-hidden rounded-2xl border border-mountain-200 bg-mountain-100 sm:my-16"
-          >
-            <div className="aspect-[16/10] w-full">
-              <Picture
-                src={item.photos[0].src}
-                alt={localized.photoAlts?.[0] || item.photos[0].alt || ''}
-                loading="lazy"
-                className="h-full w-full object-cover"
-              />
-            </div>
-            <figcaption className="bg-mountain-950 px-5 py-3 font-mono text-[10px] uppercase tracking-[0.25em] text-white/80">
-              {localized.photoAlts?.[0] || item.photos[0].alt || ''}
-            </figcaption>
-          </motion.figure>
-        )}
-
-        {/* Paragraphes 2 et suivants — support à la fois du format string et
-            du format { heading, body } qui affiche un sous-titre éditorial. */}
-        {localized.paragraphs.slice(1).map((p, i) => {
-          const isHeaded = typeof p === 'object' && p !== null && p.body;
-          const heading = isHeaded ? p.heading : null;
-          const body = isHeaded ? p.body : p;
-          return (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-50px' }}
-              transition={{ duration: 0.7 }}
-              className={heading ? 'mt-12 sm:mt-14' : 'mt-7 sm:mt-8'}
-            >
-              {heading && (
-                <h3 className="mb-3 font-mono text-[10px] font-semibold uppercase tracking-[0.28em] text-flame-600 sm:mb-4 sm:text-[11px]">
-                  {heading}
-                </h3>
-              )}
-              <p className="text-[15px] leading-[1.8] text-mountain-800 sm:text-[15.5px]">
-                {body}
-              </p>
-            </motion.div>
-          );
-        })}
-      </article>
+      {/* CORPS — long-form éditorial : chapitres numérotés, photos et
+          pull-quotes tissés dans le récit pour rythmer la lecture. */}
+      <ArticleBody item={item} localized={localized} t={t} />
 
       {/* CITATION — largeur du récit, dans la continuité du texte */}
       <div className="mx-auto max-w-[36rem] px-6 sm:px-8">
@@ -846,15 +960,17 @@ export default function CommuniqueDetail() {
         <VideoSection videos={item.videos} localized={localized} t={t} />
       </div>
 
-      {/* GALERIE */}
-      <div className="mx-auto max-w-6xl px-6 sm:px-8">
-        <PhotoMosaic
-          photos={item.photos}
-          alts={localized.photoAlts}
-          title={localized.photosTitle}
-          t={t}
-        />
-      </div>
+      {/* GALERIE — masquée si les photos sont déjà tissées dans le récit */}
+      {!hasInlinePhoto && (
+        <div className="mx-auto max-w-6xl px-6 sm:px-8">
+          <PhotoMosaic
+            photos={item.photos}
+            alts={localized.photoAlts}
+            title={localized.photosTitle}
+            t={t}
+          />
+        </div>
+      )}
 
       {/* FOOTER CTA */}
       <section className="border-t border-mountain-200 bg-mountain-950 text-white">
